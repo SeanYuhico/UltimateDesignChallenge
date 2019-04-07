@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+    <bottom>
+        <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane prefHeight="102.0" prefWidth="1155.0">
+                    <children>
+                        <Slider fx:id="volumeSlider" layoutX="940.0" layoutY="28.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="21.0" prefWidth="185.0" />
+                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="598.0" layoutY="17.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/play.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="prevImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="495.0" layoutY="21.0" onMouseClicked="#prev" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/prevsong.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="nextImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="709.0" layoutY="22.0" onMouseClicked="#next" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/nextsong.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="repeatImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="756.0" layoutY="26.0" onMouseClicked="#repeatSong" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/repeat.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvwShuffle" fitHeight="43.0" fitWidth="227.0" layoutX="442.0" layoutY="17.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/shuffle.png" />
+                            </image>
+                        </ImageView>
+                        <MediaView fitHeight="120.0" fitWidth="120.0" layoutX="63.0" layoutY="10.0" />
+                        <ImageView fitHeight="120.0" fitWidth="120.0" layoutX="63.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/vinyl.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="nameLbl" layoutX="214.0" layoutY="29.0" text="Song Title" />
+                        <Label fx:id="artistLbl" layoutX="214.0" layoutY="83.0" text="Artist" />
+                        <Slider fx:id="progressSlider" layoutX="420.0" layoutY="82.0" onDragDetected="#changeProgress" onDragDone="#changeProgress" onDragDropped="#changeProgress" onDragEntered="#changeProgress" onDragExited="#changeProgress" onDragOver="#changeProgress" onMouseClicked="#changeProgress" onMouseDragEntered="#changeProgress" onMouseDragExited="#changeProgress" onMouseDragOver="#changeProgress" onMouseDragReleased="#changeProgress" prefHeight="18.0" prefWidth="400.0" />
+                        <ImageView fx:id="pauseImgVw" fitHeight="43.0" fitWidth="227.0" layoutX="598.0" layoutY="17.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/pause.png" />
+                            </image>
+                        </ImageView>
+                  <ImageView fx:id="backwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="543.0" layoutY="22.0" onMouseClicked="#backward" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/back10sec.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="forwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="659.0" layoutY="21.0" onMouseClicked="#forward" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/next10sec.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="repeatOnceVw" fitHeight="27.0" fitWidth="25.0" layoutX="756.0" layoutY="27.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../Pictures/repeatOnce.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="repeatAllImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="872.0" layoutY="27.0" onMouseClicked="#repeatPlaylist" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../Pictures/repeat.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </HBox>
+    </bottom>
+    <left>
+        <VBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="295.0" BorderPane.alignment="CENTER">
+            <children>
+            <HBox prefHeight="33.0" prefWidth="290.0">
+               <children>
+                      <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="191.0" text="REAL Music Player" textFill="#c99326">
+                          <padding>
+                              <Insets left="15.0" />
+                          </padding>
+                          <font>
+                              <Font name="Leelawadee UI" size="20.0" />
+                          </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                      </Label>
+                  <Label fx:id="logoutLbl" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#logout" prefHeight="54.0" prefWidth="68.0" text="Logout" textFill="#c99326">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                     <font>
+                        <Font name="Leelawadee UI" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fx:id="profileImgVw" fitHeight="43.0" fitWidth="227.0" onMouseClicked="#showProfile" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/profile.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+                <Separator prefWidth="200.0" />
+            <Label fx:id="mySongsPlaylist" onMouseClicked="#showMySongs" prefHeight="60.0" prefWidth="312.0" text="My Songs" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="myMostPlayed" onMouseClicked="#showByMostPlayed" prefHeight="60.0" prefWidth="312.0" text="My Most Played Songs" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+                <Label fx:id="myPlaylistsLbl" onMouseClicked="#showMyPlaylists" prefHeight="60.0" prefWidth="312.0" text="My Playlists" textFill="#dab545">
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" top="10.0" />
+                    </padding>
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Label>
+            <Label fx:id="artistsLbl" onMouseClicked="#showByArtists" prefHeight="60.0" prefWidth="312.0" text="Artists" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="albumsLbl" onMouseClicked="#showByAlbumNames" prefHeight="60.0" prefWidth="312.0" text="Albums" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="genresLbl" onMouseClicked="#showByGenres" prefHeight="60.0" prefWidth="312.0" text="Genres" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="yearLbl" onMouseClicked="#showByYears" prefHeight="60.0" prefWidth="312.0" text="Year" textFill="#dab545">
+               <padding>
+                  <Insets bottom="10.0" left="15.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+                <HBox prefHeight="33.0" prefWidth="290.0">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#addNewPlaylist" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/add.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets bottom="10.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="NewPlaylstLbl" onMouseClicked="#addNewPlaylist" prefHeight="37.0" prefWidth="132.0" text="New Playlist">
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets bottom="10.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="5.0" top="10.0" />
+                    </padding>
+                </HBox>
+                <HBox prefHeight="33.0" prefWidth="290.0">
+                    <padding>
+                        <Insets left="5.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#uploadSong" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Pictures/add.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="NewPlaylstLbl1" prefHeight="37.0" prefWidth="132.0" text="Upload Song">
+                            <font>
+                                <Font size="15.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </left>
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id="playlistPane" prefHeight="200.0" prefWidth="44.0">
+               <children>
+                  <VBox fx:id="playlistVBox" layoutX="14.0" layoutY="179.0" prefHeight="379.0" prefWidth="823.0" />
+                  <Label fx:id="playlistNameLbl" layoutX="21.0" layoutY="31.0" prefHeight="57.0" prefWidth="254.0" text="My Playlists">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="dashboardPane" prefHeight="200.0" prefWidth="44.0">
+               <children>
+                  <VBox fx:id="dashboardVBox" layoutX="14.0" layoutY="179.0" prefHeight="379.0" prefWidth="823.0" />
+                  <Label fx:id="dashboardPlaylistLbl" layoutX="21.0" layoutY="31.0" prefHeight="57.0" prefWidth="464.0" text="Playlist Name">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="playPlaylistBtn" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onMouseClicked="#playAll" prefHeight="38.0" prefWidth="81.0" text="Play" textFill="#c4b57c" />
+                  <Label layoutX="96.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="TITLE" />
+                  <Label layoutX="389.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="ARTIST" />
+                  <Label layoutX="764.0" layoutY="146.0" opacity="0.5" prefHeight="17.0" prefWidth="60.0" text="YEAR" />
+                  <Label layoutX="638.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="GENRE" />
+                  <Label layoutX="514.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="ALBUM" />
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
