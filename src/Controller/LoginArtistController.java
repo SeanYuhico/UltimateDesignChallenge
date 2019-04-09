@@ -3,10 +3,12 @@ package Controller;
 import View.LoginWindow;
 import View.Main;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import javax.swing.*;
-import java.awt.*;
+
 
 public class LoginArtistController {
 
