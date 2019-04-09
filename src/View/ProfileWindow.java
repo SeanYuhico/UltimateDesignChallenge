@@ -20,7 +20,7 @@ public class ProfileWindow implements Window{
         Label faveSongs = new Label("Favorite Songs");
         Label favePlaylists = new Label("Favorite Playlists");
         Label username = new Label(LoginWindow.getLoggedUser());
-        ImageView profile = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\profile.png"));
+        ImageView profile = new ImageView(new Image("/Pictures/profile.png"));
 
         layout.setPadding(new Insets(10, 10, 10, 10));
         layout.setVgap(10);
