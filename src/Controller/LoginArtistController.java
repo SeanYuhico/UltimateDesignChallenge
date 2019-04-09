@@ -19,9 +19,9 @@ public class LoginArtistController {
 
     public void signIn(){
 
-        if (usernameTextField.getText() == null)
+        if (usernameTextField.getText().equals(""))
             AlertBox.display("Error", "Username field cannot be left blank");
-        else if (passwordField.getText() == null)
+        if (passwordField.getText().equals(""))
             AlertBox.display("Error", "Password field cannot be left blank");
         else
             System.out.println("DB Boys!");

@@ -15,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         mainStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginArtist.FXML"));
-        mainStage.setScene(new Scene(root, 599, 417));
+        mainStage.setScene(new Scene(root, 789, 417));
         mainStage.show();
     }
 
