@@ -16,6 +16,7 @@ public class Main extends Application {
         mainStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginArtist.FXML"));
         mainStage.setScene(new Scene(root, 599, 417));
+        mainStage.show();
     }
 
     public static void main(String[] args) {
