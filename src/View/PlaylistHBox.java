@@ -32,8 +32,8 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
-        deleteBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\x.png"));
+        playBtn = new ImageView(new Image("/Pictures/play.png"));
+        deleteBtn = new ImageView(new Image("/Pictures/x.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 
@@ -131,7 +131,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
+        playBtn = new ImageView(new Image("/Pictures/play.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 
@@ -181,7 +181,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
+        playBtn = new ImageView(new Image("/Pictures/play.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 

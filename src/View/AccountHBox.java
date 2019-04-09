@@ -31,7 +31,7 @@ public class AccountHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        dp = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\profilePic2.png"));
+        dp = new ImageView(new Image("/Pictures/profilePic.png"));
         usernameLbl = new Label(account.getUsername());
 
         // Optional Contents.

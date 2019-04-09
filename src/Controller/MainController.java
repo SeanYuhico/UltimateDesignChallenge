@@ -428,7 +428,7 @@ public class MainController implements Initializable, Controller {
 
     public ArrayList<String> initList(){
         ArrayList<String> results = new ArrayList<>();
-        File[] files = new File("\\Users\\aaron\\Desktop\\DesignChallenge2\\DesignChallenge2\\src\\Music\\").listFiles();
+        File[] files = new File("\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\").listFiles();
         for(File file : files){
             if(file.isFile()){
                 results.add(file.getName());
