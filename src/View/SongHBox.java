@@ -36,8 +36,8 @@ public class SongHBox extends HBox {
         setPickOnBounds(true);
 
         // Contents
-        playBtn = new ImageView(new Image("File:\\Users\\Legs\\Desktop\\dc2\\src\\Pictures\\play.png"));
-        deleteBtn = new ImageView(new Image("File:\\Users\\Legs\\Desktop\\dc2\\src\\Pictures\\x.png"));
+        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
+        deleteBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\x.png"));
         titleLbl = new Label(song.getTitle());
         artistLbl = new Label(song.getArtist());
         albumLbl = new Label(song.getAlbumName());

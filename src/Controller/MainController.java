@@ -54,6 +54,9 @@ public class MainController implements Initializable, Controller {
     @FXML VBox dashboardVBox, playlistVBox;
     @FXML Pane dashboardPane, playlistPane;
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
+
+    @FXML TextField mainSearchFld, otherSearchFld;
+
     Displayer displayer;
     PlaylistBuilder genrePlaylistBuilder, albumPlaylistBuilder, artistPlaylistBuilder, yearPlaylistBuilder;
 //    Queue<MediaPlayer> players;
@@ -437,7 +440,7 @@ public class MainController implements Initializable, Controller {
     public void shuffle() {}
 
     public void update() {
-        if (dashboardVBox.isVisible()) {
+        if (dashboardPane.isVisible()) {
             if (dashboardPlaylistLbl.getText().equals("My Songs"))
                 showMySongs();
             else if (dashboardPlaylistLbl.getText().equals("My Most Played Songs"))
@@ -448,10 +451,10 @@ public class MainController implements Initializable, Controller {
                 showByAlbumNames();
             else if (dashboardPlaylistLbl.getText().equals("Artists"))
                 showByArtists();
-            else if (dashboardPlaylistLbl.equals("Years"))
+            else if (dashboardPlaylistLbl.getText().equals("Years"))
                 showByYears();
         }
-        else if (playlistVBox.isVisible() ) {
+        else if (playlistPane.isVisible() ) {
             if (playlistNameLbl.getText().equals("My Playlists"))
                 showMyPlaylists();
         }
@@ -463,5 +466,35 @@ public class MainController implements Initializable, Controller {
 
     public void setMp(MediaPlayer mp) {
         this.mp = mp;
+    }
+
+    public void mainSearch(){
+        if(!mainSearchFld.getText().equals("")) {
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardVBox.getChildren().clear();
+            DisplaySearch.initialize(dashboardVBox);
+            DisplaySearch.mainDisplay(dashboardVBox, this);
+        }
+    }
+
+    public void otherSearch(){
+        if(!otherSearchFld.getText().equals("")) {
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardVBox.getChildren().clear();
+            DisplaySearch.initialize(dashboardVBox);
+            DisplaySearch.otherDisplay(dashboardVBox, this);
+        }
+    }
+
+    public TextField getMainSearchFld(){
+        return this.mainSearchFld;
+    }
+
+    public TextField getOtherSearchFld(){
+        return this.otherSearchFld;
     }
 }
