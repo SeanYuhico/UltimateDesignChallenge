@@ -1,5 +1,6 @@
 package Controller;
 
+import View.AlertBox;
 import View.LoginWindow;
 import View.Main;
 import javafx.fxml.FXML;
@@ -18,10 +19,10 @@ public class LoginArtistController {
 
     public void signIn(){
 
-        if (usernameTextField.getText() == null || passwordField.getText() == null) {
-            JOptionPane.showMessageDialog(null, "One or more text fields are left blank.",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+        if (usernameTextField.getText() == null)
+            AlertBox.display("Error", "Username field cannot be left blank");
+        else if (passwordField.getText() == null)
+            AlertBox.display("Error", "Password field cannot be left blank");
         else
             System.out.println("DB Boys!");
 
