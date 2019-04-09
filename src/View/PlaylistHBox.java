@@ -32,8 +32,8 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        playBtn = new ImageView(new Image("File:\\Users\\Legs\\Desktop\\dc2\\src\\Pictures\\play.png"));
-        deleteBtn = new ImageView(new Image("File:\\Users\\Legs\\Desktop\\dc2\\src\\Pictures\\x.png"));
+        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
+        deleteBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\x.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 
@@ -60,7 +60,7 @@ public class PlaylistHBox extends HBox {
 
         titleLbl.setPrefWidth(289);
         titleLbl.setPrefHeight(29);
-        setMargin(titleLbl, new Insets(4, 5, 0, 0));
+        setMargin(titleLbl, new Insets(4, 5, 0, 5));
         countLbl.setPrefWidth(289);
         countLbl.setPrefHeight(29);
         setMargin(countLbl, new Insets(4, 5, 0, 0));
@@ -131,7 +131,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\DesignChallenge2\\DesignChallenge2\\src\\Pictures\\play.png"));
+        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 
@@ -149,10 +149,11 @@ public class PlaylistHBox extends HBox {
         playBtn.setFitWidth(32);
         playBtn.setPickOnBounds(true);
         playBtn.setPreserveRatio(true);
+        setMargin(playBtn, new Insets(4,5,0,10));
 
         titleLbl.setPrefWidth(289);
         titleLbl.setPrefHeight(29);
-        setMargin(titleLbl, new Insets(4, 5, 0, 0));
+        setMargin(titleLbl, new Insets(4, 5, 0, 10));
         countLbl.setPrefWidth(289);
         countLbl.setPrefHeight(29);
         setMargin(countLbl, new Insets(4, 5, 0, 0));
@@ -167,6 +168,56 @@ public class PlaylistHBox extends HBox {
             }
         });
 
-        this.getChildren().addAll(titleLbl, countLbl);
+        this.getChildren().addAll(playBtn, titleLbl, countLbl);
+    }
+
+    public PlaylistHBox(Playlist p){
+        setVisible(true);
+        setCacheShape(true);
+        setCenterShape(true);
+        setScaleShape(true);
+        setOpacity(1);
+        setAlignment(Pos.TOP_LEFT);
+        setPickOnBounds(true);
+
+        // Content
+        playBtn = new ImageView(new Image("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Pictures\\play.png"));
+        titleLbl = new Label(p.getName());
+        countLbl = new Label("Number of Songs : " + p.getSongCount());
+
+        // Layout
+        setFillHeight(true);
+        setPrefWidth(823);
+        setPrefHeight(37);
+        setMinWidth(USE_COMPUTED_SIZE);
+        setMaxWidth(USE_COMPUTED_SIZE);
+        setMinHeight(USE_COMPUTED_SIZE);
+        setMaxHeight(USE_COMPUTED_SIZE);
+        setSnapToPixel(true);
+
+        playBtn.setFitHeight(38);
+        playBtn.setFitWidth(32);
+        playBtn.setPickOnBounds(true);
+        playBtn.setPreserveRatio(true);
+        setMargin(playBtn, new Insets(4,5,0,10));
+
+        titleLbl.setPrefWidth(289);
+        titleLbl.setPrefHeight(29);
+        setMargin(titleLbl, new Insets(4, 5, 0, 10));
+        countLbl.setPrefWidth(289);
+        countLbl.setPrefHeight(29);
+        setMargin(countLbl, new Insets(4, 5, 0, 0));
+
+        // Functionalities
+//        titleLbl.setOnMouseClicked(e -> {
+//            if (e.getClickCount() == 2) {
+//                dashboardPane.setVisible(true);
+//                playlistPane.setVisible(false);
+//                dashboardPlaylistLbl.setText(p.getName());
+//                DisplayNonDefault.displaySongs(p.getName(), dashboardVBox, controller);
+//            }
+//        });
+
+        this.getChildren().addAll(playBtn, titleLbl, countLbl);
     }
 }

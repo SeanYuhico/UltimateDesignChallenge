@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -16,7 +23,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
     <bottom>
         <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
             <children>
@@ -238,7 +245,17 @@
          <children>
             <Pane fx:id="playlistPane" prefHeight="200.0" prefWidth="44.0">
                <children>
-                  <VBox fx:id="playlistVBox" layoutX="14.0" layoutY="179.0" prefHeight="379.0" prefWidth="823.0" />
+                  <TextField fx:id="otherSearchFld" layoutX="618.0" layoutY="42.0" onAction="#otherSearch" promptText="search" />
+                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="573.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/search.png" />
+                     </image>
+                  </ImageView>
+                  <ScrollPane layoutX="14.0" layoutY="179.0" prefViewportHeight="379.0" prefViewportWidth="823.0">
+                     <content>
+                        <VBox fx:id="playlistVBox" layoutX="14.0" layoutY="179.0" />
+                     </content>
+                  </ScrollPane>
                   <Label fx:id="playlistNameLbl" layoutX="21.0" layoutY="31.0" prefHeight="57.0" prefWidth="254.0" text="My Playlists">
                      <font>
                         <Font size="25.0" />
@@ -248,7 +265,11 @@
             </Pane>
             <Pane fx:id="dashboardPane" prefHeight="200.0" prefWidth="44.0">
                <children>
-                  <VBox fx:id="dashboardVBox" layoutX="14.0" layoutY="179.0" prefHeight="379.0" prefWidth="823.0" />
+                  <ScrollPane layoutX="14.0" layoutY="179.0" prefViewportHeight="379.0" prefViewportWidth="823.0">
+                     <content>
+                        <VBox fx:id="dashboardVBox" layoutX="14.0" layoutY="179.0" />
+                     </content>
+                  </ScrollPane>
                   <Label fx:id="dashboardPlaylistLbl" layoutX="21.0" layoutY="31.0" prefHeight="57.0" prefWidth="464.0" text="Playlist Name">
                      <font>
                         <Font size="25.0" />
@@ -260,6 +281,12 @@
                   <Label layoutX="764.0" layoutY="146.0" opacity="0.5" prefHeight="17.0" prefWidth="60.0" text="YEAR" />
                   <Label layoutX="638.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="GENRE" />
                   <Label layoutX="514.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="ALBUM" />
+                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="573.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/search.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="mainSearchFld" layoutX="618.0" layoutY="42.0" onAction="#mainSearch" promptText="search" />
                </children>
             </Pane>
          </children>
