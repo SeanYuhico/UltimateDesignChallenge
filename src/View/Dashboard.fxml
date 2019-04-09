@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.media.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,34 +18,34 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
     <bottom>
         <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
             <children>
-                <AnchorPane prefHeight="102.0" prefWidth="1155.0">
+                <AnchorPane prefHeight="102.0" prefWidth="1155.0" style="-fx-background-color: #95713d;">
                     <children>
-                        <Slider fx:id="volumeSlider" layoutX="940.0" layoutY="28.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="21.0" prefWidth="185.0" />
-                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="598.0" layoutY="17.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
+                        <Slider fx:id="volumeSlider" layoutX="1037.0" layoutY="44.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="22.0" prefWidth="94.0" />
+                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/play.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="prevImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="495.0" layoutY="21.0" onMouseClicked="#prev" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="prevImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="503.0" layoutY="32.0" onMouseClicked="#prev" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/prevsong.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="nextImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="709.0" layoutY="22.0" onMouseClicked="#next" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="nextImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="717.0" layoutY="33.0" onMouseClicked="#next" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/nextsong.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="repeatImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="756.0" layoutY="26.0" onMouseClicked="#repeatSong" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="repeatImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatSong" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/repeat.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="imgvwShuffle" fitHeight="43.0" fitWidth="227.0" layoutX="442.0" layoutY="17.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvwShuffle" fitHeight="43.0" fitWidth="227.0" layoutX="450.0" layoutY="28.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/shuffle.png" />
                             </image>
@@ -61,20 +56,26 @@
                                 <Image url="@../Pictures/vinyl.png" />
                             </image>
                         </ImageView>
-                        <Label fx:id="nameLbl" layoutX="214.0" layoutY="29.0" text="Song Title" />
-                        <Label fx:id="artistLbl" layoutX="214.0" layoutY="83.0" text="Artist" />
-                        <Slider fx:id="progressSlider" layoutX="420.0" layoutY="82.0" onDragDetected="#changeProgress" onDragDone="#changeProgress" onDragDropped="#changeProgress" onDragEntered="#changeProgress" onDragExited="#changeProgress" onDragOver="#changeProgress" onMouseClicked="#changeProgress" onMouseDragEntered="#changeProgress" onMouseDragExited="#changeProgress" onMouseDragOver="#changeProgress" onMouseDragReleased="#changeProgress" prefHeight="18.0" prefWidth="400.0" />
-                        <ImageView fx:id="pauseImgVw" fitHeight="43.0" fitWidth="227.0" layoutX="598.0" layoutY="17.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
+                        <Label fx:id="nameLbl" layoutX="214.0" layoutY="29.0" text="Song Title">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Label>
+                        <Label fx:id="artistLbl" layoutX="214.0" layoutY="83.0" text="Artist">
+                     <font>
+                        <Font size="17.0" />
+                     </font></Label>
+                        <Slider fx:id="progressSlider" layoutX="378.0" layoutY="87.0" onDragDetected="#changeProgress" onDragDone="#changeProgress" onDragDropped="#changeProgress" onDragEntered="#changeProgress" onDragExited="#changeProgress" onDragOver="#changeProgress" onMouseClicked="#changeProgress" onMouseDragEntered="#changeProgress" onMouseDragExited="#changeProgress" onMouseDragOver="#changeProgress" onMouseDragReleased="#changeProgress" prefHeight="18.0" prefWidth="501.0" />
+                        <ImageView fx:id="pauseImgVw" fitHeight="43.0" fitWidth="227.0" layoutX="606.0" layoutY="28.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/pause.png" />
                             </image>
                         </ImageView>
-                  <ImageView fx:id="backwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="543.0" layoutY="22.0" onMouseClicked="#backward" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="backwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="551.0" layoutY="33.0" onMouseClicked="#backward" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/back10sec.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="forwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="659.0" layoutY="21.0" onMouseClicked="#forward" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="forwardImgVw" fitHeight="43.0" fitWidth="35.0" layoutX="667.0" layoutY="32.0" onMouseClicked="#forward" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/next10sec.png" />
                      </image>
@@ -95,7 +96,7 @@
         </HBox>
     </bottom>
     <left>
-        <VBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="295.0" BorderPane.alignment="CENTER">
+        <VBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="295.0" style="-fx-background-color: #43320e;" BorderPane.alignment="CENTER">
             <children>
             <HBox prefHeight="33.0" prefWidth="290.0">
                <children>
@@ -110,9 +111,9 @@
                         <Insets top="20.0" />
                      </HBox.margin>
                       </Label>
-                  <Label fx:id="logoutLbl" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#logout" prefHeight="54.0" prefWidth="68.0" text="Logout" textFill="#c99326">
+                  <Label fx:id="logoutLbl" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#logout" prefHeight="54.0" prefWidth="54.0" text="Logout" textFill="#c99326">
                      <padding>
-                        <Insets left="15.0" />
+                        <Insets left="7.0" />
                      </padding>
                      <font>
                         <Font name="Leelawadee UI" size="12.0" />
@@ -198,10 +199,10 @@
                                 <Image url="@../Pictures/add.png" />
                             </image>
                             <HBox.margin>
-                                <Insets bottom="10.0" />
+                                <Insets />
                             </HBox.margin>
                         </ImageView>
-                        <Label fx:id="NewPlaylstLbl" onMouseClicked="#addNewPlaylist" prefHeight="37.0" prefWidth="132.0" text="New Playlist">
+                        <Label fx:id="NewPlaylstLbl" onMouseClicked="#addNewPlaylist" prefHeight="37.0" prefWidth="132.0" text="New Playlist" textFill="WHITE">
                             <padding>
                                 <Insets left="10.0" />
                             </padding>
@@ -227,7 +228,7 @@
                                 <Image url="@../Pictures/add.png" />
                             </image>
                         </ImageView>
-                        <Label fx:id="NewPlaylstLbl1" prefHeight="37.0" prefWidth="132.0" text="Upload Song">
+                        <Label fx:id="NewPlaylstLbl1" prefHeight="37.0" prefWidth="132.0" text="Upload Song" textFill="WHITE">
                             <font>
                                 <Font size="15.0" />
                             </font>
@@ -246,12 +247,12 @@
             <Pane fx:id="playlistPane" prefHeight="200.0" prefWidth="44.0">
                <children>
                   <TextField fx:id="otherSearchFld" layoutX="618.0" layoutY="42.0" onAction="#otherSearch" promptText="search" />
-                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="573.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Pictures/search.png" />
-                     </image>
-                  </ImageView>
-                  <ScrollPane layoutX="14.0" layoutY="179.0" prefViewportHeight="379.0" prefViewportWidth="823.0">
+                   <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="587.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                           <Image url="@../Pictures/search.png" />
+                       </image>
+                   </ImageView>
+                   <ScrollPane layoutX="14.0" layoutY="179.0" prefHeight="380.0" prefViewportHeight="379.0" prefViewportWidth="823.0" prefWidth="838.0">
                      <content>
                         <VBox fx:id="playlistVBox" layoutX="14.0" layoutY="179.0" />
                      </content>
@@ -263,9 +264,9 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="dashboardPane" prefHeight="200.0" prefWidth="44.0">
+            <Pane fx:id="dashboardPane" prefHeight="570.0" prefWidth="860.0">
                <children>
-                  <ScrollPane layoutX="14.0" layoutY="179.0" prefViewportHeight="379.0" prefViewportWidth="823.0">
+                   <ScrollPane layoutX="14.0" layoutY="179.0" prefHeight="380.0" prefViewportHeight="379.0" prefViewportWidth="823.0" prefWidth="838.0">
                      <content>
                         <VBox fx:id="dashboardVBox" layoutX="14.0" layoutY="179.0" />
                      </content>
@@ -281,7 +282,7 @@
                   <Label layoutX="764.0" layoutY="146.0" opacity="0.5" prefHeight="17.0" prefWidth="60.0" text="YEAR" />
                   <Label layoutX="638.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="GENRE" />
                   <Label layoutX="514.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="ALBUM" />
-                  <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="573.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="587.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/search.png" />
                      </image>

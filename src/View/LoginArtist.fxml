@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="417.0" prefWidth="599.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginArtistController">
+<AnchorPane prefHeight="418.0" prefWidth="789.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginArtistController">
    <children>
       <AnchorPane layoutX="395.0" prefHeight="418.0" prefWidth="399.0" style="-fx-background-color: #43320e;">
          <children>
@@ -17,12 +17,12 @@
                <children>
                   <TextField fx:id="usernameTextField" layoutX="23.0" layoutY="101.0" onAction="#signIn" prefHeight="32.0" prefWidth="235.0" promptText="username" />
                   <PasswordField fx:id="passwordField" layoutX="23.0" layoutY="171.0" onAction="#signIn" prefHeight="32.0" prefWidth="235.0" promptText="password" />
-                  <Button fx:id="signInButton" layoutX="23.0" layoutY="231.0" mnemonicParsing="false" onAction="#signIn" prefHeight="32.0" prefWidth="235.0" style="-fx-background-color: #855d0e;" text="Sign in" textFill="WHITE">
+                  <Button fx:id="signInButton" layoutX="23.0" layoutY="231.0" mnemonicParsing="false" onAction="#signIn" onMouseEntered="#signInHover" onMouseExited="#signInHoverOut" prefHeight="32.0" prefWidth="235.0" style="-fx-background-color: #855d0e;" text="Sign in" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logListenerButton" layoutX="88.0" layoutY="287.0" mnemonicParsing="false" onAction="#logAsListener" style="-fx-background-color: #c99326;" text="Login as Listener" textFill="WHITE" />
+                  <Button fx:id="logListenerButton" layoutX="88.0" layoutY="287.0" mnemonicParsing="false" onAction="#logAsListener" onMouseEntered="#logListenerHover" onMouseExited="#logListenerHoverOut" style="-fx-background-color: #c99326;" text="Login as Listener" textFill="WHITE" />
                   <Label layoutX="102.0" layoutY="33.0" text="Sign in" textFill="WHITE">
                      <font>
                         <Font size="25.0" />

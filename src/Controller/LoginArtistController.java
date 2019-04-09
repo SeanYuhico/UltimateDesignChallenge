@@ -7,8 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.*;
 
-import javax.swing.*;
 
 
 public class LoginArtistController {
@@ -30,6 +30,22 @@ public class LoginArtistController {
 
     public void logAsListener() {
         LoginWindow.display(Main.getMainStage());
+    }
+
+    public void signInHover() {
+        signInButton.setEffect(new DropShadow());
+    }
+
+    public void signInHoverOut() {
+        signInButton.setEffect(null);
+    }
+
+    public void logListenerHover() {
+        logListenerButton.setEffect(new DisplacementMap());
+    }
+
+    public void logListenerHoverOut() {
+        logListenerButton.setEffect(null);
     }
 
 }
