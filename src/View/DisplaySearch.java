@@ -4,6 +4,7 @@ import Controller.MainController;
 import Model.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -54,7 +55,8 @@ public class DisplaySearch {
         artistLabel.setTextFill(Color.DARKRED);
     }
 
-    public static void mainDisplay(VBox dashboardVBox, MainController controller){
+    public static void mainDisplay(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
+                                   MainController controller){
         initialize(dashboardVBox);
         String searchKey = controller.getMainSearchFld().getText().toLowerCase();
 
@@ -66,15 +68,17 @@ public class DisplaySearch {
         dashboardVBox.getChildren().add(playlistLabel);
         for(Playlist p : playlists)
             if((p.getName().toLowerCase().contains(searchKey)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs"))
-                dashboardVBox.getChildren().addAll(new PlaylistHBox(p));
+                dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
 
         dashboardVBox.getChildren().add(artistLabel);
         for(Account a : accounts)
             if(a.getUsername().toLowerCase().contains(searchKey))
-                dashboardVBox.getChildren().addAll(new AccountHBox(a));
+                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardVBox, controller));
     }
 
-    public static void otherDisplay(VBox dashboardVBox, MainController controller){
+    public static void otherDisplay(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
+                                    MainController controller){
         initialize(dashboardVBox);
         String searchKey = controller.getOtherSearchFld().getText().toLowerCase();
 
@@ -86,11 +90,12 @@ public class DisplaySearch {
         dashboardVBox.getChildren().add(playlistLabel);
         for(Playlist p : playlists)
             if((p.getName().toLowerCase().contains(searchKey)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs"))
-                dashboardVBox.getChildren().addAll(new PlaylistHBox(p));
+                dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
 
         dashboardVBox.getChildren().add(artistLabel);
         for(Account a : accounts)
             if(a.getUsername().toLowerCase().contains(searchKey))
-                dashboardVBox.getChildren().addAll(new AccountHBox(a));
+                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardVBox, controller));
     }
 }
