@@ -32,6 +32,7 @@ public class Register {
         PasswordField conPassInput = new PasswordField();
         ChoiceBox<String> reg = new ChoiceBox<>();
         reg.getItems().addAll("Artist", "Listener");
+        reg.getSelectionModel().selectFirst();
 
         Button registerButton = new Button("Register");
         nameInput.setPromptText("Username");
@@ -49,7 +50,9 @@ public class Register {
         GridPane.setConstraints(passInput, 1, 2);
         GridPane.setConstraints(confirmPassLabel, 0, 3);
         GridPane.setConstraints(conPassInput, 1, 3);
-        GridPane.setConstraints(registerButton, 1, 4);
+        GridPane.setConstraints(registerAs, 0, 4);
+        GridPane.setConstraints(reg, 1, 4);
+        GridPane.setConstraints(registerButton, 1, 5);
 
         registerButton.setOnAction(e -> {
             if(conPassInput.getText().equals(passInput.getText())) {
@@ -60,7 +63,10 @@ public class Register {
                 Account a = new Account();
                 a.setUsername(username);
                 a.setPassword(password);
-                a.setArtist(false);
+                if(reg.getValue().equals("Listener"))
+                    a.setArtist(false);
+                else
+                    a.setArtist(true);
                 PlaylistService plService = new PlaylistService(db);
 
                 // MOST PLAYED SONGS
@@ -103,7 +109,8 @@ public class Register {
             }
         });
 
-        layout.getChildren().addAll(title, nameLabel, nameInput, passLabel, passInput, confirmPassLabel, conPassInput, registerButton);
+        layout.getChildren().addAll(title, nameLabel, nameInput, passLabel, passInput, confirmPassLabel, conPassInput,
+                registerAs, reg, registerButton);
 
         Scene regScene = new Scene(layout, 300,200);
         window.setScene(regScene);

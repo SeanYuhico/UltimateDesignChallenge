@@ -3,6 +3,7 @@ package Controller;
 import View.AlertBox;
 import View.LoginWindow;
 import View.Main;
+import View.Register;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -46,6 +47,10 @@ public class LoginArtistController {
 
     public void logListenerHoverOut() {
         logListenerButton.setEffect(null);
+    }
+
+    public void openRegWindow(){
+        Register.display();
     }
 
 }
