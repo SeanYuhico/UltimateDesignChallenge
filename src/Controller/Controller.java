@@ -1,6 +1,6 @@
 package Controller;
 
 
-public interface Controller {
-    void update();
+public abstract class Controller {
+
 }

@@ -17,13 +17,17 @@ public class ProfileController {
     @FXML VBox profileVBox;
 
     ArrayList<Playlist> publicPlaylists = new ArrayList<>();
-    ArrayList<Song> likedSongs = new ArrayList();
+    ArrayList<Song> likedSongs = new ArrayList<>();
+    ArrayList<String> followings = new ArrayList<>();
+    ProfileController controller = this;
 
     public void initialize () {
 
         AccountService accountService = new AccountService(new Database());
         SongService songService = new SongService(new Database());
         List<Song> songs = songService.getAll();
+        FollowerService followerService = new FollowerService(new Database());
+        List<Follower> followers = followerService.getAll();
 
 
         for (int i = 0; i < accountService.getAll().size(); i++)
@@ -38,22 +42,33 @@ public class ProfileController {
             if (s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.isFave())
                 likedSongs.add(s);
 
-//        for
+        for (Follower f: followers)
+            if (f.getFollower().equals(LoginArtistController.getLoggedUser()))
+                followings.add(f.getFollowing());
+
         usernameLabel.setText(LoginArtistController.getLoggedUser());
 
-
+        showPublicPlaylists();
     }
 
     public void showPublicPlaylists() {
+        profileVBox.getChildren().clear();
+
 
     }
 
     public void showLikedSongs() {
+        profileVBox.getChildren().clear();
 
+        for (Song song: likedSongs)
+            profileVBox.getChildren().add(new Label(song.getTitle())); // incomplete pa to
     }
 
     public void showFollowing() {
+        profileVBox.getChildren().clear();
 
+        for (String following: followings)
+            profileVBox.getChildren().add(new Label(following));
     }
 
     public void publicPlaylistsHover() {

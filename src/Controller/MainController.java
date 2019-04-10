@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -40,7 +41,7 @@ import java.util.ResourceBundle;
 
 import static View.Main.getMainStage;
 
-public class MainController implements Initializable, Controller {
+public class MainController extends Controller implements Initializable {
     @FXML private MediaView mv;
     private MediaPlayer mp, currPlayer, nextPlayer;
     private Media me;
@@ -429,7 +430,7 @@ public class MainController implements Initializable, Controller {
         stage.setTitle("My profile");
 
         Parent root = FXMLLoader.load(getClass().getResource("/View/Profile.fxml"));
-
+        stage.setScene(new Scene(root, 600, 400));
         stage.showAndWait();
 
     }
