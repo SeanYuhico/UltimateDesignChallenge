@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -28,7 +29,8 @@ public class AccountHBox extends HBox {
     private Label followersLabel;
     private int numFollowers;
 
-    public AccountHBox(Account account, VBox dashboardVBox, MainController controller)
+    public AccountHBox(Account account, Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
+                       MainController controller)
     {
         // Properties
         setVisible(true);
@@ -82,7 +84,8 @@ public class AccountHBox extends HBox {
         usernameLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(usernameLbl, e.getScreenX(), e.getScreenY());
-//                visitProfile.setOnAction(ex -> ArtistProfile.display(dashboardVBox, usernameLbl.getText(), controller));
+                visitProfile.setOnAction(ex -> ArtistProfile.display(dashboardPlaylistLbl, usernameLbl.getText(), dashboardVBox,
+                        dashboardPane, playlistPane, controller));
 //                follow.setOnAction(ex -> AccountService.follow());
             }
         });
