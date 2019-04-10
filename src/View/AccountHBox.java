@@ -1,9 +1,8 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
-import Model.Account;
-import Model.AccountService;
-import Model.Database;
+import Model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -19,12 +18,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountHBox extends HBox {
     private ImageView dp;
     private Label usernameLbl;
-
+    private boolean isFollowing = true;
     // optional. display num of followers.
     private Label followersLabel;
     private int numFollowers;
@@ -72,12 +72,22 @@ public class AccountHBox extends HBox {
 
         // Functionalities
         Database db = new Database();
-        AccountService as = new AccountService(db);
-        List<Account> accounts = as.getAll();
+        FollowerService fs = new FollowerService(db);
+
+
 
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem visitProfile = new MenuItem("Visit Profile");
         MenuItem follow = new MenuItem("Follow");
+        for(int i = 0; i < fs.getAll().size(); i++)
+            if((fs.getAll().get(i).getFollower().equals(LoginArtistController.getLoggedUser())) &&
+                    (fs.getAll().get(i).getFollowing().equals(usernameLbl.getText()))) {
+                follow.setText("Unfollow");
+            }
+            else
+                follow.setText("Follow");
+
+
 
         contextMenu.getItems().addAll(visitProfile, follow);
 
@@ -86,11 +96,14 @@ public class AccountHBox extends HBox {
                 contextMenu.show(usernameLbl, e.getScreenX(), e.getScreenY());
                 visitProfile.setOnAction(ex -> ArtistProfile.display(dashboardPlaylistLbl, usernameLbl.getText(), dashboardVBox,
                         dashboardPane, playlistPane, controller));
-//                follow.setOnAction(ex -> AccountService.follow());
+                follow.setOnAction(ex -> {
+                    if(follow.getText().equals("Follow"))
+                        fs.add(LoginArtistController.getLoggedUser(), usernameLbl.getText());
+                    else if(follow.getText().equals("Unfollow"))
+                        fs.unfollow(LoginArtistController.getLoggedUser(), usernameLbl.getText());
+                });
             }
         });
-
-
 
         this.getChildren().addAll(dp, usernameLbl);
     }

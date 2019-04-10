@@ -121,6 +121,8 @@ public class DisplayNonDefault {
                 if (kanta.getYear().equals(playlistName))
                     dashboardVBox.getChildren().add(new SongHBox(kanta, dashboardVBox, controller));
             }
+            else
+                dashboardVBox.getChildren().add(new SongHBox(kanta, dashboardVBox, controller));
     }
 
 
