@@ -16,7 +16,7 @@ public class LoginArtistController {
 
     @FXML TextField usernameTextField;
     @FXML PasswordField passwordField;
-    @FXML Button signInButton, logListenerButton;
+    @FXML Button signInButton, registerButton, guestButton;
 
     private Database db;
     private AccountService accountService;
@@ -57,10 +57,6 @@ public class LoginArtistController {
         }
     }
 
-    public void logAsListener() {
-        LoginWindow.display(Main.getMainStage());
-    }
-
     public void signInHover() {
         signInButton.setEffect(new DropShadow());
     }
@@ -69,12 +65,20 @@ public class LoginArtistController {
         signInButton.setEffect(null);
     }
 
-    public void logListenerHover() {
-        logListenerButton.setEffect(new DisplacementMap());
+    public void registerHover() {
+        registerButton.setEffect(new DisplacementMap());
     }
 
-    public void logListenerHoverOut() {
-        logListenerButton.setEffect(null);
+    public void registerHoverOut() {
+        registerButton.setEffect(null);
+    }
+
+    public void guestHover() {
+        guestButton.setEffect(new DisplacementMap());
+    }
+
+    public void guestHoverOut() {
+        guestButton.setEffect(null);
     }
 
     public void openRegWindow(){

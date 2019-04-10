@@ -69,7 +69,6 @@ public class MainController implements Initializable, Controller {
     PlayMP3 play;
     ArrayList<String> songs;
 
-
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
