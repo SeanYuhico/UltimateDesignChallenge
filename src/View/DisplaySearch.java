@@ -74,7 +74,8 @@ public class DisplaySearch {
         dashboardVBox.getChildren().add(artistLabel);
         for(Account a : accounts)
             if(a.getUsername().toLowerCase().contains(searchKey))
-                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardVBox, controller));
+                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardPlaylistLbl, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
     }
 
     public static void otherDisplay(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
@@ -96,6 +97,7 @@ public class DisplaySearch {
         dashboardVBox.getChildren().add(artistLabel);
         for(Account a : accounts)
             if(a.getUsername().toLowerCase().contains(searchKey))
-                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardVBox, controller));
+                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardPlaylistLbl, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
     }
 }
