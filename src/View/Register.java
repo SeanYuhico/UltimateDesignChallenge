@@ -3,13 +3,12 @@ package View;
 import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class Register {
 
@@ -24,9 +23,16 @@ public class Register {
         Label nameLabel = new Label("Username: ");
         Label passLabel = new Label("Password: ");
         Label confirmPassLabel = new Label("Confirm Password: ");
+        Label registerAs = new Label("Register as: ");
+        ArrayList<String> artOrLis = new ArrayList<>();
+        artOrLis.add("Artist");
+        artOrLis.add("Listener");
+
+
         TextField nameInput = new TextField();
         PasswordField passInput = new PasswordField();
         PasswordField conPassInput = new PasswordField();
+        ChoiceBox<String> reg = new ChoiceBox<>();
 
         Button registerButton = new Button("Register");
         nameInput.setPromptText("Username");
@@ -55,6 +61,7 @@ public class Register {
                 Account a = new Account();
                 a.setUsername(username);
                 a.setPassword(password);
+                a.setArtist(false);
                 PlaylistService plService = new PlaylistService(db);
 
                 // MOST PLAYED SONGS

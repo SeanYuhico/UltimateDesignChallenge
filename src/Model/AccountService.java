@@ -18,13 +18,14 @@ public class AccountService {
     public boolean add(Account a){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + Account.TABLE_NAME + " VALUE (?, ?)";
+        String query = "INSERT INTO " + Account.TABLE_NAME + " VALUE (?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, a.getUsername());
             statement.setString(2, a.getPassword());
+            statement.setBoolean(3, a.isArtist());
 
             boolean added = statement.execute();
             return added;
@@ -49,6 +50,7 @@ public class AccountService {
                 Account a = new Account();
                 a.setUsername(rs.getString(Account.COL_USERNAME));
                 a.setPassword(rs.getString(Account.COL_PASSWORD));
+                a.setArtist(rs.getBoolean(Account.COL_ARTIST));
                 accounts.add(a);
             }
 
