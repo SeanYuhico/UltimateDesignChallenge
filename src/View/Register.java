@@ -1,6 +1,8 @@
 package View;
 
 import Model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,15 +26,12 @@ public class Register {
         Label passLabel = new Label("Password: ");
         Label confirmPassLabel = new Label("Confirm Password: ");
         Label registerAs = new Label("Register as: ");
-        ArrayList<String> artOrLis = new ArrayList<>();
-        artOrLis.add("Artist");
-        artOrLis.add("Listener");
-
 
         TextField nameInput = new TextField();
         PasswordField passInput = new PasswordField();
         PasswordField conPassInput = new PasswordField();
         ChoiceBox<String> reg = new ChoiceBox<>();
+        reg.getItems().addAll("Artist", "Listener");
 
         Button registerButton = new Button("Register");
         nameInput.setPromptText("Username");
