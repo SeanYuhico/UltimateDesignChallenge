@@ -28,7 +28,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="guestButton" layoutX="143.0" layoutY="286.0" mnemonicParsing="false" onAction="#openRegWindow" onMouseEntered="#guestHover" onMouseExited="#guestHoverOut" style="-fx-background-color: #c99326;" text="Login as Guest" textFill="WHITE" />
+                  <Button fx:id="guestButton" layoutX="143.0" layoutY="286.0" mnemonicParsing="false" onMouseEntered="#guestHover" onMouseExited="#guestHoverOut" style="-fx-background-color: #c99326;" text="Login as Guest" textFill="WHITE" />
                </children>
             </AnchorPane>
          </children>

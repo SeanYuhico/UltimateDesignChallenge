@@ -7,7 +7,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -421,8 +423,15 @@ public class MainController implements Initializable, Controller {
         playlistPane.setVisible(false);
     }
 
-    public void showProfile() {
-        ProfileWindow.display();
+    public void showProfile() throws IOException{
+        //ProfileWindow.display();
+        Stage stage = new Stage();
+        stage.setTitle("My profile");
+
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Profile.fxml"));
+
+        stage.showAndWait();
+
     }
 
     public ArrayList<String> initList(){

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c99326;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProfileController">
+   <children>
+      <AnchorPane prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #43320e;">
+         <children>
+            <ImageView fitHeight="107.0" fitWidth="117.0" layoutX="14.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/profile.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="usernameLabel" layoutX="148.0" layoutY="50.0" text="Wong Jerick" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelLabel" layoutX="148.0" layoutY="24.0" text="Artist/Listener" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="publicPlaylistsButton" layoutX="29.0" layoutY="118.0" mnemonicParsing="false" onAction="#showPublicPlaylists" onMouseEntered="#publicPlaylistsHover" onMouseExited="#publicPlaylistsHoverOut" style="-fx-background-color: #c99326;" text="Public Playlists" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="followingButton" layoutX="258.0" layoutY="118.0" mnemonicParsing="false" onAction="#showFollowing" onMouseEntered="#followingHover" onMouseExited="#followingHoverOut" style="-fx-background-color: #c99326;" text="Following" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="likedSongsButton" layoutX="146.0" layoutY="118.0" mnemonicParsing="false" onAction="#showLikedSongs" onMouseEntered="#likedSongsHover" onMouseExited="#likedSongsHoverOut" style="-fx-background-color: #c99326;" text="Liked Songs" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="29.0" layoutY="154.0" prefHeight="218.0" prefWidth="534.0">
+         <children>
+            <ScrollPane prefHeight="218.0" prefWidth="534.0" style="-fx-background-color: #c99326;">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="530.0">
+                     <children>
+                        <VBox fx:id="profileVBox" prefHeight="218.0" prefWidth="534.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
