@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.geometry.Insets;
@@ -100,7 +101,7 @@ public class EditSongWindow implements Window{
                 s.setAlbumName(album);
                 s.setGenre(genre);
                 s.setYear(year);
-                s.setUsername(LoginWindow.getLoggedUser());
+                s.setUsername(LoginArtistController.getLoggedUser());
 
                 service.update(songToEdit, s);
                 window.close();

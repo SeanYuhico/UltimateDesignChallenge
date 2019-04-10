@@ -88,7 +88,7 @@ public class MainController implements Initializable, Controller {
 
         boolean checker = false;
         for (Song s : ss.getAll()) {
-            if (s.getUsername().equals(LoginWindow.getLoggedUser())) {
+            if (s.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 checker = true;
             }
         }
@@ -144,7 +144,7 @@ public class MainController implements Initializable, Controller {
     public void logout(){
         Boolean ans = ConfirmBox.display("Logout", "Are you sure you want to logout?");
         if(ans) {
-            if(LoginWindow.getLoggedUser().equals("Guest")) {
+            if(LoginArtistController.getLoggedUser().equals("Guest")) {
                 // Delete all files of guest.
                 PlaylistService.guestLogout();
                 SongService.guestLogout();

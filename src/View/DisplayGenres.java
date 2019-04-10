@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.scene.control.Label;
@@ -25,7 +26,7 @@ public class DisplayGenres implements  PlaylistInterface {
             int howManySongs = 0;
             gpb.buildName(genre);
             for(Song s : ss.getAll())
-                if(s.getUsername().equals(LoginWindow.getLoggedUser()) && s.getGenre().equals(genre))
+                if(s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.getGenre().equals(genre))
                     howManySongs++;
             gpb.buildSongCount(howManySongs);
             gpb.buildUsername();
@@ -39,7 +40,7 @@ public class DisplayGenres implements  PlaylistInterface {
     public List<String> getAllGenres() {
         List<String> genres = new ArrayList<>();
         for (Song s : ss.getAll())
-            if (s.getUsername().equals(LoginWindow.getLoggedUser()))
+            if (s.getUsername().equals(LoginArtistController.getLoggedUser()))
                 if (!(genres.contains(s.getGenre())))
                     genres.add(s.getGenre());
         return genres;

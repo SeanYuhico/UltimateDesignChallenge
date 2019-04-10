@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Model.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -45,7 +46,7 @@ public class FavePlaylistWindow implements Window{
         treeView.setShowRoot(false);
 
         for(Playlist playlist : playlists)
-            if(playlist.isFave() && playlist.getUsername().equals(LoginWindow.getLoggedUser())) {
+            if(playlist.isFave() && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 int playlistID = playlist.getPlaylistID();
                 TreeItem<String> temp = makeBranch(playlist.getName(), root, window);
                 for (PlaylistSong playlistSong: playlistSongs)

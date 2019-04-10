@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.LoginArtistController;
 import View.LoginWindow;
 
 import java.sql.Connection;
@@ -26,7 +27,7 @@ public class PlaylistSongService {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, p.getPlaylistID());
             statement.setInt(2, s.getSongID());
-            statement.setString(3, LoginWindow.getLoggedUser());
+            statement.setString(3, LoginArtistController.getLoggedUser());
             statement.setDouble(4, PlaylistSong.PK);
 
             boolean added = statement.execute();

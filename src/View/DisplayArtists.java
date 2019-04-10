@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.scene.control.Label;
@@ -22,7 +23,7 @@ public class DisplayArtists implements  PlaylistInterface {
             ArtistPlaylistBuilder artPB = new ArtistPlaylistBuilder();
             artPB.buildName(artist);
             for(Song s : ss.getAll())
-                if(s.getUsername().equals(LoginWindow.getLoggedUser()) && s.getArtist().equals(artist))
+                if(s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.getArtist().equals(artist))
                     howManySongs++;
             artPB.buildSongCount(howManySongs);
             artPB.buildUsername();
@@ -41,7 +42,7 @@ public class DisplayArtists implements  PlaylistInterface {
     public List<String> getAllArtists() {
         List<String> artists = new ArrayList<>();
         for (Song s : ss.getAll())
-            if (s.getUsername().equals(LoginWindow.getLoggedUser()))
+            if (s.getUsername().equals(LoginArtistController.getLoggedUser()))
                 if (!(artists.contains(s.getArtist())))
                     artists.add(s.getArtist());
         return artists;

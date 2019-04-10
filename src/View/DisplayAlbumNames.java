@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.scene.control.Label;
@@ -21,7 +22,7 @@ public class DisplayAlbumNames implements PlaylistInterface {
             int howManySongs = 0;
             albPB.buildName(album);
             for(Song s : ss.getAll())
-                if(s.getUsername().equals(LoginWindow.getLoggedUser()) && s.getAlbumName().equals(album))
+                if(s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.getAlbumName().equals(album))
                     howManySongs++;
             albPB.buildSongCount(howManySongs);
             albPB.buildUsername();
@@ -35,7 +36,7 @@ public class DisplayAlbumNames implements PlaylistInterface {
     public List<String> getAllAlbums() {
         List<String> albums = new ArrayList<>();
         for (Song s : ss.getAll())
-            if (s.getUsername().equals(LoginWindow.getLoggedUser()))
+            if (s.getUsername().equals(LoginArtistController.getLoggedUser()))
                 if (!(albums.contains(s.getAlbumName())))
                     albums.add(s.getAlbumName());
         return albums;

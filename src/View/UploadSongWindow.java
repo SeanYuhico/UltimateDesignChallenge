@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -107,7 +108,7 @@ public class UploadSongWindow implements Window{
                 s.setGenre(genre);
                 s.setSongName(songName);
                 s.setYear(year);
-                s.setUsername(LoginWindow.getLoggedUser());
+                s.setUsername(LoginArtistController.getLoggedUser());
                 s.setFilename(filename);
 
                 int add = 1;
@@ -123,7 +124,7 @@ public class UploadSongWindow implements Window{
                 // automatically adds the song to the default playlists of the user.
                 for(Playlist playlist : playlists)
                     if((playlist.getName().equals("My Songs") || playlist.getName().equals("Most Played Songs"))
-                            && playlist.getUsername().equals(LoginWindow.getLoggedUser())) {
+                            && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
                         PlaylistSong.PK++;
                         playlistSongService.add(playlist, s);
                         ps.upload(playlist);

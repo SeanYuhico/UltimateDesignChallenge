@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Model.Database;
 import Model.Song;
 import Model.SongService;
@@ -37,7 +38,7 @@ public class FaveSongWindow implements Window{
 
         int i = 1;
         for(Song s : songs)
-            if(s.isFave() && s.getUsername().equals(LoginWindow.getLoggedUser())) {
+            if(s.isFave() && s.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 Label faveSong = new Label(s.getTitle());
                 faveSong.setOnMouseClicked(e -> {
                     if (e.getButton() == MouseButton.SECONDARY) {

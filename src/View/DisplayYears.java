@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.scene.control.Label;
@@ -23,7 +24,7 @@ public class DisplayYears implements PlaylistInterface {
             int howManySongs = 0;
             ypb.buildName(year);
             for(Song s : ss.getAll())
-                if(s.getUsername().equals(LoginWindow.getLoggedUser()) && s.getYear().equals(year))
+                if(s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.getYear().equals(year))
                     howManySongs++;
             ypb.buildSongCount(howManySongs);
             ypb.buildUsername();
@@ -41,7 +42,7 @@ public class DisplayYears implements PlaylistInterface {
     public List<String> getAllYears() {
         List<String> years = new ArrayList<>();
         for (Song s : ss.getAll())
-            if (s.getUsername().equals(LoginWindow.getLoggedUser()))
+            if (s.getUsername().equals(LoginArtistController.getLoggedUser()))
                 if (!(years.contains(s.getYear())))
                     years.add(s.getYear());
         return years;

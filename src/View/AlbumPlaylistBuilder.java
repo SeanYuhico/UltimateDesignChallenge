@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Model.Playlist;
 
 public class AlbumPlaylistBuilder extends PlaylistBuilder {
@@ -25,6 +26,6 @@ public class AlbumPlaylistBuilder extends PlaylistBuilder {
 
     @Override
     public void buildUsername(){
-        playlist.setUsername(LoginWindow.getLoggedUser());
+        playlist.setUsername(LoginArtistController.getLoggedUser());
     }
 }

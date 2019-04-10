@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.scene.control.Label;
@@ -35,7 +36,7 @@ public class DisplayNonDefault {
         initialize(dashboardVBox);
 
         for(Playlist playlist : playlists)
-            if(playlist.getName().equals(playlistName) && playlist.getUsername().equals(LoginWindow.getLoggedUser())) {
+            if(playlist.getName().equals(playlistName) && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 int playlistID = playlist.getPlaylistID();
                 for (PlaylistSong playlistSong : playlistSongs)
                     if(playlistSong.getPlaylistID() == playlistID){
@@ -54,7 +55,7 @@ public class DisplayNonDefault {
         for (Playlist p : playlists)
             if((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") && !p.getName().equals("Artists") &&
                     !p.getName().equals("Albums") && !p.getName().equals("Genres") && !p.getName().equals("Year")) &&
-                    p.getUsername().equals(LoginWindow.getLoggedUser())) {
+                    p.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 playlistVBox.getChildren().add(new PlaylistHBox(dashboardPlaylistLbl, p, playlistVBox, dashboardVBox, dashboardPane, playlistPane,
                         controller));
             }
@@ -68,13 +69,13 @@ public class DisplayNonDefault {
         int largestNum = 0;
 
         for(Song song: songs)
-            if(song.getUsername().equals(LoginWindow.getLoggedUser()))
+            if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
                 if (song.getNumTimesPlayed() > largestNum)
                     largestNum = song.getNumTimesPlayed();
 
         for (int i=largestNum; i>=0; i--)
             for(Song song: songs)
-                if(song.getUsername().equals(LoginWindow.getLoggedUser()))
+                if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
                     if (song.getNumTimesPlayed() == i)
                         dashboardVBox.getChildren().add(new SongHBox(song, dashboardVBox, controller));
 

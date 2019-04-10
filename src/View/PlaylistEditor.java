@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.Database;
 import Model.Playlist;
@@ -48,7 +49,7 @@ public class PlaylistEditor {
             p.setPlaylistID(plService.getAll().size()+1);
             p.setName(playlistName);
             p.setSongCount(0);
-            p.setUsername(LoginWindow.getLoggedUser());
+            p.setUsername(LoginArtistController.getLoggedUser());
 
             for(Playlist playlist : playlists)
                 if(playlist.getName().equals(playlistName))

@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -19,7 +20,7 @@ public class ProfileWindow implements Window{
 
         Label faveSongs = new Label("Favorite Songs");
         Label favePlaylists = new Label("Favorite Playlists");
-        Label username = new Label(LoginWindow.getLoggedUser());
+        Label username = new Label(LoginArtistController.getLoggedUser());
         ImageView profile = new ImageView(new Image("/Pictures/profile.png"));
 
         layout.setPadding(new Insets(10, 10, 10, 10));

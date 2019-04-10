@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.geometry.Insets;
@@ -97,7 +98,7 @@ public class SongHBox extends HBox {
         // di pwede mag-add ng songs sa default playlists.
         for(Playlist p : playlists) {
             if ((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
-                    p.getUsername().equals(LoginWindow.getLoggedUser()))) {
+                    p.getUsername().equals(LoginArtistController.getLoggedUser()))) {
                 MenuItem addHere = new MenuItem(p.getName());
                 addHere.setOnAction(e -> {
                     boolean add = true;
@@ -122,7 +123,7 @@ public class SongHBox extends HBox {
         Menu removeFromPlaylist = new Menu("Remove from Playlist");
         for(Playlist p : playlists){
             if((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs")) &&
-                    p.getUsername().equals(LoginWindow.getLoggedUser())) {
+                    p.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 MenuItem removeFromHere = new MenuItem(p.getName());
                 removeFromHere.setOnAction(e -> {
                     if(!playlistIDsInPS.contains(p.getPlaylistID())) {
@@ -168,7 +169,7 @@ public class SongHBox extends HBox {
                     // If dinelete sa default playlist, tanggal yung buong song sa music player.
                     if ((p.getName().equals("My Songs") || p.getName().equals("Most Played Songs") || p.getName().equals("Artists") ||
                             p.getName().equals("Albums") || p.getName().equals("Genres") ||
-                            p.getName().equals("Year")) && p.getUsername().equals(LoginWindow.getLoggedUser())) {
+                            p.getName().equals("Year")) && p.getUsername().equals(LoginArtistController.getLoggedUser())) {
                         ss.delete(song);
                     }
                     // If hindi default, tanggal lang yung relationship and decrement the songCount.
