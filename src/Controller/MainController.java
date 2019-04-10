@@ -460,14 +460,6 @@ public class MainController implements Initializable, Controller {
         }
     }
 
-    public MediaPlayer getMp() {
-        return mp;
-    }
-
-    public void setMp(MediaPlayer mp) {
-        this.mp = mp;
-    }
-
     public void mainSearch(){
         if(!mainSearchFld.getText().equals("")) {
             dashboardPane.setVisible(true);
@@ -475,7 +467,7 @@ public class MainController implements Initializable, Controller {
             dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
-            DisplaySearch.mainDisplay(dashboardVBox, this);
+            DisplaySearch.mainDisplay(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
         }
     }
 
@@ -486,8 +478,18 @@ public class MainController implements Initializable, Controller {
             dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
-            DisplaySearch.otherDisplay(dashboardVBox, this);
+            DisplaySearch.otherDisplay(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
         }
+    }
+
+
+
+    public MediaPlayer getMp() {
+        return mp;
+    }
+
+    public void setMp(MediaPlayer mp) {
+        this.mp = mp;
     }
 
     public TextField getMainSearchFld(){
