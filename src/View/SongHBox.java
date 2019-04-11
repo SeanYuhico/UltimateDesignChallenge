@@ -139,6 +139,11 @@ public class SongHBox extends HBox {
         MenuItem addToQueue = new MenuItem("Add to Queue");
         MenuItem edit = new MenuItem("Edit");
         MenuItem addToFaves = new MenuItem("Add to Favorites");
+        if(song.isFave())
+            addToFaves.setText("Add to Favorites");
+        else
+            addToFaves.setText("Remove from Favorites");
+
         contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToQueue, edit, addToFaves);
 
         playBtn.setOnMouseClicked(e -> {
@@ -184,7 +189,16 @@ public class SongHBox extends HBox {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
                 edit.setOnAction(ex -> EditSongWindow.display(dashboardVBox, song.getSongID(), controller));
-                addToFaves.setOnAction(ev -> SongService.makeFave(song.getSongID(), "true"));
+                addToFaves.setOnAction(ev -> {
+                    if(addToFaves.getText().equals("Remove from Favorites")) {
+                        SongService.makeFave(song.getSongID(), "false");
+                        addToFaves.setText("Add to Favorites");
+                    }
+                    else{
+                        SongService.makeFave(song.getSongID(),"true");
+                        addToFaves.setText("Remove from Favorites");
+                    }
+                });
             }
         });
 
