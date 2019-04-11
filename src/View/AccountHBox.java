@@ -97,10 +97,14 @@ public class AccountHBox extends HBox {
                 visitProfile.setOnAction(ex -> ArtistProfile.display(dashboardPlaylistLbl, usernameLbl.getText(), dashboardVBox,
                         dashboardPane, playlistPane, controller));
                 follow.setOnAction(ex -> {
-                    if(follow.getText().equals("Follow"))
+                    if(follow.getText().equals("Follow")) {
                         fs.add(LoginArtistController.getLoggedUser(), usernameLbl.getText());
-                    else if(follow.getText().equals("Unfollow"))
+                        follow.setText("Unfollow");
+                    }
+                    else if(follow.getText().equals("Unfollow")) {
                         fs.unfollow(LoginArtistController.getLoggedUser(), usernameLbl.getText());
+                        follow.setText("Follow");
+                    }
                 });
             }
         });
