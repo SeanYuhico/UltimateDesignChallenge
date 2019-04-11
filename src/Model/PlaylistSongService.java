@@ -1,7 +1,6 @@
 package Model;
 
 import Controller.LoginArtistController;
-import View.LoginWindow;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

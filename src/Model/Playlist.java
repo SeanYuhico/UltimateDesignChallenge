@@ -10,13 +10,13 @@ public class Playlist {
     public static final String COL_NAME = "name";
     public static final String COL_SONGCOUNT = "songCount";
     public static final String COL_USERNAME = "username";
-    public static final String COL_FAVE = "fave";
+    public static final String COL_PUBLIC = "public";
 
     private int playlistID;
     private String name;
     private int songCount = 0;
     private String username;
-    private boolean fave = false;
+    private boolean isPublic = false;
 
     public Playlist(){}
 
@@ -52,11 +52,11 @@ public class Playlist {
         this.username = username;
     }
 
-    public boolean isFave() {
-        return fave;
+    public boolean isPublic() {
+        return isPublic;
     }
 
-    public void setFave(boolean fave) {
-        this.fave = fave;
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }

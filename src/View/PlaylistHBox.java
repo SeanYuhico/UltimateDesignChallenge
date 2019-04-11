@@ -72,14 +72,14 @@ public class PlaylistHBox extends HBox {
 
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem rename = new MenuItem("Rename");
-        MenuItem addToFaves = new MenuItem("Add to Favorites");
-        if(p.isFave())
-            addToFaves.setText("Remove from Favorites");
+        MenuItem addToPublic = new MenuItem("Add to Public");
+        if(p.isPublic())
+            addToPublic.setText("Remove from Public");
         else
-            addToFaves.setText("Add to Favorites");
+            addToPublic.setText("Add to Public");
 
         rename.setOnAction(e -> PlaylistEditor.editPlaylist(p.getPlaylistID()));
-        contextMenu.getItems().addAll(rename, addToFaves);
+        contextMenu.getItems().addAll(rename, addToPublic);
 
         deleteBtn.setOnMouseClicked(e -> {
             Boolean ans = ConfirmBox.display("Delete Playlist", "Are you sure you want to delete this playlist?");
@@ -94,14 +94,14 @@ public class PlaylistHBox extends HBox {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
                 rename.setOnAction(ex -> PlaylistEditor.editPlaylist(p.getPlaylistID()));
-                addToFaves.setOnAction(ev -> {
-                    if(addToFaves.getText().equals("Add to Favorites")) {
-                        PlaylistService.makeFave(p.getPlaylistID(), "true");
-                        addToFaves.setText("Remove from Favorites");
+                addToPublic.setOnAction(ev -> {
+                    if(addToPublic.getText().equals("Add to Public")) {
+                        PlaylistService.makePublic(p.getPlaylistID(), "true");
+                        addToPublic.setText("Remove from Public");
                     }
-                    else if(addToFaves.getText().equals("Remove from Favorites")){
-                        PlaylistService.makeFave(p.getPlaylistID(), "false");
-                        addToFaves.setText("Add to Favorites");
+                    else if(addToPublic.getText().equals("Remove from Public")){
+                        PlaylistService.makePublic(p.getPlaylistID(), "false");
+                        addToPublic.setText("Add to Public");
                     }
                 });
             }
