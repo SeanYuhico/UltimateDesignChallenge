@@ -76,10 +76,11 @@ public class MainController extends Controller implements Initializable {
     ArrayList<String> songs;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical");
 
+
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
-        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+//        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -115,18 +116,18 @@ public class MainController extends Controller implements Initializable {
 //            }
 //            songIndex = 0;
 
-        me = new Media(new File(aaronPath).toURI().toString());
-        mp = new MediaPlayer(me);
+//        me = new Media(new File(aaronPath).toURI().toString());
+//        mp = new MediaPlayer(me);
 
 //            me = new Media(new File(files.get(0)).toURI().toString());
 //            mp = players.get(0);
-            mv = new MediaView();
-            mv.setMediaPlayer(mp);
-            volumeSlider.setValue(mp.getVolume() * 100);
-            DoubleProperty width = mv.fitWidthProperty();
-            DoubleProperty height = mv.fitHeightProperty();
-            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-            height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
+//            mv = new MediaView();
+//            mv.setMediaPlayer(mp);
+//            volumeSlider.setValue(mp.getVolume() * 100);
+//            DoubleProperty width = mv.fitWidthProperty();
+//            DoubleProperty height = mv.fitHeightProperty();
+//            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
+//            height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 //        }
 
 //        DoubleProperty width = mv.fitWidthProperty();
@@ -135,7 +136,7 @@ public class MainController extends Controller implements Initializable {
 //        height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
 //        setMPLabels();
-            volumeSlider.setValue(mp.getVolume() * 100);
+//            volumeSlider.setValue(mp.getVolume() * 100);
             pauseImgVw.setVisible(false);
             playImgVw.setVisible(true);
             dashboardPane.setVisible(true);
@@ -144,6 +145,7 @@ public class MainController extends Controller implements Initializable {
             dbPane = dashboardPane;
             mpPane = playlistPane;
             showMySongs();
+
 
             dbPaneSortBy.setItems(sortList);
             dbPaneSortBy.getSelectionModel().selectFirst();
