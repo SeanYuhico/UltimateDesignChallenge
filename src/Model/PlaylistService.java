@@ -26,7 +26,7 @@ public class PlaylistService {
             statement.setString(2, p.getName());
             statement.setInt(3, p.getSongCount());
             statement.setString(4, p.getUsername());
-            statement.setBoolean(5, p.isFave());
+            statement.setBoolean(5, p.isPublic());
 
             boolean added = statement.execute();
             return added;
@@ -53,7 +53,7 @@ public class PlaylistService {
                 p.setName(rs.getString(Playlist.COL_NAME));
                 p.setSongCount(rs.getInt(Playlist.COL_SONGCOUNT));
                 p.setUsername(rs.getString(Playlist.COL_USERNAME));
-                p.setFave(rs.getBoolean(Playlist.COL_FAVE));
+                p.setPublic(rs.getBoolean(Playlist.COL_PUBLIC));
 
                 playlists.add(p);
             }
@@ -126,11 +126,11 @@ public class PlaylistService {
         }
     }
 
-    public static void makeFave(int id, String fave)
+    public static void makePublic(int id, String isPublic)
     {
         Database db = new Database();
         Connection connection = db.getConnection();
-        String query = "UPDATE " + Playlist.TABLE_NAME + " SET fave = " + fave + " WHERE playlistID = " + id;
+        String query = "UPDATE " + Playlist.TABLE_NAME + " SET public = " + isPublic + " WHERE playlistID = " + id;
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();

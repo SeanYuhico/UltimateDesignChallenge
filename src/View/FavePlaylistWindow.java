@@ -46,7 +46,7 @@ public class FavePlaylistWindow implements Window{
         treeView.setShowRoot(false);
 
         for(Playlist playlist : playlists)
-            if(playlist.isFave() && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
+            if(playlist.isPublic() && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
                 int playlistID = playlist.getPlaylistID();
                 TreeItem<String> temp = makeBranch(playlist.getName(), root, window);
                 for (PlaylistSong playlistSong: playlistSongs)

@@ -146,7 +146,6 @@ public class MainController extends Controller implements Initializable {
             mpPane = playlistPane;
             showMySongs();
 
-
             dbPaneSortBy.setItems(sortList);
             dbPaneSortBy.getSelectionModel().selectFirst();
             mpPaneSortBy.setItems(sortList);
