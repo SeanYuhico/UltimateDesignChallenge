@@ -160,5 +160,17 @@ public class SongService {
             ex.printStackTrace();
         }
     }
+
+    public void changeAlbum(Playlist p, int id)
+    {
+        Connection connection =  new Database().getConnection();
+        String query = "UPDATE " + Song.TABLE_NAME + " SET albumName = '" + p.getName() + "' WHERE songID = " + id;
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
 

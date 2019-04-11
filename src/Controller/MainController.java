@@ -1,13 +1,9 @@
 package Controller;
 
-//import BuilderPattern.Playlist;
 import Model.*;
 import View.*;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -25,20 +20,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import static View.Main.getMainStage;
@@ -316,7 +301,8 @@ public class MainController extends Controller implements Initializable {
 
     public void createAlbum()
     {
-
+        CreateAlbumWindow.addNewAlbum();
+        update();
     }
 
     public void repeatSong()
@@ -351,9 +337,18 @@ public class MainController extends Controller implements Initializable {
     }
     public void uploadSong()
     {
-        UploadSongWindow.display();
-        dashboardVBox.getChildren().clear();
-        update();
+        int checker = 0;
+        PlaylistService ps = new PlaylistService(new Database());
+        for(Playlist p : ps.getAll())
+            if(p.isAlbum())
+                checker = 1;
+        if(checker == 1) {
+            UploadSongWindow.display();
+            dashboardVBox.getChildren().clear();
+            update();
+        }
+        else
+            AlertBox.display("Error", "Gawa ka muna ng album pls lang.");
     }
 
     public void forward() {

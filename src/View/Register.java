@@ -83,6 +83,14 @@ public class Register {
                 ms.setSongCount(0);
                 ms.setUsername(username);
 
+                // NO ALBUM PLAYLIST
+                Playlist na = new Playlist();
+                na.setPlaylistID(plService.getAll().size()+3);
+                na.setName("No Album");
+                na.setSongCount(0);
+                na.setUsername(username);
+                na.setAlbum(true);
+
                 int exists = 0;
 
                 for (int i = 0; i < accService.getAll().size(); i++) {
@@ -95,6 +103,7 @@ public class Register {
                     accService.add(a);
                     plService.add(mps);
                     plService.add(ms);
+                    plService.add(na);
                     window.close();
                 }
                 else if(username.equals("") || password.equals(""))

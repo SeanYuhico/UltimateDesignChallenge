@@ -54,14 +54,12 @@ public class DisplayNonDefault {
         initialize(playlistVBox);
 
         for (Playlist p : playlists)
-            if((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") && !p.getName().equals("Artists") &&
-                    !p.getName().equals("Albums") && !p.getName().equals("Genres") && !p.getName().equals("Year")) &&
-                    p.getUsername().equals(LoginArtistController.getLoggedUser())) {
-                playlistVBox.getChildren().add(new PlaylistHBox(dashboardPlaylistLbl, p, playlistVBox, dashboardVBox, dashboardPane, playlistPane,
-                        controller));
+            if(!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+                    p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
+                playlistVBox.getChildren().add(new PlaylistHBox(dashboardPlaylistLbl, p, playlistVBox, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
             }
     }
-
 
     public static void displayByMostPlayed (VBox dashboardVBox, MainController controller) {
 

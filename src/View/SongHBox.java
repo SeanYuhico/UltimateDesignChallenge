@@ -95,16 +95,18 @@ public class SongHBox extends HBox {
 
         final ContextMenu contextMenu = new ContextMenu();
         Menu addToPlaylist= new Menu("Add to Playlist");
+        Menu addToAlbum = new Menu("Add to Album");
+
         // di pwede mag-add ng songs sa default playlists.
         for(Playlist p : playlists) {
-            if ((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
-                    p.getUsername().equals(LoginArtistController.getLoggedUser()))) {
+            if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+                    p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
                 MenuItem addHere = new MenuItem(p.getName());
                 addHere.setOnAction(e -> {
                     boolean add = true;
                     for (PlaylistSong playlistSong : playlistSongs) {
                         if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
-                            AlertBox.display("Error", "Nandyan na yung song vuvu");
+                            AlertBox.display("Error", "Song already in playlist lah");
                             add = false;
                             break;
                         }
@@ -112,7 +114,31 @@ public class SongHBox extends HBox {
                     if (add)
                         pss.addSongToPlaylist(p, song);
                 });
-                addToPlaylist.getItems().addAll(addHere);
+                addToPlaylist.getItems().add(addHere);
+            }
+            else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
+                MenuItem addAlbum = new MenuItem(p.getName());
+                addAlbum.setOnAction(e -> {
+                    boolean add = true;
+                    for (PlaylistSong playlistSong : playlistSongs) {
+                        if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
+                            AlertBox.display("Error", "Song already in album lah");
+                            add = false;
+                            break;
+                        }
+                    }
+                    if (add) {
+                        pss.addSongToPlaylist(p, song);
+                        ss.changeAlbum(p, song.getSongID());
+                        controller.update();
+                        for(Playlist pl : playlists)
+                            if(pl.getName().equals("No Album") && pl.getUsername().equals(LoginArtistController.getLoggedUser()))
+                                for(PlaylistSong pSong : pss.getAll())
+                                    if(pl.getPlaylistID() == pSong.getPlaylistID())
+                                        pss.removeSongFromPlaylist(pl, song);
+                    }
+                });
+                addToAlbum.getItems().add(addAlbum);
             }
         }
 
@@ -121,18 +147,45 @@ public class SongHBox extends HBox {
             playlistIDsInPS.add(playlistSong.getPlaylistID());
 
         Menu removeFromPlaylist = new Menu("Remove from Playlist");
+        Menu removeFromAlbum = new Menu("Remove from Album");
         for(Playlist p : playlists){
-            if((!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs")) &&
-                    p.getUsername().equals(LoginArtistController.getLoggedUser())) {
+            if(!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+                    p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
                 MenuItem removeFromHere = new MenuItem(p.getName());
                 removeFromHere.setOnAction(e -> {
                     if(!playlistIDsInPS.contains(p.getPlaylistID())) {
-                        AlertBox.display("Error", "Playlist has no song in it.");
+                        AlertBox.display("Error", "Song not in playlist.");
                     }
                     else
                         pss.removeSongFromPlaylist(p, song);
                 });
-                removeFromPlaylist.getItems().addAll(removeFromHere);
+                removeFromPlaylist.getItems().add(removeFromHere);
+            }
+            else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()){
+                MenuItem remove = new MenuItem(p.getName());
+                remove.setOnAction(e -> {
+                    if(!playlistIDsInPS.contains(p.getPlaylistID())) {
+                        AlertBox.display("Error", "Song not in album.");
+                    }
+                    else {
+                        pss.removeSongFromPlaylist(p, song);
+                        int checker = 1;
+                        for(PlaylistSong pSong : pss.getAll())
+                            if(song.getSongID() == pSong.getSongID())
+                                for(Playlist pl : ps.getAll())
+                                    if(pl.isAlbum() && !pl.getName().equals("No Album") && (pSong.getPlaylistID() == pl.getPlaylistID()))
+                                        checker = 0;
+                        if(checker == 1) {
+                            for(Playlist pl : ps.getAll())
+                                if(pl.isAlbum() && pl.getName().equals("No Album") && pl.getUsername().equals(LoginArtistController.getLoggedUser())) {
+                                    pss.addSongToPlaylist(pl, song);
+                                    ss.changeAlbum(pl, song.getSongID());
+                                }
+                        }
+                    }
+                    controller.update();
+                });
+                removeFromAlbum.getItems().add(remove);
             }
         }
 
@@ -144,7 +197,7 @@ public class SongHBox extends HBox {
         else
             addToFaves.setText("Remove from Favorites");
 
-        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToQueue, edit, addToFaves);
+        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToAlbum, removeFromAlbum, addToQueue, edit, addToFaves);
 
         playBtn.setOnMouseClicked(e -> {
             controller.pause();

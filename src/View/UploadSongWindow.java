@@ -4,10 +4,7 @@ import Controller.LoginArtistController;
 import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -26,14 +23,15 @@ public class UploadSongWindow implements Window{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         GridPane layout = new GridPane();
+        PlaylistService ps = new PlaylistService(new Database());
 
         Label windowTitle = new Label("UPLOAD NEW SONG");
         Label titleLabel = new Label("Title: ");
-        Label albumLabel = new Label("Album: ");
+//        Label albumLabel = new Label("Album: ");
         Label genreLabel = new Label("Genre: ");
         Label yearLabel = new Label("Year: ");
         TextField titleInput = new TextField();
-        TextField albumInput = new TextField();
+//        ComboBox<String> albumInput = new ComboBox<>();
         ComboBox<String> genreInput = new ComboBox<>();
         TextField yearInput = new TextField();
         TextField fileSelected = new TextField();
@@ -43,6 +41,10 @@ public class UploadSongWindow implements Window{
         fileSelected.setEditable(false);
         Button selectFile = new Button("Choose Song");
         Button uploadBtn = new Button("Upload");
+//        albumInput.setPromptText("Select Album");
+//        for(Playlist p : ps.getAll())
+//            if(p.isAlbum())
+//                albumInput.getItems().add(p.getName());
         genreInput.setPromptText("Select Genre");
         genreInput.getItems().addAll("KPOP", "OPM", "Rock", "Pop", "Ballad", "RNB");
         genreInput.getSelectionModel().selectFirst();
@@ -54,8 +56,8 @@ public class UploadSongWindow implements Window{
         GridPane.setConstraints(windowTitle, 1, 0);
         GridPane.setConstraints(titleLabel, 0, 1);
         GridPane.setConstraints(titleInput, 1, 1);
-        GridPane.setConstraints(albumLabel, 0, 2);
-        GridPane.setConstraints(albumInput, 1, 2);
+//        GridPane.setConstraints(albumLabel, 0, 2);
+//        GridPane.setConstraints(albumInput, 1, 2);
         GridPane.setConstraints(genreLabel, 0, 3);
         GridPane.setConstraints(genreInput, 1, 3);
         GridPane.setConstraints(yearLabel, 0, 4);
@@ -77,14 +79,10 @@ public class UploadSongWindow implements Window{
         uploadBtn.setOnAction(e -> {
             Database db = new Database();
             SongService service = new SongService(db);
-            PlaylistService plservice = new PlaylistService(db);
-            List<Playlist> playlists = plservice.getAll();
             PlaylistSongService playlistSongService = new PlaylistSongService(db);
 
             int checker = 1;
             String title = titleInput.getText();
-//            String artist = artistInput.getText();
-            String album = albumInput.getText();
             String genre = genreInput.getSelectionModel().getSelectedItem().toString();
             String year = yearInput.getText();
             String songName = fileSelected.getText();
@@ -95,8 +93,6 @@ public class UploadSongWindow implements Window{
             if(checker == 0)
                 AlertBox.display("Input Error", "Please input at least title and file");
             else {
-                if (album.isEmpty())
-                    album = "Unknown Album";
                 if (year.isEmpty())
                     year = "Unknown Year";
 
@@ -104,7 +100,8 @@ public class UploadSongWindow implements Window{
                 s.setSongID(service.getAll().size()+1);
                 s.setTitle(title);
                 s.setArtist(LoginArtistController.getLoggedUser());
-                s.setAlbumName(album);
+//                s.setAlbumName(albumInput.getValue());
+                s.setAlbumName("No Album");
                 s.setGenre(genre);
                 s.setSongName(songName);
                 s.setYear(year);
@@ -119,25 +116,24 @@ public class UploadSongWindow implements Window{
                 if(add == 1)
                     service.add(s);
                 else
-                    AlertBox.display("Error in Uploading Song", "Bobo ka ba? Inupload mo na tong song na to eh.");
+                    AlertBox.display("Error in Uploading Song", "Huy inupload mo na tong song na to.");
 
-                PlaylistService ps = new PlaylistService(db);
                 // automatically adds the song to the default playlists of the user.
-                for(Playlist playlist : playlists)
-                    if((playlist.getName().equals("My Songs") || playlist.getName().equals("Most Played Songs"))
-                            && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
+                for(Playlist playlist : ps.getAll())
+                    if((playlist.getName().equals("My Songs") || playlist.getName().equals("Most Played Songs") ||
+                            playlist.getName().equals("No Album")) && playlist.getUsername().equals(LoginArtistController.getLoggedUser()))
+                    {
                         PlaylistSong.PK++;
                         playlistSongService.add(playlist, s);
                         ps.upload(playlist);
                     }
 
                 titleInput.setText("");
-                albumInput.setText("");
                 yearInput.setText("");
                 fileSelected.setText("");
             }
         });
-        layout.getChildren().addAll(windowTitle, titleLabel, titleInput, albumLabel, albumInput,
+        layout.getChildren().addAll(windowTitle, titleLabel, titleInput, /*albumLabel, albumInput,*/
                 genreLabel, genreInput, yearLabel, yearInput, selectFile, fileSelected, uploadBtn);
 
         window.setScene(new Scene(layout, 300, 300));

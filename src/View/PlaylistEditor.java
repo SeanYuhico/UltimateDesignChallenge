@@ -52,7 +52,7 @@ public class PlaylistEditor {
             p.setUsername(LoginArtistController.getLoggedUser());
 
             for(Playlist playlist : playlists)
-                if(playlist.getName().equals(playlistName))
+                if(playlist.getName().equals(playlistName) && !playlist.isAlbum())
                     AlertBox.display("Wrong Input", "Playlist already exists.");
 
             plService.add(p);
