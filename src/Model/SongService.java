@@ -21,7 +21,7 @@ public class SongService {
     public boolean add(Song s){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + Song.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + Song.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
@@ -40,6 +40,7 @@ public class SongService {
             statement.setString(9, s.getUsername());
             statement.setBinaryStream(10, input);
             statement.setBoolean(11, s.isFave());
+            statement.setTimestamp(12, s.getDateUploaded());
 
             boolean added = statement.execute();
             return added;
@@ -75,6 +76,7 @@ public class SongService {
                 s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
                 s.setUsername(rs.getString(Song.COL_USERNAME));
                 s.setFave(rs.getBoolean(Song.COL_FAVE));
+                s.setDateUploaded(rs.getTimestamp(Song.COL_DATEUPLOADED));
 
                 songs.add(s);
             }

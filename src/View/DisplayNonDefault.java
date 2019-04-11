@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class DisplayNonDefault {
@@ -124,6 +125,4 @@ public class DisplayNonDefault {
             else
                 dashboardVBox.getChildren().add(new SongHBox(kanta, dashboardVBox, controller));
     }
-
-
 }

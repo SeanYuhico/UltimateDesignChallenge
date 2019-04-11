@@ -24,7 +24,6 @@ import java.util.List;
 public class AccountHBox extends HBox {
     private ImageView dp;
     private Label usernameLbl;
-    private boolean isFollowing = true;
     // optional. display num of followers.
     private Label followersLabel;
     private int numFollowers;
