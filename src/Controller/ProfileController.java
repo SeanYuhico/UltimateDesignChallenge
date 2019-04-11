@@ -19,15 +19,17 @@ public class ProfileController {
     ArrayList<Playlist> publicPlaylists = new ArrayList<>();
     ArrayList<Song> likedSongs = new ArrayList<>();
     ArrayList<String> followings = new ArrayList<>();
-    ProfileController controller = this;
 
     public void initialize () {
 
         AccountService accountService = new AccountService(new Database());
+        List<Account> accounts = accountService.getAll();
         SongService songService = new SongService(new Database());
         List<Song> songs = songService.getAll();
         FollowerService followerService = new FollowerService(new Database());
         List<Follower> followers = followerService.getAll();
+        PlaylistService playlistService = new PlaylistService(new Database());
+        List<Playlist> playlists = playlistService.getAll();
 
 
         for (int i = 0; i < accountService.getAll().size(); i++)
@@ -38,6 +40,11 @@ public class ProfileController {
                     labelLabel.setText("Listener");
 
             }
+
+        for (Playlist p: playlists)
+            if (p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isPublic())
+                publicPlaylists.add(p);
+
         for (Song s: songs)
             if (s.getUsername().equals(LoginArtistController.getLoggedUser()) && s.isFave())
                 likedSongs.add(s);
@@ -54,7 +61,8 @@ public class ProfileController {
     public void showPublicPlaylists() {
         profileVBox.getChildren().clear();
 
-
+        for (Playlist playlist: publicPlaylists)
+            profileVBox.getChildren().add(new Label(playlist.getName()));
     }
 
     public void showLikedSongs() {
@@ -68,6 +76,7 @@ public class ProfileController {
         profileVBox.getChildren().clear();
 
         for (String following: followings)
+//            if (following)
             profileVBox.getChildren().add(new Label(following));
     }
 

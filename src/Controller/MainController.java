@@ -314,6 +314,11 @@ public class MainController extends Controller implements Initializable {
         update();
     }
 
+    public void createAlbum()
+    {
+
+    }
+
     public void repeatSong()
     {
          mp.setOnEndOfMedia(new Runnable() {
