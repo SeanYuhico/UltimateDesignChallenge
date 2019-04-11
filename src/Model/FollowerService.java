@@ -63,7 +63,7 @@ public class FollowerService {
     public void unfollow(String follower, String unfollowing){
         Connection connection = db.getConnection();
 
-        String query = "DELETE FROM " + Follower.TABLE_NAME + " WHERE Follower = " + follower + " AND Following = " + unfollowing;
+        String query = "DELETE FROM " + Follower.TABLE_NAME + " WHERE Follower = '" + follower + "' AND Following = '" + unfollowing + "'";
 
         try{
             PreparedStatement statement = connection.prepareStatement(query);
