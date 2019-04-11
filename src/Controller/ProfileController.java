@@ -18,7 +18,8 @@ public class ProfileController {
 
     ArrayList<Playlist> publicPlaylists = new ArrayList<>();
     ArrayList<Song> likedSongs = new ArrayList<>();
-    ArrayList<String> followings = new ArrayList<>();
+    ArrayList<Follower> followers = new ArrayList<>();
+    ArrayList<Account> accounts = new ArrayList<>();
 
     public void initialize () {
 
@@ -32,14 +33,27 @@ public class ProfileController {
         List<Playlist> playlists = playlistService.getAll();
 
 
-        for (int i = 0; i < accountService.getAll().size(); i++)
-            if (accountService.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser())) {
-                if (accountService.getAll().get(i).isArtist())
+//        for (int i = 0; i < accountService.getAll().size(); i++) {
+//            if (accountService.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser())) {
+//                if (accountService.getAll().get(i).isArtist())
+//                    labelLabel.setText("Artist");
+//                else
+//                    labelLabel.setText("Listener");
+//
+//            }
+//
+//        }
+
+        for (Account a: accounts) {
+            if (a.getUsername().equals(LoginArtistController.getLoggedUser())) {
+                if (a.isArtist())
                     labelLabel.setText("Artist");
                 else
                     labelLabel.setText("Listener");
-
             }
+            this.accounts.add(a);
+        }
+
 
         for (Playlist p: playlists)
             if (p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isPublic())
@@ -51,7 +65,7 @@ public class ProfileController {
 
         for (Follower f: followers)
             if (f.getFollower().equals(LoginArtistController.getLoggedUser()))
-                followings.add(f.getFollowing());
+                followers.add(f);
 
         usernameLabel.setText(LoginArtistController.getLoggedUser());
 
@@ -75,9 +89,19 @@ public class ProfileController {
     public void showFollowing() {
         profileVBox.getChildren().clear();
 
-        for (String following: followings)
-//            if (following)
-            profileVBox.getChildren().add(new Label(following));
+        profileVBox.getChildren().add(new Label("ARTISTS"));
+
+        for (Follower follower: followers)
+            for (Account account: accounts)
+                if (follower.getFollowing().equals(account.getUsername()) && account.isArtist())
+                    profileVBox.getChildren().add(new Label(follower.getFollowing()));
+
+        profileVBox.getChildren().add(new Label("LISTENERS"));
+
+        for (Follower follower: followers)
+            for (Account account: accounts)
+                if (follower.getFollowing().equals(account.getUsername()) && !account.isArtist())
+                    profileVBox.getChildren().add(new Label(follower.getFollowing()));
     }
 
     public void publicPlaylistsHover() {
