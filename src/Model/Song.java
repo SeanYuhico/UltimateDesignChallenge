@@ -1,7 +1,6 @@
 package Model;
 
-import java.io.File;
-import java.sql.Blob;
+import java.sql.Timestamp;
 
 public class Song {
     public static final String TABLE_NAME = "song";
@@ -15,6 +14,7 @@ public class Song {
     public static final String COL_NUMTIMESPLAYED = "numTimesPlayed";
     public static final String COL_USERNAME = "username";
     public static final String COL_FAVE = "fave";
+    public static final String COL_DATEUPLOADED = "dateUploaded";
 
     private int songID;
     private String title;
@@ -28,6 +28,7 @@ public class Song {
     private String username;
     private String filename;
     private boolean fave = false;
+    private Timestamp dateUploaded;
 
     public Song(){}
 
@@ -120,6 +121,14 @@ public class Song {
 
     public void setFave(boolean fave) {
         this.fave = fave;
+    }
+
+    public Timestamp getDateUploaded() {
+        return dateUploaded;
+    }
+
+    public void setDateUploaded(Timestamp dateUploaded) {
+        this.dateUploaded = dateUploaded;
     }
 }
 

@@ -13,6 +13,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.File;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 public class UploadSongWindow implements Window{
@@ -30,7 +36,7 @@ public class UploadSongWindow implements Window{
         TextField titleInput = new TextField();
         TextField artistInput = new TextField();
         TextField albumInput = new TextField();
-        ComboBox genreInput = new ComboBox<>();
+        ComboBox<String> genreInput = new ComboBox<>();
         TextField yearInput = new TextField();
         TextField fileSelected = new TextField();
 
@@ -110,6 +116,7 @@ public class UploadSongWindow implements Window{
                 s.setYear(year);
                 s.setUsername(LoginArtistController.getLoggedUser());
                 s.setFilename(filename);
+                s.setDateUploaded(new Timestamp(System.currentTimeMillis()));
 
                 int add = 1;
                 for(Song song : service.getAll())

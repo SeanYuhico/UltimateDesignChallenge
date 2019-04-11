@@ -5,6 +5,8 @@ import Model.*;
 import View.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +61,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
+    @FXML ChoiceBox<String> dbPaneSortBy, mpPaneSortBy;
 
     Displayer displayer;
     PlaylistBuilder genrePlaylistBuilder, albumPlaylistBuilder, artistPlaylistBuilder, yearPlaylistBuilder;
@@ -71,6 +74,7 @@ public class MainController extends Controller implements Initializable {
     SongLoader sLoader;
     PlayMP3 play;
     ArrayList<String> songs;
+    ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical");
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
@@ -140,6 +144,11 @@ public class MainController extends Controller implements Initializable {
             dbPane = dashboardPane;
             mpPane = playlistPane;
             showMySongs();
+
+            dbPaneSortBy.setItems(sortList);
+            dbPaneSortBy.getSelectionModel().selectFirst();
+            mpPaneSortBy.setItems(sortList);
+            mpPaneSortBy.getSelectionModel().selectFirst();
         }
 
 
@@ -491,6 +500,25 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
+    public void dashboardSort(){
+        SongService ss = new SongService(new Database());
+        List<Song> alphabeticalSongs = ss.getAll();
+        List<Song> yearSongs = ss.getAll();
+        List<Song> dateUploaded = ss.getAll();
+        alphabeticalSongs.sort(Comparator.comparing(Song::getTitle));
+        yearSongs.sort(Comparator.comparing(Song::getYear));
+
+        dashboardVBox.getChildren().clear();
+        if(dbPaneSortBy.getValue().equals("Alphabetical"))
+            for(Song s : alphabeticalSongs)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
+        else if(dbPaneSortBy.getValue().equals("Year")){
+
+        }
+        else if(dbPaneSortBy.getValue().equals("Date Uploaded")){
+
+        }
+    }
 
 
     public MediaPlayer getMp() {
