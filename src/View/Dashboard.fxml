@@ -253,12 +253,6 @@
          <children>
             <Pane fx:id="playlistPane" prefHeight="200.0" prefWidth="44.0">
                <children>
-                  <ChoiceBox fx:id="mpPaneSortBy" layoutX="439.0" layoutY="88.0" prefWidth="150.0" />
-                  <Label layoutX="370.0" layoutY="87.0" text="Sort By">
-                     <font>
-                        <Font size="19.0" />
-                     </font>
-                  </Label>
                   <TextField fx:id="otherSearchFld" layoutX="618.0" layoutY="42.0" onAction="#otherSearch" promptText="search" />
                    <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="587.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
                        <image>

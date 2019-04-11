@@ -61,7 +61,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
-    @FXML ChoiceBox<String> dbPaneSortBy, mpPaneSortBy;
+    @FXML ChoiceBox<String> dbPaneSortBy;
 
     Displayer displayer;
     PlaylistBuilder genrePlaylistBuilder, albumPlaylistBuilder, artistPlaylistBuilder, yearPlaylistBuilder;
@@ -74,7 +74,8 @@ public class MainController extends Controller implements Initializable {
     SongLoader sLoader;
     PlayMP3 play;
     ArrayList<String> songs;
-    ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical");
+    ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
+            "Album", "Genre");
 
 
     @Override
@@ -148,8 +149,6 @@ public class MainController extends Controller implements Initializable {
 
             dbPaneSortBy.setItems(sortList);
             dbPaneSortBy.getSelectionModel().selectFirst();
-            mpPaneSortBy.setItems(sortList);
-            mpPaneSortBy.getSelectionModel().selectFirst();
         }
 
 
@@ -506,20 +505,46 @@ public class MainController extends Controller implements Initializable {
         List<Song> alphabeticalSongs = ss.getAll();
         List<Song> yearSongs = ss.getAll();
         List<Song> dateUploaded = ss.getAll();
+        List<Song> artistSongs = ss.getAll();
+        List<Song> albumSongs = ss.getAll();
+        List<Song> genreSongs = ss.getAll();
+
         alphabeticalSongs.sort(Comparator.comparing(Song::getTitle));
         yearSongs.sort(Comparator.comparing(Song::getYear));
+        dateUploaded.sort(Comparator.comparing(Song::getDateUploaded));
+        artistSongs.sort(Comparator.comparing(Song::getArtist));
+        albumSongs.sort(Comparator.comparing(Song::getAlbumName));
+        genreSongs.sort(Comparator.comparing(Song::getGenre));
 
         dashboardVBox.getChildren().clear();
-        if(dbPaneSortBy.getValue().equals("Alphabetical"))
-            for(Song s : alphabeticalSongs)
-                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
-        else if(dbPaneSortBy.getValue().equals("Year")){
 
+        if(dbPaneSortBy.getValue().equals("Alphabetical")) {
+            for (Song s : ss.getAll())
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
+        }
+        else if(dbPaneSortBy.getValue().equals("Year")){
+            for(Song s : yearSongs)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Date Uploaded")){
-
+            for(Song s : dateUploaded)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
+        }
+        else if(dbPaneSortBy.getValue().equals("Artist")){
+            for(Song s : artistSongs)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
+        }
+        else if(dbPaneSortBy.getValue().equals("Album")){
+            for(Song s : albumSongs)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
+        }
+        else if(dbPaneSortBy.getValue().equals("Genre")){
+            for(Song s : genreSongs)
+                dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
     }
+
+
 
 
     public MediaPlayer getMp() {

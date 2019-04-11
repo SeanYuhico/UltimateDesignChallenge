@@ -29,12 +29,10 @@ public class UploadSongWindow implements Window{
 
         Label windowTitle = new Label("UPLOAD NEW SONG");
         Label titleLabel = new Label("Title: ");
-        Label artistLabel = new Label("Artist: ");
         Label albumLabel = new Label("Album: ");
         Label genreLabel = new Label("Genre: ");
         Label yearLabel = new Label("Year: ");
         TextField titleInput = new TextField();
-        TextField artistInput = new TextField();
         TextField albumInput = new TextField();
         ComboBox<String> genreInput = new ComboBox<>();
         TextField yearInput = new TextField();
@@ -56,17 +54,15 @@ public class UploadSongWindow implements Window{
         GridPane.setConstraints(windowTitle, 1, 0);
         GridPane.setConstraints(titleLabel, 0, 1);
         GridPane.setConstraints(titleInput, 1, 1);
-        GridPane.setConstraints(artistLabel, 0, 2);
-        GridPane.setConstraints(artistInput, 1, 2);
-        GridPane.setConstraints(albumLabel, 0, 3);
-        GridPane.setConstraints(albumInput, 1, 3);
-        GridPane.setConstraints(genreLabel, 0, 4);
-        GridPane.setConstraints(genreInput, 1, 4);
-        GridPane.setConstraints(yearLabel, 0, 5);
-        GridPane.setConstraints(yearInput, 1, 5);
-        GridPane.setConstraints(selectFile, 0, 6);
-        GridPane.setConstraints(fileSelected, 1, 6);
-        GridPane.setConstraints(uploadBtn, 1, 7);
+        GridPane.setConstraints(albumLabel, 0, 2);
+        GridPane.setConstraints(albumInput, 1, 2);
+        GridPane.setConstraints(genreLabel, 0, 3);
+        GridPane.setConstraints(genreInput, 1, 3);
+        GridPane.setConstraints(yearLabel, 0, 4);
+        GridPane.setConstraints(yearInput, 1, 4);
+        GridPane.setConstraints(selectFile, 0, 5);
+        GridPane.setConstraints(fileSelected, 1, 5);
+        GridPane.setConstraints(uploadBtn, 1, 6);
 
         selectFile.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -87,7 +83,7 @@ public class UploadSongWindow implements Window{
 
             int checker = 1;
             String title = titleInput.getText();
-            String artist = artistInput.getText();
+//            String artist = artistInput.getText();
             String album = albumInput.getText();
             String genre = genreInput.getSelectionModel().getSelectedItem().toString();
             String year = yearInput.getText();
@@ -99,8 +95,6 @@ public class UploadSongWindow implements Window{
             if(checker == 0)
                 AlertBox.display("Input Error", "Please input at least title and file");
             else {
-                if (artist.isEmpty())
-                    artist = "Unknown Artist";
                 if (album.isEmpty())
                     album = "Unknown Album";
                 if (year.isEmpty())
@@ -109,7 +103,7 @@ public class UploadSongWindow implements Window{
                 Song s = new Song();
                 s.setSongID(service.getAll().size()+1);
                 s.setTitle(title);
-                s.setArtist(artist);
+                s.setArtist(LoginArtistController.getLoggedUser());
                 s.setAlbumName(album);
                 s.setGenre(genre);
                 s.setSongName(songName);
@@ -138,13 +132,12 @@ public class UploadSongWindow implements Window{
                     }
 
                 titleInput.setText("");
-                artistInput.setText("");
                 albumInput.setText("");
                 yearInput.setText("");
                 fileSelected.setText("");
             }
         });
-        layout.getChildren().addAll(windowTitle, titleLabel, titleInput, artistLabel, artistInput, albumLabel, albumInput,
+        layout.getChildren().addAll(windowTitle, titleLabel, titleInput, albumLabel, albumInput,
                 genreLabel, genreInput, yearLabel, yearInput, selectFile, fileSelected, uploadBtn);
 
         window.setScene(new Scene(layout, 300, 300));

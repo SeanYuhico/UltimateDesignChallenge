@@ -11,12 +11,14 @@ public class Playlist {
     public static final String COL_SONGCOUNT = "songCount";
     public static final String COL_USERNAME = "username";
     public static final String COL_PUBLIC = "public";
+    public static final String COL_ISALBUM = "isAlbum";
 
     private int playlistID;
     private String name;
     private int songCount = 0;
     private String username;
     private boolean isPublic = false;
+    private boolean isAlbum;
 
     public Playlist(){}
 
@@ -58,5 +60,13 @@ public class Playlist {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public boolean isAlbum() {
+        return isAlbum;
+    }
+
+    public void setAlbum(boolean album) {
+        isAlbum = album;
     }
 }

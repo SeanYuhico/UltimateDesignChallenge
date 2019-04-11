@@ -17,7 +17,7 @@ public class PlaylistService {
     public boolean add(Playlist p){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + Playlist.TABLE_NAME + " VALUE (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + Playlist.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
@@ -27,6 +27,7 @@ public class PlaylistService {
             statement.setInt(3, p.getSongCount());
             statement.setString(4, p.getUsername());
             statement.setBoolean(5, p.isPublic());
+            statement.setBoolean(6, p.isAlbum());
 
             boolean added = statement.execute();
             return added;
@@ -54,6 +55,7 @@ public class PlaylistService {
                 p.setSongCount(rs.getInt(Playlist.COL_SONGCOUNT));
                 p.setUsername(rs.getString(Playlist.COL_USERNAME));
                 p.setPublic(rs.getBoolean(Playlist.COL_PUBLIC));
+                p.setAlbum(rs.getBoolean(Playlist.COL_ISALBUM));
 
                 playlists.add(p);
             }
