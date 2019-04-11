@@ -7,7 +7,10 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,7 +41,7 @@ import java.util.ResourceBundle;
 
 import static View.Main.getMainStage;
 
-public class MainController implements Initializable, Controller {
+public class MainController extends Controller implements Initializable {
     @FXML private MediaView mv;
     private MediaPlayer mp, currPlayer, nextPlayer;
     private Media me;
@@ -72,7 +75,7 @@ public class MainController implements Initializable, Controller {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
-        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+//        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -95,31 +98,31 @@ public class MainController implements Initializable, Controller {
         ArrayList<String> files = new ArrayList<>();
         if (checker) {
 //            files = initList();
-            files.add(aaronPath);
+//            files.add(aaronPath);
 //        files.add(song2);
 //        files.add(song3);
-            prevList = new ArrayList<>();
-            prevS = new Stack<>();
-//        players = new LinkedList<>();
-            players = new ArrayList<>();
-            for (int i = 0; i < files.size(); i++) {
-                prevList.add(new MediaPlayer(new Media(new File(files.get(i)).toURI().toString())));
-                players.add(new MediaPlayer(new Media(new File(files.get(i)).toURI().toString())));
-            }
-            songIndex = 0;
+//            prevList = new ArrayList<>();
+//            prevS = new Stack<>();
+////        players = new LinkedList<>();
+//            players = new ArrayList<>();
+//            for (int i = 0; i < files.size(); i++) {
+//                prevList.add(new MediaPlayer(new Media(new File(files.get(i)).toURI().toString())));
+//                players.add(new MediaPlayer(new Media(new File(files.get(i)).toURI().toString())));
+//            }
+//            songIndex = 0;
 
 //        me = new Media(new File(aaronPath).toURI().toString());
 //        mp = new MediaPlayer(me);
 
-            me = new Media(new File(files.get(0)).toURI().toString());
-            mp = players.get(0);
-            mv = new MediaView();
-            mv.setMediaPlayer(mp);
-            volumeSlider.setValue(mp.getVolume() * 100);
-            DoubleProperty width = mv.fitWidthProperty();
-            DoubleProperty height = mv.fitHeightProperty();
-            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
-            height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
+//            me = new Media(new File(files.get(0)).toURI().toString());
+//            mp = players.get(0);
+//            mv = new MediaView();
+//            mv.setMediaPlayer(mp);
+//            volumeSlider.setValue(mp.getVolume() * 100);
+//            DoubleProperty width = mv.fitWidthProperty();
+//            DoubleProperty height = mv.fitHeightProperty();
+//            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
+//            height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
         }
 
 //        DoubleProperty width = mv.fitWidthProperty();
@@ -421,8 +424,15 @@ public class MainController implements Initializable, Controller {
         playlistPane.setVisible(false);
     }
 
-    public void showProfile() {
-        ProfileWindow.display();
+    public void showProfile() throws IOException{
+        //ProfileWindow.display();
+        Stage stage = new Stage();
+        stage.setTitle("My profile");
+
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Profile.fxml"));
+        stage.setScene(new Scene(root, 600, 400));
+        stage.showAndWait();
+
     }
 
     public ArrayList<String> initList(){

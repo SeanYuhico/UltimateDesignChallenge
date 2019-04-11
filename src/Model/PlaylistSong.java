@@ -12,8 +12,6 @@ public class PlaylistSong {
     private String username;
     public static double PK = 0;
 
-    public PlaylistSong(){}
-
     public int getPlaylistID() {
         return playlistID;
     }
