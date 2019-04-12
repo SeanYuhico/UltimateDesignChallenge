@@ -50,12 +50,23 @@ public class DisplayNonDefault {
             }
     }
 
-    public static void displayAllPlaylists(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp, Label dashboardPlaylistLbl, Label playlistNameLbl) {
+    public static void displayAllPlaylists(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp, Label dashboardPlaylistLbl) {
         initialize(playlistVBox);
 
         for (Playlist p : playlists)
             if(!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
+                playlistVBox.getChildren().add(new PlaylistHBox(dashboardPlaylistLbl, p, playlistVBox, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
+            }
+    }
+
+    public static void displayAllAlbums(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp, Label dashboardPlaylistLbl) {
+        initialize(playlistVBox);
+
+        for (Playlist p : playlists)
+            if(!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+                    p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
                 playlistVBox.getChildren().add(new PlaylistHBox(dashboardPlaylistLbl, p, playlistVBox, dashboardVBox,
                         dashboardPane, playlistPane, controller));
             }

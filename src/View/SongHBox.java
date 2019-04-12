@@ -131,11 +131,10 @@ public class SongHBox extends HBox {
                         pss.addSongToPlaylist(p, song);
                         ss.changeAlbum(p, song.getSongID());
                         controller.update();
+
                         for(Playlist pl : playlists)
                             if(pl.getName().equals("No Album") && pl.getUsername().equals(LoginArtistController.getLoggedUser()))
-                                for(PlaylistSong pSong : pss.getAll())
-                                    if(pl.getPlaylistID() == pSong.getPlaylistID())
-                                        pss.removeSongFromPlaylist(pl, song);
+                                pss.removeSongFromPlaylist(pl, song);
                     }
                 });
                 addToAlbum.getItems().add(addAlbum);

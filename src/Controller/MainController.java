@@ -367,7 +367,7 @@ public class MainController extends Controller implements Initializable {
         playlistPane.setVisible(true);
         playlistNameLbl.setText("My Playlists");
         playlistVBox.getChildren().clear();
-        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl, playlistNameLbl);
+        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
     }
 
     public ArrayList<MediaPlayer> resetQueue(ArrayList<MediaPlayer> q, ArrayList<MediaPlayer> mPL){
@@ -401,8 +401,9 @@ public class MainController extends Controller implements Initializable {
     public void showByAlbumNames() {
         playlistNameLbl.setText("Albums");
         playlistVBox.getChildren().clear();
-        displayer.setPlaylistBuilder(albumPlaylistBuilder);
-        displayer.constructAlbumPlaylist(dashboardPlaylistLbl, playlistVBox, dashboardVBox, dashboardPane, playlistPane, this);
+        DisplayNonDefault.displayAllAlbums(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
+//        displayer.setPlaylistBuilder(albumPlaylistBuilder);
+//        displayer.constructAlbumPlaylist(dashboardPlaylistLbl, playlistVBox, dashboardVBox, dashboardPane, playlistPane, this);
         dashboardPane.setVisible(false);
         playlistPane.setVisible(true);
     }
