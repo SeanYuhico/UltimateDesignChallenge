@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c99326;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NotificationsController">
+    <children>
+        <AnchorPane prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #43320e;">
+            <children>
+                <Label layoutX="32.0" layoutY="28.0" text="Notifications" textFill="WHITE">
+                    <font>
+                        <Font size="33.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="29.0" layoutY="128.0" prefHeight="244.0" prefWidth="534.0">
+            <children>
+                <ScrollPane prefHeight="244.0" prefWidth="534.0" style="-fx-: #c99326;">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="530.0">
+                            <children>
+                                <VBox fx:id="notifVBox" prefHeight="244.0" prefWidth="534.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

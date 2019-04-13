@@ -14,6 +14,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         mainStage = primaryStage;
+        mainStage.setTitle("Welcome to REAL Music Player");
+        mainStage.setResizable(false);
+        mainStage.centerOnScreen();
         Parent root = FXMLLoader.load(getClass().getResource("/View/LoginArtist.FXML"));
         mainStage.setScene(new Scene(root, 789, 417));
         mainStage.show();
