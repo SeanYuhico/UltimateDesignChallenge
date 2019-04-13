@@ -68,6 +68,11 @@ public class SongHBox extends HBox {
         deleteBtn.setPreserveRatio(true);
         setMargin(deleteBtn, new Insets(4, 5, 0, 20));
 
+        if(!song.getUsername().equals(LoginArtistController.getLoggedUser())){
+            deleteBtn.setVisible(false);
+            deleteBtn.setDisable(true);
+        }
+
         titleLbl.setPrefWidth(289);
         titleLbl.setPrefHeight(29);
         setMargin(titleLbl, new Insets(4, 5, 0, 0));
@@ -92,6 +97,13 @@ public class SongHBox extends HBox {
         List<Playlist> playlists = ps.getAll();
         List<PlaylistSong> playlistSongs = pss.getAll();
 
+        // someone make this work pls T_T
+//        if(!controller.getDashboardPlaylistLbl().getText().equals("My Songs") &&
+//                !controller.getDashboardPlaylistLbl().getText().equals("Most Played Songs"))
+//        {
+//            deleteBtn.setDisable(true);
+//            deleteBtn.setVisible(false);
+//        }
 
         final ContextMenu contextMenu = new ContextMenu();
         Menu addToPlaylist= new Menu("Add to Playlist");
@@ -182,7 +194,6 @@ public class SongHBox extends HBox {
                                 }
                         }
                     }
-                    controller.update();
                 });
                 removeFromAlbum.getItems().add(remove);
             }

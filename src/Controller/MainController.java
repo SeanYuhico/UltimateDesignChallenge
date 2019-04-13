@@ -134,6 +134,7 @@ public class MainController extends Controller implements Initializable {
 
             dbPaneSortBy.setItems(sortList);
             dbPaneSortBy.getSelectionModel().selectFirst();
+            dbPaneSortBy.setOnAction(e -> dashboardSort());
         }
 
 
@@ -486,7 +487,7 @@ public class MainController extends Controller implements Initializable {
             dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
-            DisplaySearch.mainDisplay(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
         }
     }
 
@@ -497,7 +498,7 @@ public class MainController extends Controller implements Initializable {
             dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
-            DisplaySearch.otherDisplay(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
         }
     }
 
@@ -545,8 +546,9 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
-
-
+    public Label getDashboardPlaylistLbl() {
+        return dashboardPlaylistLbl;
+    }
 
     public MediaPlayer getMp() {
         return mp;

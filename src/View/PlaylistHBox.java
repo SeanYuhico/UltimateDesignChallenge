@@ -1,7 +1,9 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
+import com.mysql.cj.log.Log;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -17,7 +19,7 @@ import javafx.scene.layout.VBox;
 public class PlaylistHBox extends HBox {
     private ImageView playBtn;
     private ImageView deleteBtn;
-    private Label titleLbl, countLbl;
+    private Label titleLbl, artistLbl, countLbl;
 
     public PlaylistHBox(Label dashboardPlaylistLbl, Playlist p, VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                         MainController controller)
@@ -36,6 +38,11 @@ public class PlaylistHBox extends HBox {
         deleteBtn = new ImageView(new Image("/Pictures/x.png"));
         titleLbl = new Label(p.getName());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
+
+        if((p.getName().equals("No Album") && p.isAlbum()) || (!p.getUsername().equals(LoginArtistController.getLoggedUser()))) {
+            deleteBtn.setDisable(true);
+            deleteBtn.setVisible(false);
+        }
 
         // Layout
         setFillHeight(true);
@@ -79,14 +86,20 @@ public class PlaylistHBox extends HBox {
             addToPublic.setText("Add to Public");
 
         rename.setOnAction(e -> PlaylistEditor.editPlaylist(p.getPlaylistID()));
-        contextMenu.getItems().addAll(rename, addToPublic);
+
+        if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()))
+            contextMenu.getItems().addAll(rename, addToPublic);
 
         deleteBtn.setOnMouseClicked(e -> {
-            Boolean ans = ConfirmBox.display("Delete Playlist", "Are you sure you want to delete this playlist?");
+            Boolean ans = ConfirmBox.display("Delete Playlist", "Are you sure you want to delete?");
             if(ans) {
-                playlistVBox.getChildren().remove(this);
-                pss.deletePlaylist(p);
-                ps.delete(p);
+                if(p.isAlbum() && p.getSongCount() > 0)
+                    AlertBox.display("Error", "Please remove all songs in album first.");
+                else {
+                    playlistVBox.getChildren().remove(this);
+                    pss.deletePlaylist(p);
+                    ps.delete(p);
+                }
             }
         });
 
@@ -133,6 +146,7 @@ public class PlaylistHBox extends HBox {
         // Content
         playBtn = new ImageView(new Image("/Pictures/play.png"));
         titleLbl = new Label(p.getName());
+        artistLbl = new Label(p.getUsername());
         countLbl = new Label("Number of Songs : " + p.getSongCount());
 
         // Layout
@@ -154,6 +168,10 @@ public class PlaylistHBox extends HBox {
         titleLbl.setPrefWidth(289);
         titleLbl.setPrefHeight(29);
         setMargin(titleLbl, new Insets(4, 5, 0, 10));
+
+        artistLbl.setPrefSize(289,29);
+        setMargin(artistLbl, new Insets(4,5,0,10));
+
         countLbl.setPrefWidth(289);
         countLbl.setPrefHeight(29);
         setMargin(countLbl, new Insets(4, 5, 0, 0));
@@ -168,6 +186,6 @@ public class PlaylistHBox extends HBox {
             }
         });
 
-        this.getChildren().addAll(playBtn, titleLbl, countLbl);
+        this.getChildren().addAll(playBtn, titleLbl, artistLbl, countLbl);
     }
 }
