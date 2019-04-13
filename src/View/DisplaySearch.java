@@ -26,6 +26,7 @@ public class DisplaySearch {
     private static Label playlistLabel;
     private static Label albumLabel;
     private static Label artistLabel;
+    private static Label listenerLabel;
 
     public static void initialize(VBox vBox){
         vBox.getChildren().clear();
@@ -60,6 +61,12 @@ public class DisplaySearch {
         artistLabel.setPrefSize(822, 51);
         artistLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
         artistLabel.setTextFill(Color.DARKVIOLET);
+        
+        listenerLabel = new Label("LISTENERS");
+        listenerLabel.setAlignment(Pos.CENTER);
+        listenerLabel.setPrefSize(822, 51);
+        listenerLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
+        listenerLabel.setTextFill(Color.GOLD);
     }
 
     public static void display(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
@@ -87,7 +94,13 @@ public class DisplaySearch {
 
         dashboardVBox.getChildren().add(artistLabel);
         for(Account a : accounts)
-            if(a.getUsername().toLowerCase().contains(searchKey))
+            if(a.getUsername().toLowerCase().contains(searchKey) && a.isArtist())
+                dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardPlaylistLbl, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
+
+        dashboardVBox.getChildren().add(listenerLabel);
+        for(Account a : accounts)
+            if(a.getUsername().toLowerCase().contains(searchKey) && !a.isArtist())
                 dashboardVBox.getChildren().addAll(new AccountHBox(a, dashboardPlaylistLbl, dashboardVBox,
                         dashboardPane, playlistPane, controller));
     }

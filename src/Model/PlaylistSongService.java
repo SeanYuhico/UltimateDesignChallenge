@@ -89,7 +89,7 @@ public class PlaylistSongService {
         PlaylistSong.PK++;
         this.add(p, s);
         String query = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount + 1 WHERE name = '" + p.getName() + "' AND " +
-                "username = " + LoginArtistController.getLoggedUser() + "'";
+                "username = '" + LoginArtistController.getLoggedUser() + "'";
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();

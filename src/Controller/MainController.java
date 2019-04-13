@@ -46,6 +46,9 @@ public class MainController extends Controller implements Initializable {
     @FXML Pane dashboardPane, playlistPane;
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
+    @FXML ImageView crtAbmBtn, upldSongBtn;
+    @FXML Label crtAbmLbl, upldSongLbl;
+
     @FXML TextField mainSearchFld, otherSearchFld;
     @FXML ComboBox<String> dbPaneSortBy;
 
@@ -139,6 +142,16 @@ public class MainController extends Controller implements Initializable {
             dbPaneSortBy.setOnAction(e -> dashboardSort());
 
             uncheckedNotifImgVw.setVisible(false);
+
+            // someone make this work pls T_T
+            if(!LoginArtistController.getLoggedAccount().isArtist()){
+                crtAbmBtn.setDisable(true);
+                crtAbmBtn.setVisible(false);
+                crtAbmLbl.setVisible(false);
+                upldSongBtn.setDisable(true);
+                upldSongBtn.setVisible(false);
+                upldSongLbl.setVisible(false);
+            }
         }
 
 

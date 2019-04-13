@@ -116,7 +116,7 @@ public class SongHBox extends HBox {
         for(Playlist p : playlists) {
             if (!p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
-                if (p.getName().equals("My Songs") && !LoginArtistController.getLoggedAccount().isArtist()) {
+                if (!LoginArtistController.getLoggedAccount().isArtist()) {
                     MenuItem addHere = new MenuItem(p.getName());
                     addHere.setOnAction(e -> {
                         boolean add = true;

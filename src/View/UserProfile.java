@@ -12,14 +12,12 @@ import javafx.scene.text.FontWeight;
 
 import java.util.List;
 
-public class ArtistProfile {
+public class UserProfile {
     private static Database db;
     private static PlaylistService ps;
     private static SongService ss;
-    private static AccountService as;
     private static List<Song> songs;
     private static List<Playlist> playlists;
-    private static List<Account> accounts;
 
     private static Label songLabel;
     private static Label playlistLabel;
@@ -30,10 +28,8 @@ public class ArtistProfile {
         db = new Database();
         ss = new SongService(db);
         ps = new PlaylistService(db);
-        as = new AccountService(db);
         playlists = ps.getAll();
         songs = ss.getAll();
-        accounts = as.getAll();
 
         songLabel = new Label("SONGS");
         songLabel.setAlignment(Pos.CENTER);
@@ -54,26 +50,29 @@ public class ArtistProfile {
         albumLabel.setTextFill(Color.CRIMSON);
     }
 
-    public static void display(Label dashboardPlaylistLbl, String artist, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
+    public static void display(Label dashboardPlaylistLbl, Account account, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                                MainController controller){
         initialize(dashboardVBox);
 
-        dashboardVBox.getChildren().add(songLabel);
-        for(Song s : songs)
-            if(s.getUsername().equals(artist))
-                dashboardVBox.getChildren().addAll(new SongHBox(s, dashboardVBox, controller));
+        if(account.isArtist()) {
+            dashboardVBox.getChildren().add(songLabel);
+            for(Song s : songs)
+                if(s.getUsername().equals(account.getUsername()))
+                    dashboardVBox.getChildren().addAll(new SongHBox(s, dashboardVBox, controller));
+
+            dashboardVBox.getChildren().add(albumLabel);
+            for (Playlist p : playlists)
+                if (p.getUsername().equals(account.getUsername()) && p.isAlbum() && !p.getName().equals("No Album"))
+                    dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
+                            dashboardPane, playlistPane, controller));
+        }
 
         dashboardVBox.getChildren().addAll(playlistLabel);
         for(Playlist p : playlists)
-            if((p.getUsername().equals(artist)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+            if((p.getUsername().equals(account.getUsername())) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     !p.isAlbum() && p.isPublic())
                 dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
                         dashboardPane, playlistPane, controller));
 
-        dashboardVBox.getChildren().add(albumLabel);
-        for (Playlist p : playlists)
-            if(p.getUsername().equals(artist) && p.isAlbum() && !p.getName().equals("No Album"))
-                dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
-                        dashboardPane, playlistPane, controller));
     }
 }

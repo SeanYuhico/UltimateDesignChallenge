@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,9 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AccountHBox extends HBox {
     private ImageView dp;
@@ -96,7 +92,7 @@ public class AccountHBox extends HBox {
         usernameLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(usernameLbl, e.getScreenX(), e.getScreenY());
-                visitProfile.setOnAction(ex -> ArtistProfile.display(dashboardPlaylistLbl, usernameLbl.getText(), dashboardVBox,
+                visitProfile.setOnAction(ex -> UserProfile.display(dashboardPlaylistLbl, account, dashboardVBox,
                         dashboardPane, playlistPane, controller));
                 follow.setOnAction(ex -> {
                     if(follow.getText().equals("Follow")) {

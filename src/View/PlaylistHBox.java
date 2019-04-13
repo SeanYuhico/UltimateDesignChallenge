@@ -109,7 +109,7 @@ public class PlaylistHBox extends HBox {
 
 
         deleteBtn.setOnMouseClicked(e -> {
-            Boolean ans = ConfirmBox.display("Delete Playlist", "Are you sure you want to delete?");
+            Boolean ans = ConfirmBox.display("Delete", "Are you sure you want to delete?");
             if(ans) {
                 if(p.isAlbum() && p.getSongCount() > 0)
                     AlertBox.display("Error", "Please remove all songs in album first.");
