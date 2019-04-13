@@ -89,6 +89,40 @@ public class SongService {
 
         return songs;
     }
+    public List<Song> getAll(String title){
+        Connection connection = db.getConnection();
+        List<Song> songs = new ArrayList<>();
+
+        String query = "SELECT * FROM " + Song.TABLE_NAME + " INNER JOIN " + PlaylistSong.TABLE_NAME + " ON Song.songID = PlaylistSong.songID" +
+               " INNER JOIN " + Playlist.TABLE_NAME + " ON PlaylistSong.playlistID = Playlist.playlistID" +" WHERE name = '" + title + "'";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()){
+                Song s = new Song();
+                s.setSongID(rs.getInt(Song.COL_SONGID));
+                s.setTitle(rs.getString(Song.COL_TITLE));
+                s.setArtist(rs.getString(Song.COL_ARTIST));
+                s.setAlbumName(rs.getString(Song.COL_ALBUMNAME));
+                s.setGenre(rs.getString(Song.COL_GENRE));
+                s.setSongName(rs.getString(Song.COL_SONGNAME));
+                s.setYear(rs.getString(Song.COL_YEAR));
+                s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
+                s.setUsername(rs.getString(Song.COL_USERNAME));
+                s.setFave(rs.getBoolean(Song.COL_FAVE));
+                s.setDateUploaded(rs.getTimestamp(Song.COL_DATEUPLOADED));
+
+                songs.add(s);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return songs;
+    }
 
     public void incNumTimesPlayed(Song s){
         Connection connection = db.getConnection();
