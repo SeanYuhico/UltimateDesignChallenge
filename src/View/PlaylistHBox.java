@@ -43,7 +43,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        albumCover = new ImageView();
+//        albumCover = new ImageView();
         playBtn = new ImageView(new Image("/Pictures/play.png"));
         deleteBtn = new ImageView(new Image("/Pictures/x.png"));
         titleLbl = new Label(p.getName());
@@ -64,11 +64,11 @@ public class PlaylistHBox extends HBox {
         setMaxHeight(USE_COMPUTED_SIZE);
         setSnapToPixel(true);
 
-        albumCover.setFitHeight(38);
-        albumCover.setFitWidth(32);
-        albumCover.setPickOnBounds(true);
-        albumCover.setPreserveRatio(true);
-        setMargin(albumCover, new Insets(4,5,0,10));
+//        albumCover.setFitHeight(38);
+//        albumCover.setFitWidth(32);
+//        albumCover.setPickOnBounds(true);
+//        albumCover.setPreserveRatio(true);
+//        setMargin(albumCover, new Insets(4,5,0,10));
 
         playBtn.setFitHeight(38);
         playBtn.setFitWidth(32);
@@ -90,6 +90,18 @@ public class PlaylistHBox extends HBox {
         setMargin(countLbl, new Insets(4, 5, 0, 0));
 
         // Functionalities
+        ImageLoader img = new ImageLoader(db);
+
+        albumCover = new ImageView();
+        if(p.isAlbum() && !p.getName().equals("No Album"))
+            albumCover.setImage(new Image(img.loadImage(p.getName())));
+
+        albumCover.setFitHeight(38);
+        albumCover.setFitWidth(32);
+        albumCover.setPickOnBounds(true);
+        albumCover.setPreserveRatio(true);
+        setMargin(albumCover, new Insets(4,5,0,10));
+
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem rename = new MenuItem("Rename");
         MenuItem addToPublic = new MenuItem("Add to Public");

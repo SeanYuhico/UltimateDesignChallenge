@@ -255,6 +255,7 @@ public class SongHBox extends HBox {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
                 edit.setOnAction(ex -> EditSongWindow.display(dashboardVBox, song.getSongID(), controller));
+                addToQueue.setOnAction(event -> controller.queue(titleLbl.getText()));
                 addToFaves.setOnAction(ev -> {
                     if(addToFaves.getText().equals("Remove from Favorites")) {
                         SongService.makeFave(song.getSongID(), "false");

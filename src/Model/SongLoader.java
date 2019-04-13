@@ -24,7 +24,7 @@ public class SongLoader {
                 Blob blob = rs.getBlob("file");
                 Converter converter = new Converter();
                 if(blob != null) {
-//                    tempFilename = converter.convertToMP3(blob);
+                    tempFilename = converter.convertToMP3(blob, title);
                     System.out.println("Song loaded");
                 }
             }
