@@ -168,7 +168,6 @@ public class MainController extends Controller implements Initializable {
     }
 
 
-
     public void logout(){
         Boolean ans = ConfirmBox.display("Logout", "Are you sure you want to logout?");
         if(ans) {
@@ -249,13 +248,13 @@ public class MainController extends Controller implements Initializable {
         play = new PlayMP3();
         songs = new ArrayList<>();
 
-        for (int i = 0; i < ss.getAll().size(); i++) {
-            songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+        for (int i = 0; i < ss.getAll(dashboardPlaylistLbl.getText()).size(); i++) {
+            songs.add(sLoader.loadSong(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle()));
         }
         play.setMedia(songs.get(j));
         /*MediaPlayer*/ mp = play.getMediaPlayer();
 //        setMp(mp);
-        setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+        setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
         mp.play();
         mp.setRate(1);
         playImgVw.setVisible(false);
@@ -308,16 +307,16 @@ public class MainController extends Controller implements Initializable {
             play.setMedia(songsQueue.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
 
-        else if (j < ss.getAll().size()) {
+        else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
 //        players.element().dispose();
@@ -348,12 +347,12 @@ public class MainController extends Controller implements Initializable {
     public void prev()
     {
         j--;
-        if (j < ss.getAll().size()  && j >= 0) {
+        if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //            setMp(mp);
-            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
 //        }
