@@ -27,7 +27,6 @@ public class DisplaySearch {
     private static Label albumLabel;
     private static Label artistLabel;
 
-
     public static void initialize(VBox vBox){
         vBox.getChildren().clear();
         db = new Database();

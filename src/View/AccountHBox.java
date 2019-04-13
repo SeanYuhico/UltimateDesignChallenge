@@ -41,7 +41,12 @@ public class AccountHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
-        dp = new ImageView(new Image("/Pictures/profilePic.png"));
+        dp = new ImageView();
+        if(account.isArtist())
+            dp.setImage(new Image("/Pictures/profilePic"));
+        else
+            dp.setImage(new Image("/Pictures/profilePic2"));
+
         usernameLbl = new Label(account.getUsername());
 
         // Optional Contents.
@@ -78,15 +83,13 @@ public class AccountHBox extends HBox {
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem visitProfile = new MenuItem("Visit Profile");
         MenuItem follow = new MenuItem("Follow");
-        for(int i = 0; i < fs.getAll().size(); i++)
-            if((fs.getAll().get(i).getFollower().equals(LoginArtistController.getLoggedUser())) &&
-                    (fs.getAll().get(i).getFollowing().equals(usernameLbl.getText()))) {
+        for(Follower f : fs.getAll())
+            if(f.getFollower().equals(LoginArtistController.getLoggedUser()) && f.getFollowing().equals(usernameLbl.getText())){
                 follow.setText("Unfollow");
+                break;
             }
             else
                 follow.setText("Follow");
-
-
 
         contextMenu.getItems().addAll(visitProfile, follow);
 

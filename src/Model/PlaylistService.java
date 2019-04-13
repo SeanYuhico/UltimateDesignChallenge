@@ -136,7 +136,7 @@ public class PlaylistService {
         }
     }
 
-    public static void makePublic(int id, String isPublic)
+    public void makePublic(int id, String isPublic)
     {
         Database db = new Database();
         Connection connection = db.getConnection();

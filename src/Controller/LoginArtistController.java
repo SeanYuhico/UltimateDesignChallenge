@@ -21,6 +21,7 @@ public class LoginArtistController {
     private Database db;
     private AccountService accountService;
     private static String loggedUser;
+    private static Account loggedAccount;
 
     public void signIn(){
         db = new Database();
@@ -48,6 +49,7 @@ public class LoginArtistController {
             if (uExists > 0 && pExists > 0) {
                 AlertBox.display("Testing", "Login Successful!");
                 loggedUser = username;
+                loggedAccount = a;
                 MusicPlayer.display(Main.getMainStage());
             } else if (uExists > 0 && pExists == 0)
                 AlertBox.display("Testing", "Incorrect password!");
@@ -87,5 +89,9 @@ public class LoginArtistController {
 
     public static String getLoggedUser() {
         return loggedUser;
+    }
+
+    public static Account getLoggedAccount(){
+        return loggedAccount;
     }
 }

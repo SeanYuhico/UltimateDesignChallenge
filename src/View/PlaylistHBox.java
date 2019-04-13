@@ -29,6 +29,11 @@ public class PlaylistHBox extends HBox {
     public PlaylistHBox(Label dashboardPlaylistLbl, Playlist p, VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                         MainController controller)
     {
+        Database db = new Database();
+        PlaylistSongService pss = new PlaylistSongService(db);
+        PlaylistService ps = new PlaylistService(db);
+
+
         // Properties
         setVisible(true);
         setCacheShape(true);
@@ -86,10 +91,6 @@ public class PlaylistHBox extends HBox {
         setMargin(countLbl, new Insets(4, 5, 0, 0));
 
         // Functionalities
-        Database db = new Database();
-        PlaylistSongService pss = new PlaylistSongService(db);
-        PlaylistService ps = new PlaylistService(db);
-
         final ContextMenu contextMenu = new ContextMenu();
         MenuItem rename = new MenuItem("Rename");
         MenuItem addToPublic = new MenuItem("Add to Public");
@@ -127,11 +128,11 @@ public class PlaylistHBox extends HBox {
                 rename.setOnAction(ex -> PlaylistEditor.editPlaylist(p.getPlaylistID()));
                 addToPublic.setOnAction(ev -> {
                     if(addToPublic.getText().equals("Add to Public")) {
-                        PlaylistService.makePublic(p.getPlaylistID(), "true");
+                        ps.makePublic(p.getPlaylistID(), "true");
                         addToPublic.setText("Remove from Public");
                     }
                     else if(addToPublic.getText().equals("Remove from Public")){
-                        PlaylistService.makePublic(p.getPlaylistID(), "false");
+                        ps.makePublic(p.getPlaylistID(), "false");
                         addToPublic.setText("Add to Public");
                     }
                 });
@@ -161,6 +162,7 @@ public class PlaylistHBox extends HBox {
     public PlaylistHBox(Label dashboardPlaylistLbl, Playlist p, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                         MainController controller)
     {
+        AccPlayService aps = new AccPlayService(new Database());
         // Properties
         setVisible(true);
         setCacheShape(true);
@@ -211,12 +213,39 @@ public class PlaylistHBox extends HBox {
         setMargin(countLbl, new Insets(4, 5, 0, 0));
 
         // Functionalities
+        final ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem follow = new MenuItem("Follow Playlist");
+        for(AccPlay ap : aps.getAll())
+            if(ap.getPlaylistID() == p.getPlaylistID() && ap.getUser().equals(LoginArtistController.getLoggedUser())){
+                follow.setText("Unfollow Playlist");
+                break;
+            }
+            else
+                follow.setText("Follow Playlist");
+
+        if(!LoginArtistController.getLoggedAccount().isArtist() && !p.getUsername().equals(LoginArtistController.getLoggedUser()))
+            contextMenu.getItems().add(follow);
+
         titleLbl.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 dashboardPane.setVisible(true);
                 playlistPane.setVisible(false);
                 dashboardPlaylistLbl.setText(p.getName());
                 DisplayNonDefault.displaySongs(p.getName(), dashboardVBox, controller);
+            }
+            else if(e.getButton() == MouseButton.SECONDARY){
+                contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
+                follow.setOnAction(ev -> {
+                    if(follow.getText().equals("Follow Playlist")){
+                        aps.add(p, LoginArtistController.getLoggedUser());
+                        follow.setText("Unfollow Playlist");
+                    }
+                    else{
+                        aps.unfollow(p.getPlaylistID(), LoginArtistController.getLoggedUser());
+                        follow.setText("Follow Playlist");
+                    }
+                });
             }
         });
 
