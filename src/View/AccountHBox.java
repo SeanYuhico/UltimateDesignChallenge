@@ -43,9 +43,9 @@ public class AccountHBox extends HBox {
         // Content
         dp = new ImageView();
         if(account.isArtist())
-            dp.setImage(new Image("/Pictures/profilePic"));
+            dp.setImage(new Image("/Pictures/profilePic.png"));
         else
-            dp.setImage(new Image("/Pictures/profilePic2"));
+            dp.setImage(new Image("/Pictures/profilePic2.png"));
 
         usernameLbl = new Label(account.getUsername());
 

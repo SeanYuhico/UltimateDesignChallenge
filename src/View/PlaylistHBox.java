@@ -33,7 +33,6 @@ public class PlaylistHBox extends HBox {
         PlaylistSongService pss = new PlaylistSongService(db);
         PlaylistService ps = new PlaylistService(db);
 
-
         // Properties
         setVisible(true);
         setCacheShape(true);
