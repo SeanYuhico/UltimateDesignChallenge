@@ -2,6 +2,9 @@ package Model;
 
 import Controller.LoginArtistController;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +22,7 @@ public class PlaylistService {
     public boolean add(Playlist p){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + Playlist.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + Playlist.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
@@ -30,6 +33,7 @@ public class PlaylistService {
             statement.setString(4, p.getUsername());
             statement.setBoolean(5, p.isPublic());
             statement.setBoolean(6, p.isAlbum());
+            statement.setBinaryStream(7, null);
 
             boolean added = statement.execute();
             return added;
@@ -142,6 +146,28 @@ public class PlaylistService {
             statement.execute();
         }catch(SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void uploadAlbumCover(Playlist p, String filename)
+    {
+        Connection connection = new Database().getConnection();
+        String query = "UPDATE " + Playlist.TABLE_NAME + " SET cover = ? WHERE playlistID = " + p.getPlaylistID();
+
+        try {
+            File file = new File(filename);
+            FileInputStream input = new FileInputStream(file);
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setBinaryStream(1, input);
+
+            statement.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
         }
     }
 }

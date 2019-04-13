@@ -2,6 +2,7 @@ package Model;
 
 import Model.Song;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 
 public class Playlist {

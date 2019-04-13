@@ -31,7 +31,7 @@ public class SongService {
             FileInputStream input = new FileInputStream(file);
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, s.getSongID()); // uhh temporary lang to
+            statement.setInt(1, s.getSongID());
             statement.setString(2, s.getTitle());
             statement.setString(3, s.getArtist());
             statement.setString(4, s.getAlbumName());

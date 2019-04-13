@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,10 +16,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class PlaylistHBox extends HBox {
     private ImageView playBtn;
     private ImageView deleteBtn;
+    private ImageView albumCover;
     private Label titleLbl, artistLbl, countLbl;
 
     public PlaylistHBox(Label dashboardPlaylistLbl, Playlist p, VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
@@ -34,6 +39,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
+        albumCover = new ImageView();
         playBtn = new ImageView(new Image("/Pictures/play.png"));
         deleteBtn = new ImageView(new Image("/Pictures/x.png"));
         titleLbl = new Label(p.getName());
@@ -54,10 +60,17 @@ public class PlaylistHBox extends HBox {
         setMaxHeight(USE_COMPUTED_SIZE);
         setSnapToPixel(true);
 
+        albumCover.setFitHeight(38);
+        albumCover.setFitWidth(32);
+        albumCover.setPickOnBounds(true);
+        albumCover.setPreserveRatio(true);
+        setMargin(albumCover, new Insets(4,5,0,10));
+
         playBtn.setFitHeight(38);
         playBtn.setFitWidth(32);
         playBtn.setPickOnBounds(true);
         playBtn.setPreserveRatio(true);
+        setMargin(playBtn, new Insets(4,5,0,10));
 
         deleteBtn.setFitHeight(24);
         deleteBtn.setFitWidth(24);
@@ -84,11 +97,16 @@ public class PlaylistHBox extends HBox {
             addToPublic.setText("Remove from Public");
         else
             addToPublic.setText("Add to Public");
+        MenuItem addCover = new MenuItem("Add Album Cover");
 
         rename.setOnAction(e -> PlaylistEditor.editPlaylist(p.getPlaylistID()));
 
         if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()))
             contextMenu.getItems().addAll(rename, addToPublic);
+
+        if(p.isAlbum() && !p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()))
+            contextMenu.getItems().add(addCover);
+
 
         deleteBtn.setOnMouseClicked(e -> {
             Boolean ans = ConfirmBox.display("Delete Playlist", "Are you sure you want to delete?");
@@ -117,6 +135,13 @@ public class PlaylistHBox extends HBox {
                         addToPublic.setText("Add to Public");
                     }
                 });
+                addCover.setOnAction(ev -> {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Upload Album Cover");
+                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+                    File coverToUpload = fileChooser.showOpenDialog(null);
+                    ps.uploadAlbumCover(p, coverToUpload.getAbsolutePath());
+                });
             }
             else if(e.getButton().equals(MouseButton.PRIMARY)) {
                 if (e.getClickCount() == 2) {
@@ -127,6 +152,8 @@ public class PlaylistHBox extends HBox {
                 }
             }
         });
+        if(p.isAlbum() && !p.getName().equals("No Album"))
+            this.getChildren().add(albumCover);
 
         this.getChildren().addAll(playBtn, deleteBtn, titleLbl, countLbl);
     }
@@ -144,6 +171,7 @@ public class PlaylistHBox extends HBox {
         setPickOnBounds(true);
 
         // Content
+        albumCover = new ImageView();
         playBtn = new ImageView(new Image("/Pictures/play.png"));
         titleLbl = new Label(p.getName());
         artistLbl = new Label(p.getUsername());
@@ -158,6 +186,12 @@ public class PlaylistHBox extends HBox {
         setMinHeight(USE_COMPUTED_SIZE);
         setMaxHeight(USE_COMPUTED_SIZE);
         setSnapToPixel(true);
+
+        albumCover.setFitHeight(38);
+        albumCover.setFitWidth(32);
+        albumCover.setPickOnBounds(true);
+        albumCover.setPreserveRatio(true);
+        setMargin(albumCover, new Insets(4,5,0,10));
 
         playBtn.setFitHeight(38);
         playBtn.setFitWidth(32);
@@ -185,6 +219,9 @@ public class PlaylistHBox extends HBox {
                 DisplayNonDefault.displaySongs(p.getName(), dashboardVBox, controller);
             }
         });
+
+        if(p.isAlbum() && !p.getName().equals("No Album"))
+            this.getChildren().add(albumCover);
 
         this.getChildren().addAll(playBtn, titleLbl, artistLbl, countLbl);
     }
