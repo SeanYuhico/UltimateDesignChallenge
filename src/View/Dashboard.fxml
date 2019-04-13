@@ -25,7 +25,7 @@
             <children>
                 <AnchorPane prefHeight="102.0" prefWidth="1155.0" style="-fx-background-color: #95713d;">
                     <children>
-                        <Slider fx:id="volumeSlider" layoutX="1035.0" layoutY="51.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="22.0" prefWidth="94.0" />
+                        <Slider fx:id="volumeSlider" layoutX="1036.0" layoutY="54.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="22.0" prefWidth="94.0" />
                         <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/play.png" />
@@ -91,21 +91,22 @@
                         <Image url="@../Pictures/repeat.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="996.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="999.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/volume.png" />
-                     </image></ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="962.0" layoutY="45.0" onMouseClicked="#showQueue" pickOnBounds="true" preserveRatio="true">
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="963.0" layoutY="53.0" onMouseClicked="#showQueue" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/queue.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="notifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="928.0" layoutY="45.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="notifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="929.0" layoutY="53.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/listeners.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="37.0" fitWidth="33.0" layoutX="928.0" layoutY="38.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="41.0" fitWidth="37.0" layoutX="929.0" layoutY="44.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/uncheckedNotification.png" />
                      </image>
@@ -342,7 +343,7 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="dbPaneSortBy" layoutX="439.0" layoutY="89.0" onAction="#dashboardSort" prefWidth="150.0" />
+                  <ComboBox fx:id="dbPaneSortBy" layoutX="448.0" layoutY="89.0" onAction="#dashboardSort" prefWidth="150.0" />
                </children>
             </Pane>
          </children>

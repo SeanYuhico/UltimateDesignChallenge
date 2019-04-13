@@ -37,7 +37,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Slider volumeSlider, progressSlider;
     @FXML Button playBtn, pauseBtn;
     @FXML BorderPane bPane;
-    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw; //,repeatAllImgVw;
+    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, notifImgVw, uncheckedNotifImgVw; //,repeatAllImgVw;
     @FXML Label artistLbl,nameLbl, songLbl, logoutLbl, dashboardPlaylistLbl;
     @FXML Label playlistNameLbl;
     @FXML ScrollPane sp;
@@ -47,7 +47,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
-    @FXML ChoiceBox<String> dbPaneSortBy;
+    @FXML ComboBox<String> dbPaneSortBy;
 
     Displayer displayer;
     PlaylistBuilder genrePlaylistBuilder, albumPlaylistBuilder, artistPlaylistBuilder, yearPlaylistBuilder;
@@ -55,6 +55,7 @@ public class MainController extends Controller implements Initializable {
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
     int songIndex, j =0;
+    public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
     SongService ss;
     SongLoader sLoader;
@@ -136,6 +137,8 @@ public class MainController extends Controller implements Initializable {
             dbPaneSortBy.setItems(sortList);
             dbPaneSortBy.getSelectionModel().selectFirst();
             dbPaneSortBy.setOnAction(e -> dashboardSort());
+
+            uncheckedNotifImgVw.setVisible(false);
         }
 
 
@@ -299,12 +302,18 @@ public class MainController extends Controller implements Initializable {
     {
         PlaylistEditor.addNewPlaylist();
         update();
+
+        uncheckedNotifImgVw.setVisible(true);
+        notifications.add(LoginArtistController.getLoggedUser() + " added a new playlist.");
     }
 
     public void createAlbum()
     {
         CreateAlbumWindow.addNewAlbum();
         update();
+
+        uncheckedNotifImgVw.setVisible(true);
+        notifications.add(LoginArtistController.getLoggedUser() + " release a new album.");
     }
 
     public void repeatSong()
@@ -541,6 +550,28 @@ public class MainController extends Controller implements Initializable {
             for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
+    }
+
+    public void showNotifications() throws IOException{
+        uncheckedNotifImgVw.setVisible(false);
+
+        Stage stage = new Stage();
+        stage.setTitle("Notifications");
+        stage.setResizable(false);
+        stage.centerOnScreen();
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Notifications.fxml"));
+        stage.setScene(new Scene(root, 600, 400));
+        stage.showAndWait();
+    }
+
+    public void showQueue() throws IOException{
+        Stage stage = new Stage();
+        stage.setTitle("Activities");
+        stage.setResizable(false);
+        stage.centerOnScreen();
+        Parent root = FXMLLoader.load(getClass().getResource("/View/QueueWindow.fxml"));
+        stage.setScene(new Scene(root, 600, 400));
+        stage.showAndWait();
     }
 
     public Label getDashboardPlaylistLbl() {
