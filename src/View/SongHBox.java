@@ -24,9 +24,12 @@ public class SongHBox extends HBox {
     private Label titleLbl, artistLbl, albumLbl, genreLbl, yearLbl;
     private boolean songExists;
     private String tempFilename;
+    private Song song;
 
     public SongHBox(Song song, VBox dashboardVBox, MainController controller)
     {
+        this.song = song;
+
         // Properties
         setVisible(true);
         setCacheShape(true);
@@ -228,22 +231,20 @@ public class SongHBox extends HBox {
             }
             songExists = true;
             controller.play();
+            service.incNumTimesPlayed(song);
         });
 
         deleteBtn.setOnMouseClicked(e -> {
             Boolean ans = ConfirmBox.display("Delete Song", "Are you sure you want to delete this song?");
             if (ans) {
                 for(Playlist p : playlists) {
-                    // If dinelete sa default playlist, tanggal yung buong song sa music player.
-                    if ((p.getName().equals("My Songs") || p.getName().equals("Most Played Songs") || p.getName().equals("Artists") ||
-                            p.getName().equals("Albums") || p.getName().equals("Genres") ||
-                            p.getName().equals("Year")) && p.getUsername().equals(LoginArtistController.getLoggedUser())) {
-                        ss.delete(song);
+                    if ((p.getName().equals("My Songs") || p.getName().equals("Most Played Songs") || p.getName().equals("No Album"))
+                            && p.getUsername().equals(LoginArtistController.getLoggedUser())) {
+                        pss.deleteSong(song);
+                        ps.decrement(p);
                     }
-                    // If hindi default, tanggal lang yung relationship and decrement the songCount.
-                    pss.deleteSong(song);
-                    ps.decrement(p);
                 }
+                ss.delete(song);
                 dashboardVBox.getChildren().remove(this);
             }
         });
@@ -268,5 +269,8 @@ public class SongHBox extends HBox {
         this.getChildren().addAll(playBtn, deleteBtn, titleLbl, artistLbl, albumLbl, genreLbl, yearLbl);
     }
 
-
+    public Song getSong()
+    {
+        return this.song;
+    }
 }

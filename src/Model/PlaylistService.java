@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.LoginArtistController;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +71,8 @@ public class PlaylistService {
 
     public void upload(Playlist playlist){
         Connection connection = db.getConnection();
-        String query = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount + 1 WHERE name = '" + playlist.getName() + "'";
+        String query = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount + 1 WHERE name = '" + playlist.getName() + "' AND " +
+                "username = '" + LoginArtistController.getLoggedUser() + "'";
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();
@@ -93,7 +96,8 @@ public class PlaylistService {
     public void decrement(Playlist p)
     {
         Connection connection = db.getConnection();
-        String decrement = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount - 1 WHERE name = '" + p.getName() + "'";
+        String decrement = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount - 1 WHERE name = '" + p.getName() + "' AND " +
+                "username = '" + LoginArtistController.getLoggedUser() + "'";
         try {
             PreparedStatement statementPlaylist = connection.prepareStatement(decrement);
             statementPlaylist.execute();

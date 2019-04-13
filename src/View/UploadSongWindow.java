@@ -111,7 +111,7 @@ public class UploadSongWindow implements Window{
 
                 int add = 1;
                 for(Song song : service.getAll())
-                    if(song.getSongName().equals(s.getSongName()))
+                    if(song.getUsername().equals(LoginArtistController.getLoggedUser()) && song.getSongName().equals(s.getSongName()))
                         add = 0;
                 if(add == 1)
                     service.add(s);

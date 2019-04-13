@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -503,45 +504,41 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void dashboardSort(){
-        SongService ss = new SongService(new Database());
-        List<Song> alphabeticalSongs = ss.getAll();
-        List<Song> yearSongs = ss.getAll();
-        List<Song> dateUploaded = ss.getAll();
-        List<Song> artistSongs = ss.getAll();
-        List<Song> albumSongs = ss.getAll();
-        List<Song> genreSongs = ss.getAll();
-
-        alphabeticalSongs.sort(Comparator.comparing(Song::getTitle));
-        yearSongs.sort(Comparator.comparing(Song::getYear));
-        dateUploaded.sort(Comparator.comparing(Song::getDateUploaded));
-        artistSongs.sort(Comparator.comparing(Song::getArtist));
-        albumSongs.sort(Comparator.comparing(Song::getAlbumName));
-        genreSongs.sort(Comparator.comparing(Song::getGenre));
+        ArrayList<Song> sortedSongs = new ArrayList<>();
+        for(Node currentNode : dashboardVBox.getChildren())
+            if(currentNode instanceof SongHBox)
+                sortedSongs.add(((SongHBox) currentNode).getSong());
 
         dashboardVBox.getChildren().clear();
 
         if(dbPaneSortBy.getValue().equals("Alphabetical")) {
-            for (Song s : ss.getAll())
+            sortedSongs.sort(Comparator.comparing(Song::getTitle));
+            for (Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Year")){
-            for(Song s : yearSongs)
+            sortedSongs.sort(Comparator.comparing(Song::getYear));
+            for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Date Uploaded")){
-            for(Song s : dateUploaded)
+            sortedSongs.sort(Comparator.comparing(Song::getDateUploaded));
+            for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Artist")){
-            for(Song s : artistSongs)
+            sortedSongs.sort(Comparator.comparing(Song::getArtist));
+            for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Album")){
-            for(Song s : albumSongs)
+            sortedSongs.sort(Comparator.comparing(Song::getAlbumName));
+            for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
         else if(dbPaneSortBy.getValue().equals("Genre")){
-            for(Song s : genreSongs)
+            sortedSongs.sort(Comparator.comparing(Song::getGenre));
+            for(Song s : sortedSongs)
                 dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, this));
         }
     }

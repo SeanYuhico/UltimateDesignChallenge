@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
 import javafx.geometry.Pos;
@@ -23,6 +24,7 @@ public class DisplaySearch {
 
     private static Label songLabel;
     private static Label playlistLabel;
+    private static Label albumLabel;
     private static Label artistLabel;
 
 
@@ -48,11 +50,17 @@ public class DisplaySearch {
         playlistLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
         playlistLabel.setTextFill(Color.DARKGREEN);
 
+        albumLabel = new Label("ALBUMS");
+        albumLabel.setAlignment(Pos.CENTER);
+        albumLabel.setPrefSize(822, 51);
+        albumLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
+        albumLabel.setTextFill(Color.CRIMSON);
+
         artistLabel = new Label("ARTISTS");
         artistLabel.setAlignment(Pos.CENTER);
         artistLabel.setPrefSize(822, 51);
         artistLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
-        artistLabel.setTextFill(Color.DARKRED);
+        artistLabel.setTextFill(Color.DARKVIOLET);
     }
 
     public static void display(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
@@ -67,7 +75,14 @@ public class DisplaySearch {
 
         dashboardVBox.getChildren().add(playlistLabel);
         for(Playlist p : playlists)
-            if((p.getName().toLowerCase().contains(searchKey)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs"))
+            if((p.getName().toLowerCase().contains(searchKey)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs")
+                    && !p.isAlbum() && (p.isPublic() || p.getUsername().equals(LoginArtistController.getLoggedUser())))
+                dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
+
+        dashboardVBox.getChildren().add(albumLabel);
+        for(Playlist p : playlists)
+            if(p.getName().toLowerCase().contains(searchKey) && p.isAlbum() && !p.getName().equals("No Album"))
                 dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
                         dashboardPane, playlistPane, controller));
 

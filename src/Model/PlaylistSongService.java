@@ -67,7 +67,8 @@ public class PlaylistSongService {
     public void removeSongFromPlaylist(Playlist p, Song s)
     {
         Connection connection = db.getConnection();
-        String queryPlaylist = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount - 1 WHERE name = '" + p.getName() + "'";
+        String queryPlaylist = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount - 1 WHERE name = '" + p.getName() + "' AND " +
+                "username = " + LoginArtistController.getLoggedUser() + "'";
         String query = "DELETE FROM " + PlaylistSong.TABLE_NAME + " WHERE songID = " + s.getSongID() + " AND playlistID = " +
                 p.getPlaylistID();
 
@@ -87,7 +88,8 @@ public class PlaylistSongService {
         Connection connection = db.getConnection();
         PlaylistSong.PK++;
         this.add(p, s);
-        String query = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount + 1 WHERE name = '" + p.getName() + "'";
+        String query = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount + 1 WHERE name = '" + p.getName() + "' AND " +
+                "username = " + LoginArtistController.getLoggedUser() + "'";
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();

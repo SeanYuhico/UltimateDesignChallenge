@@ -23,6 +23,7 @@ public class ArtistProfile {
 
     private static Label songLabel;
     private static Label playlistLabel;
+    private static Label albumLabel;
 
     public static void initialize(VBox vBox) {
         vBox.getChildren().clear();
@@ -45,6 +46,12 @@ public class ArtistProfile {
         playlistLabel.setPrefSize(822, 51);
         playlistLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
         playlistLabel.setTextFill(Color.DARKGREEN);
+
+        albumLabel = new Label("ALBUMS");
+        albumLabel.setAlignment(Pos.CENTER);
+        albumLabel.setPrefSize(822, 51);
+        albumLabel.setFont(Font.font("Lucida Fax", FontWeight.SEMI_BOLD, 18));
+        albumLabel.setTextFill(Color.CRIMSON);
     }
 
     public static void display(Label dashboardPlaylistLbl, String artist, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
@@ -58,10 +65,15 @@ public class ArtistProfile {
 
         dashboardVBox.getChildren().addAll(playlistLabel);
         for(Playlist p : playlists)
-            if((p.getUsername().equals(artist)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs"))
+            if((p.getUsername().equals(artist)) && !p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
+                    !p.isAlbum() && p.isPublic())
                 dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
                         dashboardPane, playlistPane, controller));
 
-
+        dashboardVBox.getChildren().add(albumLabel);
+        for (Playlist p : playlists)
+            if(p.getUsername().equals(artist) && p.isAlbum() && !p.getName().equals("No Album"))
+                dashboardVBox.getChildren().addAll(new PlaylistHBox(dashboardPlaylistLbl, p, dashboardVBox,
+                        dashboardPane, playlistPane, controller));
     }
 }

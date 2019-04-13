@@ -19,7 +19,7 @@ public class MusicPlayer {
             URL urlAaron = new URL("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
             URL urlLegs = new URL("File:\\Users\\Legs\\IdeaProjects\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
             String path = "/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/View/Dashboard.fxml";
-            FXMLLoader loader = new FXMLLoader(urlLegs);
+            FXMLLoader loader = new FXMLLoader(urlAaron);
             FXMLLoader loaderSean = new FXMLLoader(Paths.get(path).toUri().toURL()); //walalang
             Parent root = loader.load();
             primaryStage.setTitle("REAL Music Player");
