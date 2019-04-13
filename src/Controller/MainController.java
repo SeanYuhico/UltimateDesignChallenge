@@ -54,12 +54,13 @@ public class MainController extends Controller implements Initializable {
 
     Displayer displayer;
     PlaylistBuilder genrePlaylistBuilder, albumPlaylistBuilder, artistPlaylistBuilder, yearPlaylistBuilder;
-//    Queue<MediaPlayer> players;
+    Queue<String> songsQueue;
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
     int songIndex, j =0;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
+    AccountService as;
     SongService ss;
     SongLoader sLoader;
     PlayMP3 play;
@@ -71,13 +72,16 @@ public class MainController extends Controller implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
-//        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
 
         Database db = new Database();
         SongService ss = new SongService(db);
+        as = new AccountService(db);
+        songs = new ArrayList<>();
+        songsQueue = new LinkedList<>();
         displayer = new Displayer();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
         albumPlaylistBuilder = new AlbumPlaylistBuilder();
@@ -107,14 +111,14 @@ public class MainController extends Controller implements Initializable {
 //            }
 //            songIndex = 0;
 
-//        me = new Media(new File(aaronPath).toURI().toString());
-//        mp = new MediaPlayer(me);
+        me = new Media(new File(aaronPath).toURI().toString());
+        mp = new MediaPlayer(me);
 
 //            me = new Media(new File(files.get(0)).toURI().toString());
 //            mp = players.get(0);
-//            mv = new MediaView();
-//            mv.setMediaPlayer(mp);
-//            volumeSlider.setValue(mp.getVolume() * 100);
+        mv = new MediaView();
+        mv.setMediaPlayer(mp);
+        volumeSlider.setValue(mp.getVolume() * 100);
 //            DoubleProperty width = mv.fitWidthProperty();
 //            DoubleProperty height = mv.fitHeightProperty();
 //            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
@@ -127,32 +131,42 @@ public class MainController extends Controller implements Initializable {
 //        height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
 //        setMPLabels();
-//            volumeSlider.setValue(mp.getVolume() * 100);
-            pauseImgVw.setVisible(false);
-            playImgVw.setVisible(true);
-            dashboardPane.setVisible(true);
-            playlistPane.setVisible(false);
+        volumeSlider.setValue(mp.getVolume() * 100);
+        pauseImgVw.setVisible(false);
+        playImgVw.setVisible(true);
+        dashboardPane.setVisible(true);
+        playlistPane.setVisible(false);
 
-            dbPane = dashboardPane;
-            mpPane = playlistPane;
-            showMySongs();
+        dbPane = dashboardPane;
+        mpPane = playlistPane;
+        showMySongs();
 
-            dbPaneSortBy.setItems(sortList);
-            dbPaneSortBy.getSelectionModel().selectFirst();
-            dbPaneSortBy.setOnAction(e -> dashboardSort());
+        dbPaneSortBy.setItems(sortList);
+        dbPaneSortBy.getSelectionModel().selectFirst();
+        dbPaneSortBy.setOnAction(e -> dashboardSort());
 
-            uncheckedNotifImgVw.setVisible(false);
+        uncheckedNotifImgVw.setVisible(false);
 
-            // someone make this work pls T_T
-            if(!LoginArtistController.getLoggedAccount().isArtist()){
-                crtAbmBtn.setDisable(true);
-                crtAbmBtn.setVisible(false);
-                crtAbmLbl.setVisible(false);
-                upldSongBtn.setDisable(true);
-                upldSongBtn.setVisible(false);
-                upldSongLbl.setVisible(false);
+        // someone make this work pls T_T
+//        if (!LoginArtistController.getLoggedAccount().isArtist()) {
+        boolean isArtist = false;
+        for(int i = 0; i < as.getAll().size(); i++){
+            if(as.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser()) && as.getAll().get(i).isArtist()){
+                isArtist = true;
             }
         }
+
+
+        if(!isArtist){
+            crtAbmBtn.setDisable(true);
+            crtAbmBtn.setVisible(false);
+            crtAbmLbl.setVisible(false);
+            upldSongBtn.setDisable(true);
+            upldSongBtn.setVisible(false);
+            upldSongLbl.setVisible(false);
+        }
+    }
+
 
 
     public void logout(){
@@ -187,6 +201,22 @@ public class MainController extends Controller implements Initializable {
         artistLbl.setText(artist);
         nameLbl.setText(name);
     }
+
+    public void initPlay(String filename){
+        db = new Database();
+        ss = new SongService(db);
+        sLoader = new SongLoader(db);
+        play = new PlayMP3();
+        songs = new ArrayList<>();
+
+        for (int i = 0; i < ss.getAll().size(); i++) {
+            if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
+                songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            }
+        }
+        play.setMedia(filename);
+    }
+
     public void play()
     {
         mp.play();
@@ -223,8 +253,8 @@ public class MainController extends Controller implements Initializable {
             songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
         }
         play.setMedia(songs.get(j));
-        MediaPlayer mp = play.getMediaPlayer();
-        setMp(mp);
+        /*MediaPlayer*/ mp = play.getMediaPlayer();
+//        setMp(mp);
         setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
         mp.play();
         mp.setRate(1);
@@ -240,23 +270,56 @@ public class MainController extends Controller implements Initializable {
     }
 
 
-        public void pause ()
-        {
-            mp.pause();
-            playImgVw.setVisible(true);
-            pauseImgVw.setVisible(false);
+    public void pause ()
+    {
+        mp.pause();
+        playImgVw.setVisible(true);
+        pauseImgVw.setVisible(false);
+    }
+
+    /**
+     We need a list of songs talaga that is useable for both next and previous.
+     queueing perse pero di siya 100% done yet.
+     clicking the next button works but clicking previous doesn't yet
+     */
+
+    public void queue(String qFile){
+        db = new Database();
+        ss = new SongService(db);
+        sLoader = new SongLoader(db);
+        play = new PlayMP3();
+//        songsQueue = new LinkedList<>();
+        songs.add(sLoader.loadSong(qFile));
+
+        /*for(int k = 0; k < ss.getAll().size(); k++) {
+            if(ss.getAll().get(k).getTitle().equals(qFile))
+                play.setMedia(songs.get(j));
+            MediaPlayer mp = play.getMediaPlayer();
+//            setMp(mp);
+            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            play();
+        }*/
+    }
+
+    public void next ()
+    {j++;
+        if(songsQueue != null && songsQueue.peek() != null){
+            play.stopSong();
+            play.setMedia(songsQueue.remove());
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            play();
         }
 
-        public void next ()
-        {
-            j++;
-            if (j < ss.getAll().size()) {
-                play.setMedia(songs.get(j));
-                MediaPlayer mp = play.getMediaPlayer();
-                setMp(mp);
-                setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
-                play();
-            }
+        else if (j < ss.getAll().size()) {
+            play.stopSong();
+            play.setMedia(songs.get(j));
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
+            play();
+        }
 //        players.element().dispose();
 //        prevS.push(players.element());
 //        players.get(songIndex).stop();
@@ -271,8 +334,8 @@ public class MainController extends Controller implements Initializable {
 //            pause();
 //        }
 //        else {
-            /*mp = players.element()*//*get((players.indexOf(currPlayer) +1) *//*% players.size()*//*)*/
-            ;
+        /*mp = players.element()*//*get((players.indexOf(currPlayer) +1) *//*% players.size()*//*)*/
+        ;
 //            mp=players.element();
 //            mp=players.get(songIndex);
 //            mv.setMediaPlayer(mp);
@@ -286,9 +349,10 @@ public class MainController extends Controller implements Initializable {
     {
         j--;
         if (j < ss.getAll().size()  && j >= 0) {
+            play.stopSong();
             play.setMedia(songs.get(j));
-            MediaPlayer mp = play.getMediaPlayer();
-            setMp(mp);
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//            setMp(mp);
             setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
             play();
         }
@@ -331,13 +395,13 @@ public class MainController extends Controller implements Initializable {
 
     public void repeatSong()
     {
-         mp.setOnEndOfMedia(new Runnable() {
-             @Override
-             public void run() {
-                 mp.seek(Duration.ZERO);
-                 mp.play();
-             }
-         });
+        mp.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mp.seek(Duration.ZERO);
+                mp.play();
+            }
+        });
 
         repeatImgVw.setVisible(false);
         repeatOnceVw.setVisible(true);

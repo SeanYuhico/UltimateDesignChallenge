@@ -3,6 +3,8 @@ package View;
 import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -225,7 +227,8 @@ public class SongHBox extends HBox {
                     if(!songExists) {
                         tempFilename = loader.loadSong(titleLbl.getText());
                     }
-                    play.setMedia(tempFilename);
+//                    play.setMedia(tempFilename);
+                    controller.initPlay(tempFilename);
                     MediaPlayer mp = play.getMediaPlayer();
                     controller.setMp(mp);
                     controller.setMPLabels(artistLbl.getText(), titleLbl.getText());
@@ -254,6 +257,10 @@ public class SongHBox extends HBox {
         titleLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
+                addToQueue.setOnAction(event -> {
+                    controller.queue(titleLbl.getText());
+                    System.out.println("fuck");
+                });
                 edit.setOnAction(ex -> EditSongWindow.display(dashboardVBox, song.getSongID(), controller));
                 addToQueue.setOnAction(event -> controller.queue(titleLbl.getText()));
                 addToFaves.setOnAction(ev -> {
