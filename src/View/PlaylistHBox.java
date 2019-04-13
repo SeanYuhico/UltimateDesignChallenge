@@ -174,6 +174,8 @@ public class PlaylistHBox extends HBox {
                         MainController controller)
     {
         AccPlayService aps = new AccPlayService(new Database());
+        AccountService as = new AccountService(new Database());
+        boolean isArtist = false;
         // Properties
         setVisible(true);
         setCacheShape(true);
@@ -226,6 +228,10 @@ public class PlaylistHBox extends HBox {
         // Functionalities
         final ContextMenu contextMenu = new ContextMenu();
 
+
+        MenuItem addToQueue = new MenuItem("Add to Queue");
+        contextMenu.getItems().add(addToQueue);
+
         MenuItem follow = new MenuItem("Follow Playlist");
         for(AccPlay ap : aps.getAll())
             if(ap.getPlaylistID() == p.getPlaylistID() && ap.getUser().equals(LoginArtistController.getLoggedUser())){
@@ -235,7 +241,13 @@ public class PlaylistHBox extends HBox {
             else
                 follow.setText("Follow Playlist");
 
-        if(!LoginArtistController.getLoggedAccount().isArtist() && !p.getUsername().equals(LoginArtistController.getLoggedUser()))
+        for(int i = 0; i < as.getAll().size(); i++){
+            if(as.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser()) && as.getAll().get(i).isArtist()){
+                isArtist = true;
+            }
+        }
+
+        if(!isArtist && !p.getUsername().equals(LoginArtistController.getLoggedUser()))
             contextMenu.getItems().add(follow);
 
         titleLbl.setOnMouseClicked(e -> {
@@ -257,6 +269,8 @@ public class PlaylistHBox extends HBox {
                         follow.setText("Follow Playlist");
                     }
                 });
+                addToQueue.setOnAction(ex ->
+                        System.out.println("Playlist queued!"));
             }
         });
 

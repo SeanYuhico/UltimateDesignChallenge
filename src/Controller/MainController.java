@@ -46,7 +46,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Pane dashboardPane, playlistPane;
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
-    @FXML ImageView crtAbmBtn, upldSongBtn;
+    @FXML ImageView crtAbmBtn, upldSongBtn, imgvwShuffle;
     @FXML Label crtAbmLbl, upldSongLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
@@ -543,7 +543,31 @@ public class MainController extends Controller implements Initializable {
         return results;
     }
 
-    public void shuffle() {}
+    public void shuffle() {
+        ArrayList<Integer> indexes = getRandom(0, songs.size()-1);;
+        ArrayList<String> shuffled = new ArrayList<>();
+        for(int i=0; i<songs.size()-1; i++){
+            shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
+        }
+        songs = shuffled;
+    }
+
+    public static final Random gen = new Random();
+    public static ArrayList<Integer> getRandom(int n, int maxRange) {
+        ArrayList<Integer> result = new ArrayList<>();
+        ArrayList<Integer> used = new ArrayList<>();
+
+        for (int i = 0; i < maxRange; i++) {
+
+            int newRandom;
+            do {
+                newRandom = gen.nextInt(maxRange+1);
+            } while (used.contains(newRandom));
+            result.add(newRandom);
+            used.add(newRandom);
+        }
+        return result;
+    }
 
     public void update() {
         if (dashboardPane.isVisible()) {
