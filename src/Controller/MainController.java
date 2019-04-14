@@ -58,10 +58,13 @@ public class MainController extends Controller implements Initializable {
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
     int songIndex, j =0;
+    boolean isArtist = false;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
     AccountService as;
     SongService ss;
+    PlaylistService pls;
+    PlaylistSongService ps;
     SongLoader sLoader;
     PlayMP3 play;
     ArrayList<String> songs;
@@ -80,6 +83,8 @@ public class MainController extends Controller implements Initializable {
         Database db = new Database();
         SongService ss = new SongService(db);
         as = new AccountService(db);
+        pls = new PlaylistService(db);
+        ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
         songsQueue = new LinkedList<>();
         displayer = new Displayer();
@@ -149,7 +154,6 @@ public class MainController extends Controller implements Initializable {
 
         // someone make this work pls T_T
 //        if (!LoginArtistController.getLoggedAccount().isArtist()) {
-        boolean isArtist = false;
         for(int i = 0; i < as.getAll().size(); i++){
             if(as.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser()) && as.getAll().get(i).isArtist()){
                 isArtist = true;
@@ -298,6 +302,30 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll().get(j).getArtist(), ss.getAll().get(j).getTitle());
             play();
         }*/
+    }
+
+    public void queuePlaylist(String playlist){
+        db = new Database();
+        ps = new PlaylistSongService(db);
+        pls = new PlaylistService(db);
+        ss = new SongService(db);
+        sLoader = new SongLoader(db);
+        play = new PlayMP3();
+        songs = new ArrayList<>();
+        int id = 0;
+        System.out.println("sleep");
+        for(int j = 0; j < pls.getAll().size(); j++){
+            if(pls.getAll().get(j).getName().equals(playlist)){
+                id = pls.getAll().get(j).getPlaylistID();
+            }
+        }
+        System.out.println("PLEASE");
+        for (int i = 0; i < ss.getAll().size(); i++) {
+            if(ps.getAll().get(i).getPlaylistID() == id){
+                songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            }
+        }
+        System.out.println("UGH");
     }
 
     public void next ()
