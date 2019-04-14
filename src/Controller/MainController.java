@@ -217,6 +217,7 @@ public class MainController extends Controller implements Initializable {
                 songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
             }
         }
+        System.out.println(songs.size());
         play.setMedia(filename);
     }
 
@@ -314,9 +315,9 @@ public class MainController extends Controller implements Initializable {
         songs = new ArrayList<>();
         int id = 0;
         System.out.println("sleep");
-        for(int j = 0; j < pls.getAll().size(); j++){
-            if(pls.getAll().get(j).getName().equals(playlist)){
-                id = pls.getAll().get(j).getPlaylistID();
+        for(int k = 0; k < pls.getAll().size(); k++){
+            if(pls.getAll().get(k).getName().equals(playlist)){
+                id = pls.getAll().get(k).getPlaylistID();
             }
         }
         System.out.println("PLEASE");
@@ -329,8 +330,15 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void next ()
-    {j++;
-        if(songsQueue != null && songsQueue.peek() != null){
+    {
+        if(j != songs.size()) {
+            j++;
+        }
+
+        if(j == songs.size()){
+            System.out.println("Max songs");
+        }
+        else if(songsQueue != null && songsQueue.peek() != null){
             play.stopSong();
             play.setMedia(songsQueue.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -347,6 +355,8 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
+
+
 //        players.element().dispose();
 //        prevS.push(players.element());
 //        players.get(songIndex).stop();
@@ -374,7 +384,10 @@ public class MainController extends Controller implements Initializable {
 
     public void prev()
     {
-        j--;
+        if(j != 0) {
+            j--;
+        }
+
         if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
             play.stopSong();
             play.setMedia(songs.get(j));
