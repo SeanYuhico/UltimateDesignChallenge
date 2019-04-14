@@ -30,6 +30,7 @@ public class DisplayNonDefault {
         playlists = ps.getAll();
         playlistSongs = playlistSongService.getAll();
         songs = ss.getAll();
+        controller = new MainController();
     }
 
     public static void displayPlaylistSongs(String playlistName, VBox dashboardVBox, MainController controller)

@@ -67,7 +67,7 @@ public class MainController extends Controller implements Initializable {
     PlaylistSongService ps;
     SongLoader sLoader;
     PlayMP3 play;
-    ArrayList<String> songs;
+    static ArrayList<String> songs;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
 
@@ -313,20 +313,26 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+        ArrayList<Integer> iDs = new ArrayList<>();
         int id = 0;
         System.out.println("sleep");
-        for(int k = 0; k < pls.getAll().size(); k++){
-            if(pls.getAll().get(k).getName().equals(playlist)){
-                id = pls.getAll().get(k).getPlaylistID();
+        for(int j = 0; j < pls.getAll().size(); j++){
+            if(pls.getAll().get(j).getName().equals(playlist)){
+                id = pls.getAll().get(j).getPlaylistID();
+                System.out.println("PLEASE");
             }
         }
-        System.out.println("PLEASE");
-        for (int i = 0; i < ss.getAll().size(); i++) {
+
+        for (int i = 0; i < ps.getAll().size(); i++) {
             if(ps.getAll().get(i).getPlaylistID() == id){
-                songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+                iDs.add(i);
             }
         }
-        System.out.println("UGH");
+
+        for (int i = 0; i < ss.getAll().size(); i++) {
+            songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            System.out.println("UGH");
+        }
     }
 
     public void next ()
@@ -355,8 +361,6 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
-
-
 //        players.element().dispose();
 //        prevS.push(players.element());
 //        players.get(songIndex).stop();
