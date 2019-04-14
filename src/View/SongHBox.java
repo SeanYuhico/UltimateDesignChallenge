@@ -254,6 +254,7 @@ public class SongHBox extends HBox {
             }
         });
 
+        
         titleLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
