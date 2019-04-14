@@ -79,13 +79,22 @@ public class DisplayNonDefault {
     public static void displayByMostPlayed (VBox dashboardVBox, MainController controller) {
 
         initialize(dashboardVBox);
-//
+
+        ArrayList<TimesPlayed> userTP = new ArrayList<>();
+
+        for(TimesPlayed tp : tps.getAll())
+            if(tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
+                userTP.add(tp);
+
+        userTP.sort(Comparator.comparing(TimesPlayed::getNumTimesPlayed));
+
+        for(TimesPlayed tp : userTP)
+            for(Song s : ss.getAll())
+                if(tp.getSongID() == s.getSongID())
+                    dashboardVBox.getChildren().add(new SongHBox(s, dashboardVBox, controller));
+
 //        int largestNum = 0;
 //
-//
-//        for(TimesPlayed tp : tps.getAll())
-
-
 //        for(Song song: songs)
 //            if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
 //                if (song.getNumTimesPlayed() > largestNum)
@@ -96,7 +105,6 @@ public class DisplayNonDefault {
 //                if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
 //                    if (song.getNumTimesPlayed() == i)
 //                        dashboardVBox.getChildren().add(new SongHBox(song, dashboardVBox, controller));
-
     }
 
     public static void displaySongs (String playlistName, VBox dashboardVBox, MainController controller){
