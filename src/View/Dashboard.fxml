@@ -103,10 +103,10 @@
                   </ImageView>
                   <ImageView fx:id="notifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="929.0" layoutY="53.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Pictures/listeners.png" />
+                        <Image url="@../Pictures/notifications.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="41.0" fitWidth="37.0" layoutX="929.0" layoutY="44.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="927.0" layoutY="53.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/uncheckedNotification.png" />
                      </image>
