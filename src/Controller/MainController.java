@@ -589,16 +589,20 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void shuffle() {
-        ArrayList<Integer> indexes = getRandom(0, songs.size()-1);;
+        int i;
+        System.out.println(songs.size());
+        ArrayList<Integer> indexes = getRandom(songs.size()-1);
         ArrayList<String> shuffled = new ArrayList<>();
-        for(int i=0; i<songs.size()-1; i++){
+        shuffled.add(songs.get(0));
+        for(i=0; i<songs.size()-1; i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
         }
         songs = shuffled;
+        System.out.println("Shuffled!");
     }
 
     public static final Random gen = new Random();
-    public static ArrayList<Integer> getRandom(int n, int maxRange) {
+    public static ArrayList<Integer> getRandom(int maxRange) {
         ArrayList<Integer> result = new ArrayList<>();
         ArrayList<Integer> used = new ArrayList<>();
 
@@ -607,7 +611,7 @@ public class MainController extends Controller implements Initializable {
             int newRandom;
             do {
                 newRandom = gen.nextInt(maxRange+1);
-            } while (used.contains(newRandom));
+            } while (used.contains(newRandom) || newRandom == 0);
             result.add(newRandom);
             used.add(newRandom);
         }
