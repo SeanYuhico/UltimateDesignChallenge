@@ -1,10 +1,15 @@
 package Controller;
 
+import Model.Account;
+import Model.AccountService;
+import Model.Database;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DisplacementMap;
 import javafx.scene.layout.VBox;
+
+import java.util.List;
 
 public class QueueWindowController {
 
@@ -12,7 +17,14 @@ public class QueueWindowController {
     @FXML VBox queueVBox;
     @FXML Label titleLabel;
 
-    public void initialize() {}
+    public void initialize() {
+        AccountService accountService = new AccountService(new Database());
+        List<Account> accounts = accountService.getAll();
+
+        for (Account account: accounts)
+            if (LoginArtistController.getLoggedUser().equals(account) && account.isArtist())
+                recentlyAddedButton.setVisible(false);
+    }
 
     public void showQueue() {
 
