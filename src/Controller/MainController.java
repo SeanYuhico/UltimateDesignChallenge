@@ -70,6 +70,7 @@ public class MainController extends Controller implements Initializable {
     static ArrayList<String> songs;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
+    ArrayList<Integer> indexes;
 
 
     @Override
@@ -344,7 +345,7 @@ public class MainController extends Controller implements Initializable {
         if(j == songs.size()){
             System.out.println("Max songs");
         }
-        else if(songsQueue != null && songsQueue.peek() != null){
+        else if(songsQueue != null && songsQueue.peek() != null){ // ewan ko pero i'm scared to take this out
             play.stopSong();
             play.setMedia(songsQueue.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -352,7 +353,14 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
-
+        else if (indexes != null && j < songs.size()){
+            play.stopSong();
+            play.setMedia(songs.get(j));
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+            play();
+        }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
@@ -591,7 +599,8 @@ public class MainController extends Controller implements Initializable {
     public void shuffle() {
         int i;
         System.out.println(songs.size());
-        ArrayList<Integer> indexes = getRandom(songs.size()-1);
+        indexes = new ArrayList<>();
+        /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
         ArrayList<String> shuffled = new ArrayList<>();
         shuffled.add(songs.get(0));
         for(i=0; i<songs.size()-1; i++){
