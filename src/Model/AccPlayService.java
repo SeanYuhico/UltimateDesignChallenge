@@ -17,7 +17,7 @@ public class AccPlayService {
         this.db = db;
     }
 
-    public boolean add(Playlist p, String user){
+    public boolean add(Playlist p){
         // ADD CONTACT
 
         String query = "INSERT INTO " + AccPlay.TABLE_NAME + " VALUE (?, ?, ?)";
@@ -26,7 +26,7 @@ public class AccPlayService {
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, p.getPlaylistID());
-            statement.setString(2, user);
+            statement.setString(2, LoginArtistController.getLoggedUser());
             statement.setDouble(3, AccPlay.PK);
 
             boolean added = statement.execute();
@@ -42,7 +42,7 @@ public class AccPlayService {
         Connection connection = db.getConnection();
         List<AccPlay> accPlays = new ArrayList<>();
 
-        String query = "SELECT * FROM " + PlaylistSong.TABLE_NAME;
+        String query = "SELECT * FROM " + AccPlay.TABLE_NAME;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);

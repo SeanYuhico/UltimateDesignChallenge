@@ -261,7 +261,7 @@ public class PlaylistHBox extends HBox {
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
                 follow.setOnAction(ev -> {
                     if(follow.getText().equals("Follow Playlist")){
-                        aps.add(p, LoginArtistController.getLoggedUser());
+                        aps.add(p);
                         follow.setText("Unfollow Playlist");
                     }
                     else{
