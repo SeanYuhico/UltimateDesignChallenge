@@ -83,7 +83,7 @@ public class UploadSongWindow implements Window{
 
             int checker = 1;
             String title = titleInput.getText();
-            String genre = genreInput.getSelectionModel().getSelectedItem().toString();
+            String genre = genreInput.getSelectionModel().getSelectedItem();
             String year = yearInput.getText();
             String songName = fileSelected.getText();
             String filename = cheatTextField.getText(); // para sa blob file

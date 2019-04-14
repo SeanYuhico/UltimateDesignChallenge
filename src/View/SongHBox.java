@@ -214,7 +214,10 @@ public class SongHBox extends HBox {
         else
             addToFaves.setText("Remove from Favorites");
 
-        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToAlbum, removeFromAlbum, addToQueue, edit, addToFaves);
+        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToAlbum, removeFromAlbum, addToQueue, addToFaves);
+
+        if(LoginArtistController.getLoggedAccount().isArtist() && song.getUsername().equals(LoginArtistController.getLoggedUser()))
+            contextMenu.getItems().add(edit);
 
         playBtn.setOnMouseClicked(e -> {
             controller.pause();

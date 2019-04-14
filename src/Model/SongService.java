@@ -138,8 +138,9 @@ public class SongService {
     public boolean update(int id, Song s){
         // UPDATE A CONTACT
         Connection connection = db.getConnection();
-        String query = "UPDATE " + Song.TABLE_NAME + " SET title = ? genre = ?, year = ? " + "WHERE songID = " + id;
-
+        String query = "UPDATE " + Song.TABLE_NAME + " SET title = ?, genre = ?, year = ? " + "WHERE songID = " + id;
+//        String query = "UPDATE " + Song.TABLE_NAME + " SET title = '" + s.getTitle() + "' genre = '" + s.getGenre() + "' year = '" +
+//                s.getYear() + "' WHERE songID = " + id;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
 
