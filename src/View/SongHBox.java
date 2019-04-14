@@ -3,8 +3,6 @@ package View;
 import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -223,6 +221,7 @@ public class SongHBox extends HBox {
             controller.pause();
             SongLoader loader = new SongLoader(db);
             SongService service = new SongService(db);
+            TimesPlayedService tps = new TimesPlayedService(db);
             PlayMP3 play = new PlayMP3();
             for(int i = 0; i < service.getAll().size(); i++){
                 if(titleLbl.getText().equals(service.getAll().get(i).getTitle())){
@@ -239,7 +238,17 @@ public class SongHBox extends HBox {
             }
             songExists = true;
             controller.play();
-            service.incNumTimesPlayed(song);
+//            service.incNumTimesPlayed(song);
+
+            boolean checker = false;
+            for(TimesPlayed tp : tps.getAll())
+                if(tp.getSongID() == song.getSongID() && tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
+                    checker = true;
+
+            if(!checker)
+                tps.add(song.getSongID());
+
+            tps.incNumTimesPlayed(song.getSongID(), LoginArtistController.getLoggedUser());
         });
 
         deleteBtn.setOnMouseClicked(e -> {

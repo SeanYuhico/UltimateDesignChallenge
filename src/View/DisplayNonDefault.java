@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class DisplayNonDefault {
     private static PlaylistService ps;
     private static PlaylistSongService playlistSongService;
     private static SongService ss;
+    private static TimesPlayedService tps;
     private static List<Playlist> playlists;
     private static List<PlaylistSong> playlistSongs;
     private static List<Song> songs;
@@ -27,6 +29,7 @@ public class DisplayNonDefault {
         ss = new SongService(db);
         ps = new PlaylistService(db);
         playlistSongService = new PlaylistSongService(db);
+        tps = new TimesPlayedService(db);
         playlists = ps.getAll();
         playlistSongs = playlistSongService.getAll();
         songs = ss.getAll();
@@ -76,19 +79,23 @@ public class DisplayNonDefault {
     public static void displayByMostPlayed (VBox dashboardVBox, MainController controller) {
 
         initialize(dashboardVBox);
+//
+//        int largestNum = 0;
+//
+//
+//        for(TimesPlayed tp : tps.getAll())
 
-        int largestNum = 0;
 
-        for(Song song: songs)
-            if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
-                if (song.getNumTimesPlayed() > largestNum)
-                    largestNum = song.getNumTimesPlayed();
-
-        for (int i=largestNum; i>=0; i--)
-            for(Song song: songs)
-                if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
-                    if (song.getNumTimesPlayed() == i)
-                        dashboardVBox.getChildren().add(new SongHBox(song, dashboardVBox, controller));
+//        for(Song song: songs)
+//            if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
+//                if (song.getNumTimesPlayed() > largestNum)
+//                    largestNum = song.getNumTimesPlayed();
+//
+//        for (int i=largestNum; i>=0; i--)
+//            for(Song song: songs)
+//                if(song.getUsername().equals(LoginArtistController.getLoggedUser()))
+//                    if (song.getNumTimesPlayed() == i)
+//                        dashboardVBox.getChildren().add(new SongHBox(song, dashboardVBox, controller));
 
     }
 

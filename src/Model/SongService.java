@@ -23,7 +23,7 @@ public class SongService {
     public boolean add(Song s){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + Song.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO " + Song.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
@@ -38,11 +38,11 @@ public class SongService {
             statement.setString(5, s.getGenre());
             statement.setString(6, s.getSongName());
             statement.setString(7, s.getYear());
-            statement.setInt(8, s.getNumTimesPlayed());
-            statement.setString(9, s.getUsername());
-            statement.setBinaryStream(10, input);
-            statement.setBoolean(11, s.isFave());
-            statement.setTimestamp(12, s.getDateUploaded());
+//            statement.setInt(8, s.getNumTimesPlayed());
+            statement.setString(8, s.getUsername());
+            statement.setBinaryStream(9, input);
+            statement.setBoolean(10, s.isFave());
+            statement.setTimestamp(11, s.getDateUploaded());
 
             boolean added = statement.execute();
             return added;
@@ -75,7 +75,7 @@ public class SongService {
                 s.setGenre(rs.getString(Song.COL_GENRE));
                 s.setSongName(rs.getString(Song.COL_SONGNAME));
                 s.setYear(rs.getString(Song.COL_YEAR));
-                s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
+//                s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
                 s.setUsername(rs.getString(Song.COL_USERNAME));
                 s.setFave(rs.getBoolean(Song.COL_FAVE));
                 s.setDateUploaded(rs.getTimestamp(Song.COL_DATEUPLOADED));
@@ -109,7 +109,7 @@ public class SongService {
                 s.setGenre(rs.getString(Song.COL_GENRE));
                 s.setSongName(rs.getString(Song.COL_SONGNAME));
                 s.setYear(rs.getString(Song.COL_YEAR));
-                s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
+//                s.setNumTimesPlayed(rs.getInt(Song.COL_NUMTIMESPLAYED));
                 s.setUsername(rs.getString(Song.COL_USERNAME));
                 s.setFave(rs.getBoolean(Song.COL_FAVE));
                 s.setDateUploaded(rs.getTimestamp(Song.COL_DATEUPLOADED));
@@ -124,16 +124,16 @@ public class SongService {
         return songs;
     }
 
-    public void incNumTimesPlayed(Song s){
-        Connection connection = db.getConnection();
-        String query = "UPDATE " + Song.TABLE_NAME + " SET numTimesPlayed = numTimesPlayed + 1 WHERE songID = " + s.getSongID();
-        try{
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.execute();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
+//    public void incNumTimesPlayed(Song s){
+//        Connection connection = db.getConnection();
+//        String query = "UPDATE " + Song.TABLE_NAME + " SET numTimesPlayed = numTimesPlayed + 1 WHERE songID = " + s.getSongID();
+//        try{
+//            PreparedStatement statement = connection.prepareStatement(query);
+//            statement.execute();
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//    }
 
     public boolean update(int id, Song s){
         // UPDATE A CONTACT

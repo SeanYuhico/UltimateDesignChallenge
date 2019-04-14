@@ -80,6 +80,7 @@ public class UploadSongWindow implements Window{
             Database db = new Database();
             SongService service = new SongService(db);
             PlaylistSongService playlistSongService = new PlaylistSongService(db);
+            TimesPlayedService tps = new TimesPlayedService(db);
 
             int checker = 1;
             String title = titleInput.getText();
@@ -131,6 +132,7 @@ public class UploadSongWindow implements Window{
                 titleInput.setText("");
                 yearInput.setText("");
                 fileSelected.setText("");
+                tps.add(s.getSongID());
             }
         });
         layout.getChildren().addAll(windowTitle, titleLabel, titleInput, /*albumLabel, albumInput,*/
