@@ -37,7 +37,7 @@ public class MusicPlayer {
                     SongService.guestLogout();
                     PlaylistSongService.guestLogout();
                     primaryStage.close();
-//                    Converter converter = new Converter();
+//                    SongConverter converter = new SongConverter();
 //                    try {
 //                        FileUtils.deleteDirectory(converter.getDirectory());
 //                    }
