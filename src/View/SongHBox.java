@@ -117,28 +117,24 @@ public class SongHBox extends HBox {
         for(Playlist p : playlists) {
             if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
-//                if (!LoginArtistController.getLoggedAccount().isArtist()) {
-                    MenuItem addHere = new MenuItem(p.getName());
-                    addHere.setOnAction(e -> {
-                        boolean add = true;
-                        for (PlaylistSong playlistSong : playlistSongs) {
-                            if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
-                                AlertBox.display("Error", "Song already in playlist lah");
-                                add = false;
-                                break;
-                            }
+                MenuItem addHere = new MenuItem(p.getName());
+                addHere.setOnAction(e -> {
+                    boolean add = true;
+                    for (PlaylistSong playlistSong : playlistSongs) {
+                        if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
+                            AlertBox.display("Error", "Song already in playlist lah");
+                            add = false;
+                            break;
                         }
-                        if (add){
-                            pss.addSongToPlaylist(p, song);
-                            QueueWindowController.recentlyAdded.add(song.getTitle());
-                            System.out.println("add1");
-                        }
+                    }
+                    if (add){
+                        pss.addSongToPlaylist(p, song);
+                        QueueWindowController.recentlyAdded.add(song.getTitle());
+                        System.out.println("add1");
+                    }
 
-                    });
-                    addToPlaylist.getItems().add(addHere);
-
-
-//                }
+                });
+                addToPlaylist.getItems().add(addHere);
             }
             else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
                 MenuItem addAlbum = new MenuItem(p.getName());
