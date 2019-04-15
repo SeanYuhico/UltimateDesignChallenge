@@ -117,7 +117,7 @@ public class SongHBox extends HBox {
         for(Playlist p : playlists) {
             if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
-                if (!LoginArtistController.getLoggedAccount().isArtist()) {
+//                if (!LoginArtistController.getLoggedAccount().isArtist()) {
                     MenuItem addHere = new MenuItem(p.getName());
                     addHere.setOnAction(e -> {
                         boolean add = true;
@@ -138,7 +138,7 @@ public class SongHBox extends HBox {
                     addToPlaylist.getItems().add(addHere);
 
 
-                }
+//                }
             }
             else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
                 MenuItem addAlbum = new MenuItem(p.getName());
@@ -275,7 +275,7 @@ public class SongHBox extends HBox {
             }
         });
 
-        
+
         titleLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
