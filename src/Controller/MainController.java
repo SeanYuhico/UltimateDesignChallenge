@@ -140,12 +140,19 @@ public class MainController extends Controller implements Initializable {
         volumeSlider.setValue(mp.getVolume() * 100);
         pauseImgVw.setVisible(false);
         playImgVw.setVisible(true);
-        dashboardPane.setVisible(true);
-        playlistPane.setVisible(false);
 
-        dbPane = dashboardPane;
-        mpPane = playlistPane;
-        showMySongs();
+        if(LoginArtistController.getLoggedAccount().isArtist()) {
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            showMySongs();
+        }
+        else{
+            dashboardPane.setVisible(false);
+            playlistPane.setVisible(true);
+            showMyPlaylists();
+            mySongsPlaylist.setVisible(false);
+            mySongsPlaylist.setDisable(true);
+        }
 
         dbPaneSortBy.setItems(sortList);
         dbPaneSortBy.getSelectionModel().selectFirst();
@@ -182,9 +189,16 @@ public class MainController extends Controller implements Initializable {
                 SongService.guestLogout();
                 PlaylistService.guestLogout();
             }
-            MusicPlayer.close(getMainStage());
-            LoginWindow.display(getMainStage());
-            mp.stop();
+//            MusicPlayer.close(getMainStage());
+//            mp.stop();
+
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("/View/LoginArtist.fxml"));
+                Main.getMainStage().setScene(new Scene(root, 789, 417));
+                Main.getMainStage().centerOnScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -478,20 +492,23 @@ public class MainController extends Controller implements Initializable {
     }
     public void uploadSong()
     {
-        int checker = 0;
-        PlaylistService ps = new PlaylistService(new Database());
-        for(Playlist p : ps.getAll())
-            if(p.isAlbum())
-                checker = 1;
-        if(checker == 1) {
-            UploadSongWindow.display();
-            dashboardVBox.getChildren().clear();
-            update();
-            QueueWindowController.recentlyAdded.add(UploadSongWindow.songTitle);
-            System.out.println("ditoooo");
-        }
-        else
-            AlertBox.display("Error", "Gawa ka muna ng album pls lang.");
+        UploadSongWindow.display();
+        dashboardVBox.getChildren().clear();
+        update();
+        QueueWindowController.recentlyAdded.add(UploadSongWindow.songTitle);
+        System.out.println("ditoooo");
+//        int checker = 0;
+//        PlaylistService ps = new PlaylistService(new Database());
+//        for(Playlist p : ps.getAll())
+//            if(p.isAlbum())
+//                checker = 1;
+//        if(checker == 1) {
+//            UploadSongWindow.display();
+//            dashboardVBox.getChildren().clear();
+//            update();
+//        }
+//        else
+//            AlertBox.display("Error", "Gawa ka muna ng album pls lang.");
     }
 
     public void forward() {

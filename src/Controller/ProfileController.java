@@ -65,7 +65,7 @@ public class ProfileController {
 
         for (Follower f: followers)
             if (f.getFollower().equals(LoginArtistController.getLoggedUser()))
-                followers.add(f);
+                this.followers.add(f);
 
         usernameLabel.setText(LoginArtistController.getLoggedUser());
 
