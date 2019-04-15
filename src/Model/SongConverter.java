@@ -17,7 +17,7 @@ public class SongConverter extends ConverterTemplate {
     public boolean checkFile(String title){
         results = new ArrayList<>();
 
-        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\").listFiles();
+        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -60,11 +60,11 @@ public class SongConverter extends ConverterTemplate {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\" + tempFilename;
+            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/Music/" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\" + results.get(index);
+            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/Music/" + results.get(index);
         }
         return tempFilename;
     }

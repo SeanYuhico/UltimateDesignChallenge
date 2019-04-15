@@ -26,7 +26,7 @@
                 <AnchorPane prefHeight="102.0" prefWidth="1155.0" style="-fx-background-color: #95713d;">
                     <children>
                         <Slider fx:id="volumeSlider" layoutX="1036.0" layoutY="54.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="22.0" prefWidth="94.0" />
-                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="MainController.play" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/play.png" />
                             </image>
