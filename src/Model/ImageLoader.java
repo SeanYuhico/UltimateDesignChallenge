@@ -22,9 +22,9 @@ public class ImageLoader {
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
                 Blob blob = rs.getBlob("cover");
-                Converter converter = new Converter();
+                ImageConverter imgConverter = new ImageConverter();
                 if(blob != null) {
-                    tempFilename = converter.convertToImg(blob, title);
+                    tempFilename = imgConverter.convertFromBlob(blob, title);
                     System.out.println("Image loaded");
                 }
             }

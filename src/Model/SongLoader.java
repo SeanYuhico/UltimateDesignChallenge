@@ -22,9 +22,9 @@ public class SongLoader {
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
                 Blob blob = rs.getBlob("file");
-                Converter converter = new Converter();
+                SongConverter songConverter = new SongConverter();
                 if(blob != null) {
-                    tempFilename = converter.convertToMP3(blob, title);
+                    tempFilename = songConverter.convertFromBlob(blob, title);
                     System.out.println("Song loaded");
                 }
             }
