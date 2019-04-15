@@ -40,8 +40,10 @@ public class LoginArtistController {
             int uExists = 0, pExists = 0;
 
             for (int i = 0; i < accountService.getAll().size(); i++) {
-                if (username.equals(accountService.getAll().get(i).getUsername()))
+                if (username.equals(accountService.getAll().get(i).getUsername())) {
                     uExists++;
+                    a.setArtist(accountService.getAll().get(i).isArtist());
+                }
                 if (password.equals(accountService.getAll().get(i).getPassword()))
                     pExists++;
             }

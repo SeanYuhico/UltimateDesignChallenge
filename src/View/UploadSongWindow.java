@@ -19,6 +19,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UploadSongWindow implements Window{
+
+    public static String songTitle;
+
     public static void display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -80,9 +83,11 @@ public class UploadSongWindow implements Window{
             Database db = new Database();
             SongService service = new SongService(db);
             PlaylistSongService playlistSongService = new PlaylistSongService(db);
+            TimesPlayedService tps = new TimesPlayedService(db);
 
             int checker = 1;
             String title = titleInput.getText();
+            songTitle = titleInput.getText();
             String genre = genreInput.getSelectionModel().getSelectedItem().toString();
             String year = yearInput.getText();
             String songName = fileSelected.getText();
@@ -131,6 +136,7 @@ public class UploadSongWindow implements Window{
                 titleInput.setText("");
                 yearInput.setText("");
                 fileSelected.setText("");
+                tps.add(s.getSongID());
             }
         });
         layout.getChildren().addAll(windowTitle, titleLabel, titleInput, /*albumLabel, albumInput,*/
@@ -140,4 +146,5 @@ public class UploadSongWindow implements Window{
         window.setTitle("UPLOAD NEW SONG");
         window.showAndWait();
     }
+
 }

@@ -11,7 +11,7 @@ public class Song {
     public static final String COL_GENRE = "genre";
     public static final String COL_SONGNAME = "songName";
     public static final String COL_YEAR = "year";
-    public static final String COL_NUMTIMESPLAYED = "numTimesPlayed";
+//    public static final String COL_NUMTIMESPLAYED = "numTimesPlayed";
     public static final String COL_USERNAME = "username";
     public static final String COL_FAVE = "fave";
     public static final String COL_DATEUPLOADED = "dateUploaded";
@@ -23,7 +23,7 @@ public class Song {
     private String genre;
     private String songName;
     private String year;
-    private int numTimesPlayed;
+//    private int numTimesPlayed;
     private Song nextOnQueue = null;
     private String username;
     private String filename;
@@ -60,9 +60,9 @@ public class Song {
         return year;
     }
 
-    public int getNumTimesPlayed() {
-        return numTimesPlayed;
-    }
+//    public int getNumTimesPlayed() {
+//        return numTimesPlayed;
+//    }
 
     public String getUsername() {
         return username;
@@ -98,9 +98,9 @@ public class Song {
 
     public void setNextOnQueue(Song nextSong) {nextOnQueue = nextSong;}
 
-    public void setNumTimesPlayed(int numTimesPlayed) {
-        this.numTimesPlayed++;
-    }
+//    public void setNumTimesPlayed(int numTimesPlayed) {
+//        this.numTimesPlayed++;
+//    }
 
     public void setUsername(String username)
     {

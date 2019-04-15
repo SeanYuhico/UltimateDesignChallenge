@@ -33,11 +33,13 @@ public class PlaylistService {
             statement.setString(4, p.getUsername());
             statement.setBoolean(5, p.isPublic());
             statement.setBoolean(6, p.isAlbum());
-            statement.setBinaryStream(7, null);
+            statement.setBinaryStream(7, new FileInputStream(new File("src/Pictures/vinyl.png")));
 
             boolean added = statement.execute();
             return added;
         }catch (SQLException e){
+            e.printStackTrace();
+        }catch (FileNotFoundException e){
             e.printStackTrace();
         }
         return false;

@@ -6,6 +6,7 @@ import Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -26,17 +27,11 @@ public class EditSongWindow implements Window{
         PlaylistService ps = new PlaylistService(db);
         List<Playlist> playlists = ps.getAll();
         String exTitle = "";
-        String exArtist = "";
-        String exAlbum = "";
-        String exGenre = "";
         String exYear = "";
 
         for(int i = 0; i < service.getAll().size(); i++){
             if(i == songToEdit){
                 exTitle = service.getAll().get(i).getTitle();
-                exArtist = service.getAll().get(i).getArtist();
-                exAlbum = service.getAll().get(i).getAlbumName();
-                exGenre = service.getAll().get(i).getGenre();
                 exYear = service.getAll().get(i).getYear();
             }
         }
@@ -46,7 +41,10 @@ public class EditSongWindow implements Window{
         Label genreLabel = new Label("Genre: ");
         Label yearLabel = new Label("Year: ");
         TextField titleInput = new TextField(exTitle);
-        TextField genreInput = new TextField(exGenre);
+        ComboBox<String> genreInput = new ComboBox<>();
+        genreInput.getItems().addAll("KPOP", "OPM", "Rock", "Pop", "Ballad", "RNB");
+        genreInput.getSelectionModel().selectFirst();
+
         TextField yearInput = new TextField(exYear);
 
         Button editBtn = new Button("Edit");
@@ -68,7 +66,7 @@ public class EditSongWindow implements Window{
         editBtn.setOnAction(e -> {
             int titleCheck = 1;
             String title = titleInput.getText();
-            String genre = genreInput.getText();
+            String genre = genreInput.getSelectionModel().getSelectedItem();
             String year = yearInput.getText();
 
             if(title.isEmpty())

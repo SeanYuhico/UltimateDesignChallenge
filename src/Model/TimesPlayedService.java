@@ -9,25 +9,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccPlayService {
+public class TimesPlayedService {
     private Database db;
 
-    public AccPlayService(Database db)
-    {
+    public TimesPlayedService(Database db){
         this.db = db;
     }
 
-    public boolean add(Playlist p){
+    public boolean add(int id){
         // ADD CONTACT
 
-        String query = "INSERT INTO " + AccPlay.TABLE_NAME + " VALUE (?, ?, ?)";
+        String query = "INSERT INTO " + TimesPlayed.TABLE_NAME + " VALUE (?, ?, ?, ?)";
         Connection connection = db.getConnection();
 
         try{
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, p.getPlaylistID());
+            statement.setInt(1, id);
             statement.setString(2, LoginArtistController.getLoggedUser());
-            statement.setDouble(3, AccPlay.PK);
+            statement.setInt(3, 0);
+            statement.setDouble(4, TimesPlayed.PK);
 
             boolean added = statement.execute();
             return added;
@@ -37,37 +37,37 @@ public class AccPlayService {
         return false;
     }
 
-    public List<AccPlay> getAll(){
+    public List<TimesPlayed> getAll(){
         //GET CONTACTS
         Connection connection = db.getConnection();
-        List<AccPlay> accPlays = new ArrayList<>();
+        List<TimesPlayed> tps = new ArrayList<>();
 
-        String query = "SELECT * FROM " + AccPlay.TABLE_NAME;
+        String query = "SELECT * FROM " + TimesPlayed.TABLE_NAME;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
 
             while(rs.next()){
-                AccPlay ap = new AccPlay();
-                ap.setPlaylistID(rs.getInt(AccPlay.COL_PLAYLISTID));
-                ap.setUser(rs.getString(AccPlay.COL_USER));
-                AccPlay.PK = rs.getDouble(AccPlay.COL_PK);
+                TimesPlayed tp = new TimesPlayed();
+                tp.setSongID(rs.getInt(TimesPlayed.COL_SONGID));
+                tp.setAccountName(rs.getString(TimesPlayed.COL_ACCOUNTNAME));
+                tp.setNumTimesPlayed(rs.getInt(TimesPlayed.COL_NUMTIMESPLAYED));
+                TimesPlayed.PK = rs.getDouble(TimesPlayed.COL_PK);
 
-                accPlays.add(ap);
+                tps.add(tp);
             }
 
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return accPlays;
+        return tps;
     }
 
-    public void unfollow(int id, String user){
+    public void incNumTimesPlayed(int id, String user){
         Connection connection = db.getConnection();
-
-        String query = "DELETE FROM " + AccPlay.TABLE_NAME + " WHERE playlistID = " + id + " AND user = '" + user + "'";
-
+        String query = "UPDATE " + TimesPlayed.TABLE_NAME + " SET numTimesPlayed = numTimesPlayed + 1 WHERE accountName = '" +
+                user + "' AND songID = " + id;
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();
@@ -75,4 +75,5 @@ public class AccPlayService {
             e.printStackTrace();
         }
     }
+
 }

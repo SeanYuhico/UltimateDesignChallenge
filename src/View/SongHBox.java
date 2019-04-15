@@ -2,9 +2,8 @@ package View;
 
 import Controller.LoginArtistController;
 import Controller.MainController;
+import Controller.QueueWindowController;
 import Model.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
@@ -116,7 +115,7 @@ public class SongHBox extends HBox {
 
         // di pwede mag-add ng songs sa default playlists.
         for(Playlist p : playlists) {
-            if (!p.getName().equals("Most Played Songs") &&
+            if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
                 if (!LoginArtistController.getLoggedAccount().isArtist()) {
                     MenuItem addHere = new MenuItem(p.getName());
@@ -129,10 +128,16 @@ public class SongHBox extends HBox {
                                 break;
                             }
                         }
-                        if (add)
+                        if (add){
                             pss.addSongToPlaylist(p, song);
+                            QueueWindowController.recentlyAdded.add(song.getTitle());
+                            System.out.println("add1");
+                        }
+
                     });
                     addToPlaylist.getItems().add(addHere);
+
+
                 }
             }
             else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
@@ -159,6 +164,8 @@ public class SongHBox extends HBox {
                 addToAlbum.getItems().add(addAlbum);
             }
         }
+
+
 
         ArrayList<Integer> playlistIDsInPS = new ArrayList<>();
         for(PlaylistSong playlistSong : pss.getAll())
@@ -214,12 +221,16 @@ public class SongHBox extends HBox {
         else
             addToFaves.setText("Remove from Favorites");
 
-        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToAlbum, removeFromAlbum, addToQueue, edit, addToFaves);
+        contextMenu.getItems().addAll(addToPlaylist, removeFromPlaylist, addToAlbum, removeFromAlbum, addToQueue, addToFaves);
+
+        if(LoginArtistController.getLoggedAccount().isArtist() && song.getUsername().equals(LoginArtistController.getLoggedUser()))
+            contextMenu.getItems().add(edit);
 
         playBtn.setOnMouseClicked(e -> {
             controller.pause();
             SongLoader loader = new SongLoader(db);
             SongService service = new SongService(db);
+            TimesPlayedService tps = new TimesPlayedService(db);
             PlayMP3 play = new PlayMP3();
             for(int i = 0; i < service.getAll().size(); i++){
                 if(titleLbl.getText().equals(service.getAll().get(i).getTitle())){
@@ -236,7 +247,17 @@ public class SongHBox extends HBox {
             }
             songExists = true;
             controller.play();
-            service.incNumTimesPlayed(song);
+//            service.incNumTimesPlayed(song);
+
+            boolean checker = false;
+            for(TimesPlayed tp : tps.getAll())
+                if(tp.getSongID() == song.getSongID() && tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
+                    checker = true;
+
+            if(!checker)
+                tps.add(song.getSongID());
+
+            tps.incNumTimesPlayed(song.getSongID(), LoginArtistController.getLoggedUser());
         });
 
         deleteBtn.setOnMouseClicked(e -> {
@@ -284,4 +305,5 @@ public class SongHBox extends HBox {
     {
         return this.song;
     }
+
 }

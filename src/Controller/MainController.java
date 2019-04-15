@@ -58,15 +58,19 @@ public class MainController extends Controller implements Initializable {
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
     int songIndex, j =0;
+    boolean isArtist = false;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
     AccountService as;
     SongService ss;
+    PlaylistService pls;
+    PlaylistSongService ps;
     SongLoader sLoader;
     PlayMP3 play;
-    ArrayList<String> songs;
+    static ArrayList<String> songs;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
+    ArrayList<Integer> indexes;
 
 
     @Override
@@ -80,6 +84,8 @@ public class MainController extends Controller implements Initializable {
         Database db = new Database();
         SongService ss = new SongService(db);
         as = new AccountService(db);
+        pls = new PlaylistService(db);
+        ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
         songsQueue = new LinkedList<>();
         displayer = new Displayer();
@@ -134,12 +140,19 @@ public class MainController extends Controller implements Initializable {
         volumeSlider.setValue(mp.getVolume() * 100);
         pauseImgVw.setVisible(false);
         playImgVw.setVisible(true);
-        dashboardPane.setVisible(true);
-        playlistPane.setVisible(false);
 
-        dbPane = dashboardPane;
-        mpPane = playlistPane;
-        showMySongs();
+        if(LoginArtistController.getLoggedAccount().isArtist()) {
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            showMySongs();
+        }
+        else{
+            dashboardPane.setVisible(false);
+            playlistPane.setVisible(true);
+            showMyPlaylists();
+            mySongsPlaylist.setVisible(false);
+            mySongsPlaylist.setDisable(true);
+        }
 
         dbPaneSortBy.setItems(sortList);
         dbPaneSortBy.getSelectionModel().selectFirst();
@@ -149,7 +162,6 @@ public class MainController extends Controller implements Initializable {
 
         // someone make this work pls T_T
 //        if (!LoginArtistController.getLoggedAccount().isArtist()) {
-        boolean isArtist = false;
         for(int i = 0; i < as.getAll().size(); i++){
             if(as.getAll().get(i).getUsername().equals(LoginArtistController.getLoggedUser()) && as.getAll().get(i).isArtist()){
                 isArtist = true;
@@ -177,9 +189,16 @@ public class MainController extends Controller implements Initializable {
                 SongService.guestLogout();
                 PlaylistService.guestLogout();
             }
-            MusicPlayer.close(getMainStage());
-            LoginWindow.display(getMainStage());
-            mp.stop();
+//            MusicPlayer.close(getMainStage());
+//            mp.stop();
+
+            try{
+                Parent root = FXMLLoader.load(getClass().getResource("/View/LoginArtist.fxml"));
+                Main.getMainStage().setScene(new Scene(root, 789, 417));
+                Main.getMainStage().centerOnScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -213,6 +232,7 @@ public class MainController extends Controller implements Initializable {
                 songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
             }
         }
+        System.out.println(songs.size());
         play.setMedia(filename);
     }
 
@@ -300,17 +320,62 @@ public class MainController extends Controller implements Initializable {
         }*/
     }
 
+    public void queuePlaylist(String playlist){
+        db = new Database();
+        ps = new PlaylistSongService(db);
+        pls = new PlaylistService(db);
+        ss = new SongService(db);
+        sLoader = new SongLoader(db);
+        play = new PlayMP3();
+        songs = new ArrayList<>();
+        ArrayList<Integer> iDs = new ArrayList<>();
+        int id = 0;
+        System.out.println("sleep");
+        for(int j = 0; j < pls.getAll().size(); j++){
+            if(pls.getAll().get(j).getName().equals(playlist)){
+                id = pls.getAll().get(j).getPlaylistID();
+                System.out.println("PLEASE");
+            }
+        }
+
+        for (int i = 0; i < ps.getAll().size(); i++) {
+            if(ps.getAll().get(i).getPlaylistID() == id){
+                iDs.add(i);
+            }
+        }
+
+        for (int i = 0; i < ss.getAll().size(); i++) {
+            songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            System.out.println("UGH");
+        }
+    }
+
     public void next ()
-    {j++;
-        if(songsQueue != null && songsQueue.peek() != null){
+    {
+        if(j != songs.size()) {
+            j++;
+        }
+
+        if(j == songs.size()){
+            System.out.println("Max songs");
+        }
+        else if(songsQueue != null && songsQueue.peek() != null){ // ewan ko pero i'm scared to take this out
             play.stopSong();
             play.setMedia(songsQueue.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
+            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
         }
-
+        else if (indexes != null && j < songs.size()){
+            play.stopSong();
+            play.setMedia(songs.get(j));
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+            play();
+        }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
@@ -346,7 +411,10 @@ public class MainController extends Controller implements Initializable {
 
     public void prev()
     {
-        j--;
+        if(j != 0) {
+            j--;
+        }
+
         if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
             play.stopSong();
             play.setMedia(songs.get(j));
@@ -424,18 +492,23 @@ public class MainController extends Controller implements Initializable {
     }
     public void uploadSong()
     {
-        int checker = 0;
-        PlaylistService ps = new PlaylistService(new Database());
-        for(Playlist p : ps.getAll())
-            if(p.isAlbum())
-                checker = 1;
-        if(checker == 1) {
-            UploadSongWindow.display();
-            dashboardVBox.getChildren().clear();
-            update();
-        }
-        else
-            AlertBox.display("Error", "Gawa ka muna ng album pls lang.");
+        UploadSongWindow.display();
+        dashboardVBox.getChildren().clear();
+        update();
+        QueueWindowController.recentlyAdded.add(UploadSongWindow.songTitle);
+        System.out.println("ditoooo");
+//        int checker = 0;
+//        PlaylistService ps = new PlaylistService(new Database());
+//        for(Playlist p : ps.getAll())
+//            if(p.isAlbum())
+//                checker = 1;
+//        if(checker == 1) {
+//            UploadSongWindow.display();
+//            dashboardVBox.getChildren().clear();
+//            update();
+//        }
+//        else
+//            AlertBox.display("Error", "Gawa ka muna ng album pls lang.");
     }
 
     public void forward() {
@@ -544,16 +617,21 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void shuffle() {
-        ArrayList<Integer> indexes = getRandom(0, songs.size()-1);;
+        int i;
+        System.out.println(songs.size());
+        indexes = new ArrayList<>();
+        /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
         ArrayList<String> shuffled = new ArrayList<>();
-        for(int i=0; i<songs.size()-1; i++){
+        shuffled.add(songs.get(0));
+        for(i=0; i<songs.size()-1; i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
         }
         songs = shuffled;
+        System.out.println("Shuffled!");
     }
 
     public static final Random gen = new Random();
-    public static ArrayList<Integer> getRandom(int n, int maxRange) {
+    public static ArrayList<Integer> getRandom(int maxRange) {
         ArrayList<Integer> result = new ArrayList<>();
         ArrayList<Integer> used = new ArrayList<>();
 
@@ -562,7 +640,7 @@ public class MainController extends Controller implements Initializable {
             int newRandom;
             do {
                 newRandom = gen.nextInt(maxRange+1);
-            } while (used.contains(newRandom));
+            } while (used.contains(newRandom) || newRandom == 0);
             result.add(newRandom);
             used.add(newRandom);
         }
