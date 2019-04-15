@@ -46,7 +46,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Pane dashboardPane, playlistPane;
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
-    @FXML ImageView crtAbmBtn, upldSongBtn, imgvwShuffle;
+    @FXML ImageView crtAbmBtn, upldSongBtn, imgvwShuffle, unshuffleImgVw;
     @FXML Label crtAbmLbl, upldSongLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
@@ -628,6 +628,16 @@ public class MainController extends Controller implements Initializable {
         }
         songs = shuffled;
         System.out.println("Shuffled!");
+
+        if (unshuffleImgVw.isVisible()) {
+            unshuffleImgVw.setVisible(false);
+            imgvwShuffle.setVisible(true);
+        }
+        else {
+            unshuffleImgVw.setVisible(true);
+            imgvwShuffle.setVisible(false);
+        }
+
     }
 
     public static final Random gen = new Random();

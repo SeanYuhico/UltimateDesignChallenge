@@ -19,14 +19,14 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
     <bottom>
         <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
             <children>
                 <AnchorPane prefHeight="102.0" prefWidth="1155.0" style="-fx-background-color: #95713d;">
                     <children>
                         <Slider fx:id="volumeSlider" layoutX="1036.0" layoutY="54.0" onDragDetected="#changeVolume" onDragDone="#changeVolume" onDragDropped="#changeVolume" onDragEntered="#changeVolume" onDragExited="#changeVolume" onDragOver="#changeVolume" onMouseDragEntered="#changeVolume" onMouseDragExited="#changeVolume" onMouseDragOver="#changeVolume" onMouseDragReleased="#changeVolume" prefHeight="22.0" prefWidth="94.0" />
-                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="#play" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="playImgVw" fitHeight="43.0" fitWidth="48.0" layoutX="606.0" layoutY="28.0" onMouseClicked="MainController.play" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/play.png" />
                             </image>
@@ -46,7 +46,7 @@
                                 <Image url="@../Pictures/repeat.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="imgvwShuffle" fitHeight="43.0" fitWidth="227.0" layoutX="450.0" layoutY="28.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgvwShuffle" fitHeight="43.0" fitWidth="43.0" layoutX="450.0" layoutY="28.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/shuffle.png" />
                             </image>
@@ -81,7 +81,7 @@
                         <Image url="@../Pictures/next10sec.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="repeatOnceVw" fitHeight="27.0" fitWidth="25.0" layoutX="756.0" layoutY="27.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="repeatOnceVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatPlaylist" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../Pictures/repeatOnce.png" />
                      </image>
@@ -109,6 +109,16 @@
                   <ImageView fx:id="uncheckedNotifImgVw" fitHeight="24.0" fitWidth="27.0" layoutX="929.0" layoutY="54.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/uncheckedNotification.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="repeatPlaylistImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="764.0" layoutY="38.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../Pictures/repeatPlaylist.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="unshuffleImgVw" fitHeight="43.0" fitWidth="43.0" layoutX="450.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../Pictures/unshuffled.png" />
                      </image>
                   </ImageView>
                     </children>
