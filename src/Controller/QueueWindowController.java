@@ -40,6 +40,10 @@ public class QueueWindowController {
 
 
     public void showQueue() {
+        queueVBox.getChildren().clear();
+        for(String songTitleDash : MainController.songsCopy){
+            queueVBox.getChildren().add(new Label(songTitleDash));
+        }
 
     }
 
