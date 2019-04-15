@@ -114,7 +114,7 @@ public class SongHBox extends HBox {
 
         // di pwede mag-add ng songs sa default playlists.
         for(Playlist p : playlists) {
-            if (!p.getName().equals("Most Played Songs") &&
+            if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
                 if (!LoginArtistController.getLoggedAccount().isArtist()) {
                     MenuItem addHere = new MenuItem(p.getName());

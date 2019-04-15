@@ -102,7 +102,8 @@ public class Register {
                     AlertBox.display("Testing", "Registration Successful!");
                     accService.add(a);
                     plService.add(mps);
-                    plService.add(ms);
+                    if(a.isArtist())
+                        plService.add(ms);
                     plService.add(na);
                     window.close();
                 }
