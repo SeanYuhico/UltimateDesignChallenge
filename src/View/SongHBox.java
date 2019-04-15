@@ -129,8 +129,12 @@ public class SongHBox extends HBox {
                     }
                     if (add){
                         pss.addSongToPlaylist(p, song);
-                        QueueWindowController.recentlyAdded.add(song.getTitle());
-                        System.out.println("add1");
+
+                        if(!LoginArtistController.getLoggedAccount().isArtist()){
+                            QueueWindowController.recentlyAdded.add(song.getTitle());
+                            System.out.println("add1");
+                        }
+
                     }
 
                 });
