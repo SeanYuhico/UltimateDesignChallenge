@@ -85,7 +85,10 @@ public class Register {
 
                 // NO ALBUM PLAYLIST
                 Playlist na = new Playlist();
-                na.setPlaylistID(plService.getAll().size()+3);
+                if(a.isArtist())
+                    na.setPlaylistID(plService.getAll().size()+3);
+                else
+                    na.setPlaylistID(plService.getAll().size()+2);
                 na.setName("No Album");
                 na.setSongCount(0);
                 na.setUsername(username);
