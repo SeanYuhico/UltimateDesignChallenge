@@ -19,7 +19,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
     <bottom>
         <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
             <children>
@@ -101,12 +101,12 @@
                         <Image url="@../Pictures/queue.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="notifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="929.0" layoutY="53.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="notifImgVw" fitHeight="22.0" fitWidth="19.0" layoutX="932.0" layoutY="55.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/notifications.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="927.0" layoutY="53.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="uncheckedNotifImgVw" fitHeight="24.0" fitWidth="27.0" layoutX="929.0" layoutY="54.0" onMouseClicked="#showNotifications" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/uncheckedNotification.png" />
                      </image>
