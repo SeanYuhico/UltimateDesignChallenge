@@ -68,6 +68,7 @@ public class MainController extends Controller implements Initializable {
     SongLoader sLoader;
     PlayMP3 play;
     static ArrayList<String> songs;
+    static Queue<String> songsCopy;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
     ArrayList<Integer> indexes;
@@ -88,6 +89,7 @@ public class MainController extends Controller implements Initializable {
         ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
         songsQueue = new LinkedList<>();
+        songsCopy = new LinkedList();
         displayer = new Displayer();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
         albumPlaylistBuilder = new AlbumPlaylistBuilder();
@@ -226,10 +228,12 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+        songsCopy = new LinkedList<>();
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
                 songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+                songsCopy.add(ss.getAll().get(i).getTitle());
             }
         }
         System.out.println(songs.size());
@@ -267,9 +271,12 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+        songsCopy = new LinkedList<>();
+        j = 0;
 
         for (int i = 0; i < ss.getAll(dashboardPlaylistLbl.getText()).size(); i++) {
             songs.add(sLoader.loadSong(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle()));
+            songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
         }
         play.setMedia(songs.get(j));
         /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -309,6 +316,7 @@ public class MainController extends Controller implements Initializable {
         play = new PlayMP3();
 //        songsQueue = new LinkedList<>();
         songs.add(sLoader.loadSong(qFile));
+        songsCopy.add(sLoader.loadSong(qFile));
 
         /*for(int k = 0; k < ss.getAll().size(); k++) {
             if(ss.getAll().get(k).getTitle().equals(qFile))
@@ -328,6 +336,7 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+        songsCopy = new LinkedList();
         ArrayList<Integer> iDs = new ArrayList<>();
         int id = 0;
         System.out.println("sleep");
@@ -346,6 +355,7 @@ public class MainController extends Controller implements Initializable {
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
             System.out.println("UGH");
         }
     }
@@ -415,7 +425,20 @@ public class MainController extends Controller implements Initializable {
             j--;
         }
 
-        if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
+        if (indexes != null && j < songs.size()){
+            play.stopSong();
+            play.setMedia(songs.get(j));
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            if(j == 0) {
+                setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
+            }
+            else{
+                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getTitle());
+            }
+            play();
+        }
+        else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -768,6 +791,10 @@ public class MainController extends Controller implements Initializable {
 
     public MediaPlayer getMp() {
         return mp;
+    }
+
+    public void resetJ(){
+        j = 0;
     }
 
     public void setMp(MediaPlayer mp) {
