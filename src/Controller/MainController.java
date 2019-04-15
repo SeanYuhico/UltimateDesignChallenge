@@ -33,6 +33,7 @@ public class MainController extends Controller implements Initializable {
     @FXML private MediaView mv;
     private MediaPlayer mp, currPlayer, nextPlayer;
     private Media me;
+    public static Pane dbPane, mpPane;
     @FXML Slider volumeSlider, progressSlider;
     @FXML Button playBtn, pauseBtn;
     @FXML BorderPane bPane;
@@ -75,7 +76,7 @@ public class MainController extends Controller implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resources) {
 
-//        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -116,14 +117,14 @@ public class MainController extends Controller implements Initializable {
 //            }
 //            songIndex = 0;
 
-//        me = new Media(new File(aaronPath).toURI().toString());
-//        mp = new MediaPlayer(me);
+        me = new Media(new File(aaronPath).toURI().toString());
+        mp = new MediaPlayer(me);
 
 //            me = new Media(new File(files.get(0)).toURI().toString());
 //            mp = players.get(0);
-//        mv = new MediaView();
-//        mv.setMediaPlayer(mp);
-//        volumeSlider.setValue(mp.getVolume() * 100);
+        mv = new MediaView();
+        mv.setMediaPlayer(mp);
+        volumeSlider.setValue(mp.getVolume() * 100);
 //            DoubleProperty width = mv.fitWidthProperty();
 //            DoubleProperty height = mv.fitHeightProperty();
 //            width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
@@ -136,7 +137,7 @@ public class MainController extends Controller implements Initializable {
 //        height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 
 //        setMPLabels();
-//        volumeSlider.setValue(mp.getVolume() * 100);
+        volumeSlider.setValue(mp.getVolume() * 100);
         pauseImgVw.setVisible(false);
         playImgVw.setVisible(true);
 
@@ -166,6 +167,7 @@ public class MainController extends Controller implements Initializable {
                 isArtist = true;
             }
         }
+
 
         if(!isArtist){
             crtAbmBtn.setDisable(true);
@@ -364,6 +366,7 @@ public class MainController extends Controller implements Initializable {
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
+            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
         }
         else if (indexes != null && j < songs.size()){
             play.stopSong();
@@ -492,6 +495,8 @@ public class MainController extends Controller implements Initializable {
         UploadSongWindow.display();
         dashboardVBox.getChildren().clear();
         update();
+        QueueWindowController.recentlyAdded.add(UploadSongWindow.songTitle);
+        System.out.println("ditoooo");
 //        int checker = 0;
 //        PlaylistService ps = new PlaylistService(new Database());
 //        for(Playlist p : ps.getAll())

@@ -2,6 +2,7 @@ package View;
 
 import Controller.LoginArtistController;
 import Controller.MainController;
+import Controller.QueueWindowController;
 import Model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -116,20 +117,28 @@ public class SongHBox extends HBox {
         for(Playlist p : playlists) {
             if (!p.getName().equals("My Songs") && !p.getName().equals("Most Played Songs") &&
                     p.getUsername().equals(LoginArtistController.getLoggedUser()) && !p.isAlbum()) {
-                MenuItem addHere = new MenuItem(p.getName());
-                addHere.setOnAction(e -> {
-                    boolean add = true;
-                    for (PlaylistSong playlistSong : playlistSongs) {
-                        if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
-                            AlertBox.display("Error", "Song already in playlist lah");
-                            add = false;
-                            break;
+//                if (!LoginArtistController.getLoggedAccount().isArtist()) {
+                    MenuItem addHere = new MenuItem(p.getName());
+                    addHere.setOnAction(e -> {
+                        boolean add = true;
+                        for (PlaylistSong playlistSong : playlistSongs) {
+                            if (playlistSong.getPlaylistID() == p.getPlaylistID() && playlistSong.getSongID() == song.getSongID()) {
+                                AlertBox.display("Error", "Song already in playlist lah");
+                                add = false;
+                                break;
+                            }
                         }
-                    }
-                    if (add)
-                        pss.addSongToPlaylist(p, song);
-                });
-                addToPlaylist.getItems().add(addHere);
+                        if (add){
+                            pss.addSongToPlaylist(p, song);
+                            QueueWindowController.recentlyAdded.add(song.getTitle());
+                            System.out.println("add1");
+                        }
+
+                    });
+                    addToPlaylist.getItems().add(addHere);
+
+
+//                }
             }
             else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
                 MenuItem addAlbum = new MenuItem(p.getName());
@@ -155,6 +164,8 @@ public class SongHBox extends HBox {
                 addToAlbum.getItems().add(addAlbum);
             }
         }
+
+
 
         ArrayList<Integer> playlistIDsInPS = new ArrayList<>();
         for(PlaylistSong playlistSong : pss.getAll())
@@ -236,6 +247,7 @@ public class SongHBox extends HBox {
             }
             songExists = true;
             controller.play();
+//            service.incNumTimesPlayed(song);
 
             boolean checker = false;
             for(TimesPlayed tp : tps.getAll())
@@ -263,7 +275,7 @@ public class SongHBox extends HBox {
             }
         });
 
-        
+
         titleLbl.setOnMouseClicked(e -> {
             if(e.getButton() == MouseButton.SECONDARY){
                 contextMenu.show(titleLbl, e.getScreenX(), e.getScreenY());
@@ -293,4 +305,5 @@ public class SongHBox extends HBox {
     {
         return this.song;
     }
+
 }
