@@ -17,7 +17,7 @@ public class Converter {
     public String convertToMP3(Blob blob, String title){
         if (!checkMP3(title)) {
             try {
-                directory = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music");
+                directory = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music");
                 String newTitle = title.replaceAll("\\s", "");
                 File tempMp3 = File.createTempFile(newTitle, ".mp3", directory);
                 InputStream is = blob.getBinaryStream();
@@ -38,11 +38,11 @@ public class Converter {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music/" + tempFilename;
+            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music/" + results.get(index);
+            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\" + results.get(index);
         }
         return tempFilename;
     }
@@ -51,7 +51,7 @@ public class Converter {
         results = new ArrayList<>();
 
 
-        File[] files = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music/").listFiles();
+        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music\\").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -73,7 +73,7 @@ public class Converter {
         results = new ArrayList<>();
 
 
-        File[] files = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt/").listFiles();
+        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -95,7 +95,7 @@ public class Converter {
     public String convertToImg(Blob blob, String title){
         if (!checkImg(title)) {
             try {
-                directory = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt");
+                directory = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt");
                 String newTitle = title.replaceAll("\\s", "");
                 File tempImg = File.createTempFile(newTitle, ".png", directory);
                 InputStream is = blob.getBinaryStream();
@@ -116,11 +116,11 @@ public class Converter {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt/" + tempFilename;
+            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt/" + results.get(index);
+            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\" + results.get(index);
         }
         return tempFilename;
     }
