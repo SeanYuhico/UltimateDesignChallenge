@@ -66,7 +66,7 @@ public class TimesPlayedService {
 
     public void incNumTimesPlayed(int id, String user){
         Connection connection = db.getConnection();
-        String query = "UPDATE " + TimesPlayed.TABLE_NAME + " SET numTimesPlayed = numTimesPlayed + 1 WHERE user = '" +
+        String query = "UPDATE " + TimesPlayed.TABLE_NAME + " SET numTimesPlayed = numTimesPlayed + 1 WHERE accountName = '" +
                 user + "' AND songID = " + id;
         try{
             PreparedStatement statement = connection.prepareStatement(query);
