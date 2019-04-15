@@ -352,6 +352,7 @@ public class MainController extends Controller implements Initializable {
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
+            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
         }
         else if (indexes != null && j < songs.size()){
             play.stopSong();
@@ -486,6 +487,8 @@ public class MainController extends Controller implements Initializable {
             UploadSongWindow.display();
             dashboardVBox.getChildren().clear();
             update();
+            QueueWindowController.recentlyAdded.add(UploadSongWindow.songTitle);
+            System.out.println("ditoooo");
         }
         else
             AlertBox.display("Error", "Gawa ka muna ng album pls lang.");

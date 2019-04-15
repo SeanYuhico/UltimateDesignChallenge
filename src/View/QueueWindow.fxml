@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c99326;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QueueWindowController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c99326;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QueueWindowController">
     <children>
         <AnchorPane prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #43320e;">
          <children>
@@ -39,7 +39,11 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="214.0" prefWidth="530.0">
                             <children>
-                                <VBox fx:id="queueVBox" prefHeight="218.0" prefWidth="534.0" />
+                        <ScrollPane>
+                           <content>
+                                      <VBox fx:id="queueVBox" prefHeight="218.0" prefWidth="534.0" />
+                           </content>
+                        </ScrollPane>
                             </children>
                         </AnchorPane>
                     </content>

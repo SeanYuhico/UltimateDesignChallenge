@@ -2,6 +2,7 @@ package View;
 
 import Controller.LoginArtistController;
 import Controller.MainController;
+import Controller.QueueWindowController;
 import Model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -127,10 +128,16 @@ public class SongHBox extends HBox {
                                 break;
                             }
                         }
-                        if (add)
+                        if (add){
                             pss.addSongToPlaylist(p, song);
+                            QueueWindowController.recentlyAdded.add(song.getTitle());
+                            System.out.println("add1");
+                        }
+
                     });
                     addToPlaylist.getItems().add(addHere);
+
+
                 }
             }
             else if(!p.getName().equals("No Album") && p.getUsername().equals(LoginArtistController.getLoggedUser()) && p.isAlbum()) {
@@ -157,6 +164,8 @@ public class SongHBox extends HBox {
                 addToAlbum.getItems().add(addAlbum);
             }
         }
+
+
 
         ArrayList<Integer> playlistIDsInPS = new ArrayList<>();
         for(PlaylistSong playlistSong : pss.getAll())
@@ -296,4 +305,5 @@ public class SongHBox extends HBox {
     {
         return this.song;
     }
+
 }

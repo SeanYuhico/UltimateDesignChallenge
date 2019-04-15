@@ -19,6 +19,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class UploadSongWindow implements Window{
+
+    public static String songTitle;
+
     public static void display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -84,7 +87,8 @@ public class UploadSongWindow implements Window{
 
             int checker = 1;
             String title = titleInput.getText();
-            String genre = genreInput.getSelectionModel().getSelectedItem();
+            songTitle = titleInput.getText();
+            String genre = genreInput.getSelectionModel().getSelectedItem().toString();
             String year = yearInput.getText();
             String songName = fileSelected.getText();
             String filename = cheatTextField.getText(); // para sa blob file
@@ -142,4 +146,5 @@ public class UploadSongWindow implements Window{
         window.setTitle("UPLOAD NEW SONG");
         window.showAndWait();
     }
+
 }
