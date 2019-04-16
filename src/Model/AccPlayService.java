@@ -75,4 +75,16 @@ public class AccPlayService {
             e.printStackTrace();
         }
     }
+
+    public static void guestLogout(){
+        Database db = new Database();
+        Connection connection = db.getConnection();
+        String query = "DELETE FROM " + AccPlay.TABLE_NAME + " WHERE user = 'Guest'";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

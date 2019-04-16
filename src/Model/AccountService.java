@@ -61,4 +61,16 @@ public class AccountService {
         return accounts;
     }
 
+    public static void guestLogout(){
+        Database db = new Database();
+        Connection connection = db.getConnection();
+        String query = "DELETE FROM " + Account.TABLE_NAME + " WHERE username = 'Guest'";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

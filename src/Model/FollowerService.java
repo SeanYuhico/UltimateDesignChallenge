@@ -72,4 +72,16 @@ public class FollowerService {
             e.printStackTrace();
         }
     }
+
+    public static void guestLogout(){
+        Database db = new Database();
+        Connection connection = db.getConnection();
+        String query = "DELETE FROM " + Follower.TABLE_NAME + " WHERE Follower = 'Guest'";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -9,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="418.0" prefWidth="789.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginArtistController">
+<AnchorPane prefHeight="418.0" prefWidth="789.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginArtistController">
    <children>
       <AnchorPane layoutX="395.0" prefHeight="418.0" prefWidth="399.0" style="-fx-background-color: #43320e;">
          <children>
@@ -28,7 +33,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="guestButton" layoutX="143.0" layoutY="286.0" mnemonicParsing="false" onMouseEntered="#guestHover" onMouseExited="#guestHoverOut" style="-fx-background-color: #c99326;" text="Login as Guest" textFill="WHITE" />
+                  <Button fx:id="guestButton" layoutX="143.0" layoutY="286.0" mnemonicParsing="false" onAction="#loginAsGuest" onMouseEntered="#guestHover" onMouseExited="#guestHoverOut" style="-fx-background-color: #c99326;" text="Login as Guest" textFill="WHITE" />
                </children>
             </AnchorPane>
          </children>

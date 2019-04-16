@@ -136,7 +136,7 @@ public class UploadSongWindow implements Window{
                 titleInput.setText("");
                 yearInput.setText("");
                 fileSelected.setText("");
-                tps.add(s.getSongID());
+//                tps.add(s.getSongID());
             }
         });
         layout.getChildren().addAll(windowTitle, titleLabel, titleInput, /*albumLabel, albumInput,*/

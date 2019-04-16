@@ -166,6 +166,7 @@ public class PlaylistService {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBinaryStream(1, input);
 
+            System.out.println("nagexecute shet");
             statement.execute();
         }catch (SQLException e){
             e.printStackTrace();

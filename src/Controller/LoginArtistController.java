@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.Account;
-import Model.AccountService;
-import Model.Database;
+import Model.*;
 import View.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -59,6 +57,22 @@ public class LoginArtistController {
                 AlertBox.display("Testing", "Username does not exist!");
             System.out.println("DB Boys!");
         }
+    }
+
+    public void loginAsGuest(){
+        db = new Database();
+        accountService = new AccountService(db);
+
+        Account a = new Account();
+        a.setUsername("Guest");
+        a.setPassword("Guest");
+        a.setArtist(false);
+        accountService.add(a);
+        loggedUser = "Guest";
+        loggedAccount = a;
+
+        AlertBox.display("Testing", "Login Successful!");
+        MusicPlayer.display(Main.getMainStage());
     }
 
     public void signInHover() {

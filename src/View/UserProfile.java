@@ -53,6 +53,9 @@ public class UserProfile {
     public static void display(Label dashboardPlaylistLbl, Account account, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                                MainController controller){
         initialize(dashboardVBox);
+        controller.getDbPaneSortBy().setVisible(false);
+        controller.getDbPaneSortBy().setDisable(true);
+        controller.getSortLbl().setVisible(false);
 
         if(account.isArtist()) {
             dashboardVBox.getChildren().add(songLabel);

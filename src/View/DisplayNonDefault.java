@@ -21,7 +21,7 @@ public class DisplayNonDefault {
     private static List<Playlist> playlists;
     private static List<PlaylistSong> playlistSongs;
     private static List<Song> songs;
-    private static MainController controller;
+//    private static MainController controller;
 
     public static void initialize(VBox vbox) {
         vbox.getChildren().clear();
@@ -33,12 +33,16 @@ public class DisplayNonDefault {
         playlists = ps.getAll();
         playlistSongs = playlistSongService.getAll();
         songs = ss.getAll();
-        controller = new MainController();
+//        controller = new MainController();
     }
 
     public static void displayPlaylistSongs(String playlistName, VBox dashboardVBox, MainController controller)
     {
         initialize(dashboardVBox);
+
+        controller.getDbPaneSortBy().setVisible(true);
+        controller.getDbPaneSortBy().setDisable(false);
+        controller.getSortLbl().setVisible(true);
 
         for(Playlist playlist : playlists)
             if(playlist.getName().equals(playlistName) && playlist.getUsername().equals(LoginArtistController.getLoggedUser())) {
@@ -54,7 +58,8 @@ public class DisplayNonDefault {
             }
     }
 
-    public static void displayAllPlaylists(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp, Label dashboardPlaylistLbl) {
+    public static void displayAllPlaylists(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
+                                           MediaPlayer mp, Label dashboardPlaylistLbl, MainController controller) {
         initialize(playlistVBox);
 
         for (Playlist p : playlists)
@@ -65,7 +70,8 @@ public class DisplayNonDefault {
             }
     }
 
-    public static void displayAllAlbums(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp, Label dashboardPlaylistLbl) {
+    public static void displayAllAlbums(VBox playlistVBox, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane, MediaPlayer mp,
+                                        Label dashboardPlaylistLbl, MainController controller) {
         initialize(playlistVBox);
 
         for (Playlist p : playlists)
@@ -79,6 +85,10 @@ public class DisplayNonDefault {
     public static void displayByMostPlayed (VBox dashboardVBox, MainController controller) {
 
         initialize(dashboardVBox);
+
+        controller.getDbPaneSortBy().setVisible(true);
+        controller.getDbPaneSortBy().setDisable(false);
+        controller.getSortLbl().setVisible(true);
 
         ArrayList<TimesPlayed> userTP = new ArrayList<>();
 

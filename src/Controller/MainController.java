@@ -47,7 +47,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
     @FXML ImageView crtAbmBtn, upldSongBtn, imgvwShuffle, unshuffleImgVw;
-    @FXML Label crtAbmLbl, upldSongLbl;
+    @FXML Label crtAbmLbl, upldSongLbl, sortLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
     @FXML ComboBox<String> dbPaneSortBy;
@@ -187,9 +187,12 @@ public class MainController extends Controller implements Initializable {
         if(ans) {
             if(LoginArtistController.getLoggedUser().equals("Guest")) {
                 // Delete all files of guest.
+                AccountService.guestLogout();
                 PlaylistService.guestLogout();
-                SongService.guestLogout();
-                PlaylistService.guestLogout();
+                PlaylistSongService.guestLogout();
+                TimesPlayedService.guestLogout();
+                FollowerService.guestLogout();
+                AccPlayService.guestLogout();
             }
 //            MusicPlayer.close(getMainStage());
 //            mp.stop();
@@ -550,7 +553,7 @@ public class MainController extends Controller implements Initializable {
         playlistPane.setVisible(true);
         playlistNameLbl.setText("My Playlists");
         playlistVBox.getChildren().clear();
-        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
+        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl, this);
     }
 
     public ArrayList<MediaPlayer> resetQueue(ArrayList<MediaPlayer> q, ArrayList<MediaPlayer> mPL){
@@ -584,7 +587,7 @@ public class MainController extends Controller implements Initializable {
     public void showByAlbumNames() {
         playlistNameLbl.setText("Albums");
         playlistVBox.getChildren().clear();
-        DisplayNonDefault.displayAllAlbums(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
+        DisplayNonDefault.displayAllAlbums(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl, this);
 //        displayer.setPlaylistBuilder(albumPlaylistBuilder);
 //        displayer.constructAlbumPlaylist(dashboardPlaylistLbl, playlistVBox, dashboardVBox, dashboardPane, playlistPane, this);
         dashboardPane.setVisible(false);
@@ -703,23 +706,23 @@ public class MainController extends Controller implements Initializable {
 
     public void mainSearch(){
         if(!mainSearchFld.getText().equals("")) {
-            dashboardPane.setVisible(true);
-            playlistPane.setVisible(false);
-            dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
             DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
         }
     }
 
     public void otherSearch(){
         if(!otherSearchFld.getText().equals("")) {
-            dashboardPane.setVisible(true);
-            playlistPane.setVisible(false);
-            dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
             DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
         }
     }
 
@@ -783,6 +786,14 @@ public class MainController extends Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/View/QueueWindow.fxml"));
         stage.setScene(new Scene(root, 600, 400));
         stage.showAndWait();
+    }
+
+    public ComboBox<String> getDbPaneSortBy() {
+        return dbPaneSortBy;
+    }
+
+    public Label getSortLbl() {
+        return sortLbl;
     }
 
     public Label getDashboardPlaylistLbl() {

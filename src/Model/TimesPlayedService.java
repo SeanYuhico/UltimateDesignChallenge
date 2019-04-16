@@ -76,4 +76,15 @@ public class TimesPlayedService {
         }
     }
 
+    public static void guestLogout(){
+        Database db = new Database();
+        Connection connection = db.getConnection();
+        String query = "DELETE FROM " + TimesPlayed.TABLE_NAME + " WHERE accountName = 'Guest'";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

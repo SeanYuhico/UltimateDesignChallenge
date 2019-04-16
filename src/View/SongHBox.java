@@ -250,8 +250,10 @@ public class SongHBox extends HBox {
                 if(tp.getSongID() == song.getSongID() && tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
                     checker = true;
 
-            if(!checker)
+            if(!checker) {
+                TimesPlayed.PK++;
                 tps.add(song.getSongID());
+            }
 
             tps.incNumTimesPlayed(song.getSongID(), LoginArtistController.getLoggedUser());
         });
