@@ -37,7 +37,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Slider volumeSlider, progressSlider;
     @FXML Button playBtn, pauseBtn;
     @FXML BorderPane bPane;
-    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, notifImgVw, uncheckedNotifImgVw; //,repeatAllImgVw;
+    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, repeatPlaylistImgVw, notifImgVw, uncheckedNotifImgVw; //,repeatAllImgVw;
     @FXML Label artistLbl,nameLbl, songLbl, logoutLbl, dashboardPlaylistLbl;
     @FXML Label playlistNameLbl;
     @FXML ScrollPane sp;
@@ -474,6 +474,12 @@ public class MainController extends Controller implements Initializable {
         repeatOnceVw.setVisible(true);
     }
 
+    public void repeatPlaylist() {
+
+        repeatOnceVw.setVisible(false);
+        repeatPlaylistImgVw.setVisible(true);
+    }
+
     public void stopRepeat(){
         mp.setOnEndOfMedia(new Runnable() {
             @Override
@@ -481,13 +487,7 @@ public class MainController extends Controller implements Initializable {
 
             }
         });
-        repeatOnceVw.setVisible(false);
-        repeatImgVw.setVisible(true);
-    }
-
-    public void repeatPlaylist() {
-
-
+        repeatPlaylistImgVw.setVisible(false);
         repeatImgVw.setVisible(true);
     }
     public void uploadSong()

@@ -111,14 +111,14 @@
                         <Image url="@../Pictures/uncheckedNotification.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="repeatPlaylistImgVw" fitHeight="25.0" fitWidth="25.0" layoutX="764.0" layoutY="38.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../Pictures/repeatPlaylist.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="unshuffleImgVw" fitHeight="43.0" fitWidth="43.0" layoutX="450.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="unshuffleImgVw" fitHeight="43.0" fitWidth="43.0" layoutX="450.0" layoutY="28.0" onMouseClicked="#shuffle" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../Pictures/unshuffled.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="repeatPlaylistImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../Pictures/repeatPlaylist.png" />
                      </image>
                   </ImageView>
                     </children>
