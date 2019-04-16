@@ -76,8 +76,7 @@ public class MainController extends Controller implements Initializable {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-
-        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+        String aaronPath = new File("src/10000-Reasons-Bless-the-Lord-Matt-Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -379,7 +378,6 @@ public class MainController extends Controller implements Initializable {
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
-            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
         }
         else if (indexes != null && j < songs.size()){
             play.stopSong();
@@ -387,7 +385,9 @@ public class MainController extends Controller implements Initializable {
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
+
         }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
@@ -395,7 +395,9 @@ public class MainController extends Controller implements Initializable {
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
+
         }
 //        players.element().dispose();
 //        prevS.push(players.element());
