@@ -70,22 +70,22 @@ public class Register {
                 PlaylistService plService = new PlaylistService(db);
 
                 // MOST PLAYED SONGS
-                Playlist mps = new Playlist();
-                mps.setPlaylistID(plService.getAll().size()+1);
-                mps.setName("Most Played Songs");
-                mps.setSongCount(0);
-                mps.setUsername(username);
+//                Playlist mps = new Playlist();
+//                mps.setPlaylistID(plService.getAll().size()+1);
+//                mps.setName("Most Played Songs");
+//                mps.setSongCount(0);
+//                mps.setUsername(username);
 
                 // MY SONGS
                 Playlist ms = new Playlist();
-                ms.setPlaylistID(plService.getAll().size()+2);
+                ms.setPlaylistID(plService.getAll().size()+1);
                 ms.setName("My Songs");
                 ms.setSongCount(0);
                 ms.setUsername(username);
 
                 // NO ALBUM PLAYLIST
                 Playlist na = new Playlist();
-                na.setPlaylistID(plService.getAll().size()+3);
+                na.setPlaylistID(plService.getAll().size()+2);
                 na.setName("No Album");
                 na.setSongCount(0);
                 na.setUsername(username);
@@ -101,10 +101,10 @@ public class Register {
                 if (exists == 0 && !username.equals("") && !password.equals("")) {
                     AlertBox.display("Testing", "Registration Successful!");
                     accService.add(a);
-                    plService.add(mps);
-                    if(a.isArtist())
+                    if(a.isArtist()) {
                         plService.add(ms);
-                    plService.add(na);
+                        plService.add(na);
+                    }
                     window.close();
                 }
                 else if(username.equals("") || password.equals(""))

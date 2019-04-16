@@ -18,7 +18,7 @@ public class ImageConverter extends ConverterTemplate {
         results = new ArrayList<>();
 
 
-        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\").listFiles();
+        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -61,11 +61,11 @@ public class ImageConverter extends ConverterTemplate {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\" + tempFilename;
+            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/AlbumArt/" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt\\" + results.get(index);
+            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/AlbumArt/" + results.get(index);
         }
         return tempFilename;
     }

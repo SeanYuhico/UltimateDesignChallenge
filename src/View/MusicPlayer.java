@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginArtistController;
 import Model.*;
 import View.ConfirmBox;
 import javafx.fxml.FXMLLoader;
@@ -33,9 +34,14 @@ public class MusicPlayer {
                 ex.consume();
                 Boolean answer = ConfirmBox.display("Exit", "Are you sure you want to exit?");
                 if (answer) {
-                    PlaylistService.guestLogout();
-                    SongService.guestLogout();
-                    PlaylistSongService.guestLogout();
+                    if(LoginArtistController.getLoggedUser().equals("Guest")) {
+                        AccountService.guestLogout();
+                        PlaylistService.guestLogout();
+                        PlaylistSongService.guestLogout();
+                        TimesPlayedService.guestLogout();
+                        FollowerService.guestLogout();
+                        AccPlayService.guestLogout();
+                    }
                     primaryStage.close();
 //                    SongConverter converter = new SongConverter();
 //                    try {

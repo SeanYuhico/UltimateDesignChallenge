@@ -33,7 +33,10 @@ public class PlaylistService {
             statement.setString(4, p.getUsername());
             statement.setBoolean(5, p.isPublic());
             statement.setBoolean(6, p.isAlbum());
-            statement.setBinaryStream(7, new FileInputStream(new File("src/Pictures/vinyl.png")));
+            if(p.isAlbum() && !p.getName().equals("No Album"))
+                statement.setBinaryStream(7, new FileInputStream(new File("src/Pictures/vinyl.png")));
+            else
+                statement.setBinaryStream(7, null);
 
             boolean added = statement.execute();
             return added;
@@ -163,6 +166,7 @@ public class PlaylistService {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBinaryStream(1, input);
 
+            System.out.println("nagexecute shet");
             statement.execute();
         }catch (SQLException e){
             e.printStackTrace();

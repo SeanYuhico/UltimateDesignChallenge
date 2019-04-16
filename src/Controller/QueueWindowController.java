@@ -11,6 +11,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class QueueWindowController {
@@ -24,11 +25,11 @@ public class QueueWindowController {
 
     public void initialize() {
 
+//        recentlyPlayed = new ArrayList<>();
+//        recentlyAdded = new ArrayList<>();
 
         AccountService accountService = new AccountService(new Database());
         List<Account> accounts = accountService.getAll();
-        SongService songService = new SongService(new Database());
-        List<Song> songs = songService.getAll();
         PlaylistService playlistService = new PlaylistService(new Database());
         List<Playlist> playlists = playlistService.getAll();
 
@@ -40,6 +41,10 @@ public class QueueWindowController {
 
 
     public void showQueue() {
+        queueVBox.getChildren().clear();
+        for(String songTitleDash : MainController.songsCopy){
+            queueVBox.getChildren().add(new Label(songTitleDash));
+        }
 
     }
 
@@ -55,11 +60,34 @@ public class QueueWindowController {
     }
 
     public void showRecentlyAdded() {
-        queueVBox.getChildren().clear();
+        SongService songService = new SongService(new Database());
+        ArrayList<Song> sortedSongs = new ArrayList<>();
 
-        for (String songTitle: recentlyAdded){
-            System.out.println(songTitle);
-            queueVBox.getChildren().add(new Label(songTitle));}
+       if(LoginArtistController.getLoggedAccount().isArtist()) {
+            for (Song s : songService.getAll()) {
+                for (String songTitle : recentlyAdded) {
+                    if (songTitle.equals(s.getTitle()) && LoginArtistController.getLoggedUser().equals(s.getUsername())) {
+                        sortedSongs.add(s);
+                    }
+                }
+            }
+
+            queueVBox.getChildren().clear();
+            sortedSongs.sort(Comparator.comparing(Song::getDateUploaded));
+
+            for (Song s : sortedSongs)
+                queueVBox.getChildren().add(new Label(s.getTitle()));
+        }
+        else
+        {
+            for (String songTitle: recentlyAdded){
+                System.out.println(songTitle);
+                queueVBox.getChildren().add(new Label(songTitle));
+            }
+        }
+
+
+
 
     }
 

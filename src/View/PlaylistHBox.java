@@ -179,6 +179,7 @@ public class PlaylistHBox extends HBox {
                         MainController controller) {
         AccPlayService aps = new AccPlayService(new Database());
         AccountService as = new AccountService(new Database());
+        ImageLoader img = new ImageLoader(new Database());
         boolean isArtist = false;
         // Properties
         setVisible(true);
@@ -206,6 +207,8 @@ public class PlaylistHBox extends HBox {
         setMaxHeight(USE_COMPUTED_SIZE);
         setSnapToPixel(true);
 
+        if (p.isAlbum() && !p.getName().equals("No Album"))
+            albumCover.setImage(new Image(img.loadImage(p.getName())));
         albumCover.setFitHeight(38);
         albumCover.setFitWidth(32);
         albumCover.setPickOnBounds(true);

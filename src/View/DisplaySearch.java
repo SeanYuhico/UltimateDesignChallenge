@@ -72,7 +72,15 @@ public class DisplaySearch {
     public static void display(Label dashboardPlaylistLbl, VBox dashboardVBox, Pane dashboardPane, Pane playlistPane,
                                    MainController controller){
         initialize(dashboardVBox);
-        String searchKey = controller.getMainSearchFld().getText().toLowerCase();
+        controller.getSortLbl().setVisible(false);
+        controller.getDbPaneSortBy().setVisible(false);
+        controller.getDbPaneSortBy().setDisable(true);
+        String searchKey;
+
+        if(playlistPane.isVisible())
+            searchKey = controller.getOtherSearchFld().getText().toLowerCase();
+        else
+            searchKey = controller.getMainSearchFld().getText().toLowerCase();
 
         dashboardVBox.getChildren().add(songLabel);
         for(Song s : songs)

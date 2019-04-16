@@ -129,8 +129,12 @@ public class SongHBox extends HBox {
                     }
                     if (add){
                         pss.addSongToPlaylist(p, song);
-                        QueueWindowController.recentlyAdded.add(song.getTitle());
-                        System.out.println("add1");
+
+                        if(!LoginArtistController.getLoggedAccount().isArtist()){
+                            QueueWindowController.recentlyAdded.add(song.getTitle());
+                            System.out.println("add1");
+                        }
+
                     }
 
                 });
@@ -250,8 +254,10 @@ public class SongHBox extends HBox {
                 if(tp.getSongID() == song.getSongID() && tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
                     checker = true;
 
-            if(!checker)
+            if(!checker) {
+                TimesPlayed.PK++;
                 tps.add(song.getSongID());
+            }
 
             tps.incNumTimesPlayed(song.getSongID(), LoginArtistController.getLoggedUser());
         });

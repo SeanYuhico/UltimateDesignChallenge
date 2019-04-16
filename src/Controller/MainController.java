@@ -47,7 +47,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Label mySongsPlaylist, myMostPlayed, artistsLbl, albumsLbl, genresLbl, yearLbl, myPlaylistsLbl;
 
     @FXML ImageView crtAbmBtn, upldSongBtn, imgvwShuffle, unshuffleImgVw;
-    @FXML Label crtAbmLbl, upldSongLbl;
+    @FXML Label crtAbmLbl, upldSongLbl, sortLbl;
 
     @FXML TextField mainSearchFld, otherSearchFld;
     @FXML ComboBox<String> dbPaneSortBy;
@@ -68,6 +68,8 @@ public class MainController extends Controller implements Initializable {
     SongLoader sLoader;
     PlayMP3 play;
     static ArrayList<String> songs;
+    static Queue<String> songsCopy;
+    static Stack<String> songsDump;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
     ArrayList<Integer> indexes;
@@ -75,8 +77,7 @@ public class MainController extends Controller implements Initializable {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-
-        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
+        String aaronPath = new File("src/10000-Reasons-Bless-the-Lord-Matt-Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -87,7 +88,8 @@ public class MainController extends Controller implements Initializable {
         pls = new PlaylistService(db);
         ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
-        songsQueue = new LinkedList<>();
+        songsCopy = new LinkedList<>();
+        songsDump = new Stack<>();
         displayer = new Displayer();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
         albumPlaylistBuilder = new AlbumPlaylistBuilder();
@@ -185,9 +187,12 @@ public class MainController extends Controller implements Initializable {
         if(ans) {
             if(LoginArtistController.getLoggedUser().equals("Guest")) {
                 // Delete all files of guest.
+                AccountService.guestLogout();
                 PlaylistService.guestLogout();
-                SongService.guestLogout();
-                PlaylistService.guestLogout();
+                PlaylistSongService.guestLogout();
+                TimesPlayedService.guestLogout();
+                FollowerService.guestLogout();
+                AccPlayService.guestLogout();
             }
 //            MusicPlayer.close(getMainStage());
 //            mp.stop();
@@ -226,10 +231,12 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+//        songsCopy = new LinkedList<>();
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
                 songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+                songsCopy.add(ss.getAll().get(i).getTitle());
             }
         }
         System.out.println(songs.size());
@@ -259,6 +266,8 @@ public class MainController extends Controller implements Initializable {
                 next();
             }
         });
+
+        QueueWindowController.recentlyPlayed.add(nameLbl.getText());
     }
 
     public void playAll() {
@@ -267,9 +276,12 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+//        songsCopy = new LinkedList<>();
+        j = 0;
 
         for (int i = 0; i < ss.getAll(dashboardPlaylistLbl.getText()).size(); i++) {
             songs.add(sLoader.loadSong(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle()));
+            songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
         }
         play.setMedia(songs.get(j));
         /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -286,6 +298,8 @@ public class MainController extends Controller implements Initializable {
                 next();
             }
         });
+
+        QueueWindowController.recentlyPlayed.add(nameLbl.getText());
     }
 
 
@@ -309,6 +323,7 @@ public class MainController extends Controller implements Initializable {
         play = new PlayMP3();
 //        songsQueue = new LinkedList<>();
         songs.add(sLoader.loadSong(qFile));
+        songsCopy.add(sLoader.loadSong(qFile));
 
         /*for(int k = 0; k < ss.getAll().size(); k++) {
             if(ss.getAll().get(k).getTitle().equals(qFile))
@@ -328,6 +343,7 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
+//        songsCopy = new LinkedList<>();
         ArrayList<Integer> iDs = new ArrayList<>();
         int id = 0;
         System.out.println("sleep");
@@ -346,12 +362,14 @@ public class MainController extends Controller implements Initializable {
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+            songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
             System.out.println("UGH");
         }
     }
 
     public void next ()
     {
+//        songsCopy = new LinkedList<>();
         if(j != songs.size()) {
             j++;
         }
@@ -366,23 +384,30 @@ public class MainController extends Controller implements Initializable {
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
-            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
         }
         else if (indexes != null && j < songs.size()){
             play.stopSong();
             play.setMedia(songs.get(j));
+//            if(songsCopy.peek()!=null)
+            songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+//            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
+
         }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
+//            if(songsCopy.peek()!=null)
+            songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+//            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
+
         }
 //        players.element().dispose();
 //        prevS.push(players.element());
@@ -415,7 +440,20 @@ public class MainController extends Controller implements Initializable {
             j--;
         }
 
-        if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
+        if (indexes != null && j < songs.size()){
+            play.stopSong();
+            play.setMedia(songs.get(j));
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            if(j == 0) {
+                setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
+            }
+            else{
+                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getTitle());
+            }
+            play();
+        }
+        else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
@@ -527,7 +565,7 @@ public class MainController extends Controller implements Initializable {
         playlistPane.setVisible(true);
         playlistNameLbl.setText("My Playlists");
         playlistVBox.getChildren().clear();
-        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
+        DisplayNonDefault.displayAllPlaylists(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl, this);
     }
 
     public ArrayList<MediaPlayer> resetQueue(ArrayList<MediaPlayer> q, ArrayList<MediaPlayer> mPL){
@@ -561,7 +599,7 @@ public class MainController extends Controller implements Initializable {
     public void showByAlbumNames() {
         playlistNameLbl.setText("Albums");
         playlistVBox.getChildren().clear();
-        DisplayNonDefault.displayAllAlbums(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl);
+        DisplayNonDefault.displayAllAlbums(playlistVBox, dashboardVBox, dashboardPane, playlistPane, mp, dashboardPlaylistLbl, this);
 //        displayer.setPlaylistBuilder(albumPlaylistBuilder);
 //        displayer.constructAlbumPlaylist(dashboardPlaylistLbl, playlistVBox, dashboardVBox, dashboardPane, playlistPane, this);
         dashboardPane.setVisible(false);
@@ -623,8 +661,11 @@ public class MainController extends Controller implements Initializable {
         /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
         ArrayList<String> shuffled = new ArrayList<>();
         shuffled.add(songs.get(0));
+        songsCopy.clear();
+        songsCopy.add(songs.get(0));
         for(i=0; i<songs.size()-1; i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
+            songsCopy.add(songs.get(indexes.get(i)));
         }
         songs = shuffled;
         System.out.println("Shuffled!");
@@ -638,6 +679,22 @@ public class MainController extends Controller implements Initializable {
             imgvwShuffle.setVisible(false);
         }
 
+    }
+    public void unshuffle(){
+//        int i;
+//        System.out.println(songs.size());
+//        indexes = new ArrayList<>();
+//        /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
+//        ArrayList<String> shuffled = new ArrayList<>();
+//        shuffled.add(songs.get(0));
+//        songsCopy.clear();
+//        songsCopy.add(songs.get(0));
+//        for(i=0; i<songs.size()-1; i++){
+//            shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
+//            songsCopy.add(songs.get(indexes.get(i)));
+//        }
+//        songs = shuffled;
+//        System.out.println("Shuffled!");
     }
 
     public static final Random gen = new Random();
@@ -680,23 +737,23 @@ public class MainController extends Controller implements Initializable {
 
     public void mainSearch(){
         if(!mainSearchFld.getText().equals("")) {
-            dashboardPane.setVisible(true);
-            playlistPane.setVisible(false);
-            dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
             DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
         }
     }
 
     public void otherSearch(){
         if(!otherSearchFld.getText().equals("")) {
-            dashboardPane.setVisible(true);
-            playlistPane.setVisible(false);
-            dashboardPlaylistLbl.setText("Search");
             dashboardVBox.getChildren().clear();
             DisplaySearch.initialize(dashboardVBox);
             DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
+            dashboardPlaylistLbl.setText("Search");
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
         }
     }
 
@@ -762,12 +819,24 @@ public class MainController extends Controller implements Initializable {
         stage.showAndWait();
     }
 
+    public ComboBox<String> getDbPaneSortBy() {
+        return dbPaneSortBy;
+    }
+
+    public Label getSortLbl() {
+        return sortLbl;
+    }
+
     public Label getDashboardPlaylistLbl() {
         return dashboardPlaylistLbl;
     }
 
     public MediaPlayer getMp() {
         return mp;
+    }
+
+    public void resetJ(){
+        j = 0;
     }
 
     public void setMp(MediaPlayer mp) {
