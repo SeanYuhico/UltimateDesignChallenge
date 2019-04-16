@@ -88,7 +88,7 @@ public class MainController extends Controller implements Initializable {
         ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
         songsQueue = new LinkedList<>();
-        songsCopy = new LinkedList();
+        songsCopy = new LinkedList<>();
         displayer = new Displayer();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
         albumPlaylistBuilder = new AlbumPlaylistBuilder();
@@ -230,7 +230,7 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
-        songsCopy = new LinkedList<>();
+//        songsCopy = new LinkedList<>();
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
@@ -265,6 +265,8 @@ public class MainController extends Controller implements Initializable {
                 next();
             }
         });
+
+        QueueWindowController.recentlyPlayed.add(nameLbl.getText());
     }
 
     public void playAll() {
@@ -273,7 +275,7 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
-        songsCopy = new LinkedList<>();
+//        songsCopy = new LinkedList<>();
         j = 0;
 
         for (int i = 0; i < ss.getAll(dashboardPlaylistLbl.getText()).size(); i++) {
@@ -295,6 +297,8 @@ public class MainController extends Controller implements Initializable {
                 next();
             }
         });
+
+        QueueWindowController.recentlyPlayed.add(nameLbl.getText());
     }
 
 
@@ -338,7 +342,7 @@ public class MainController extends Controller implements Initializable {
         sLoader = new SongLoader(db);
         play = new PlayMP3();
         songs = new ArrayList<>();
-        songsCopy = new LinkedList();
+//        songsCopy = new LinkedList<>();
         ArrayList<Integer> iDs = new ArrayList<>();
         int id = 0;
         System.out.println("sleep");
@@ -364,6 +368,7 @@ public class MainController extends Controller implements Initializable {
 
     public void next ()
     {
+//        songsCopy = new LinkedList<>();
         if(j != songs.size()) {
             j++;
         }
@@ -382,20 +387,24 @@ public class MainController extends Controller implements Initializable {
         else if (indexes != null && j < songs.size()){
             play.stopSong();
             play.setMedia(songs.get(j));
+            if(songsCopy.peek()!=null)
+                songsCopy.remove();
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
-            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
+//            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
 
         }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
+            if(songsCopy.peek()!=null)
+                songsCopy.remove();
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
-            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
+//            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
 
         }

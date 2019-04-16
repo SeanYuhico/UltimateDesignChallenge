@@ -68,7 +68,7 @@ public class PlaylistSongService {
     {
         Connection connection = db.getConnection();
         String queryPlaylist = "UPDATE " + Playlist.TABLE_NAME + " SET songCount = songCount - 1 WHERE name = '" + p.getName() + "' AND " +
-                "username = " + LoginArtistController.getLoggedUser() + "'";
+                "username = '" + LoginArtistController.getLoggedUser() + "'";
         String query = "DELETE FROM " + PlaylistSong.TABLE_NAME + " WHERE songID = " + s.getSongID() + " AND playlistID = " +
                 p.getPlaylistID();
 

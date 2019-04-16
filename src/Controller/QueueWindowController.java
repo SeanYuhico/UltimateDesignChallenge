@@ -20,12 +20,12 @@ public class QueueWindowController {
     @FXML VBox queueVBox;
     @FXML Label titleLabel;
 
-    public static ArrayList<String> recentlyPlayed;
+    public static ArrayList<String> recentlyPlayed = new ArrayList<>();
     public static ArrayList<String> recentlyAdded = new ArrayList<>();
 
     public void initialize() {
 
-        recentlyPlayed = new ArrayList<>();
+//        recentlyPlayed = new ArrayList<>();
 //        recentlyAdded = new ArrayList<>();
 
         AccountService accountService = new AccountService(new Database());
