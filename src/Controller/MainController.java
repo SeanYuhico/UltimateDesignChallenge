@@ -57,7 +57,7 @@ public class MainController extends Controller implements Initializable {
     Queue<String> songsQueue;
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
-    int songIndex, j =0;
+    int songIndex, j =0, tempJ;
     boolean isArtist = false;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
@@ -68,7 +68,9 @@ public class MainController extends Controller implements Initializable {
     SongLoader sLoader;
     PlayMP3 play;
     static ArrayList<String> songs;
+//    static ArrayList<String> songBackup;
     static Queue<String> songsCopy;
+    static Queue<String> songsBackup;
     static Stack<String> songsDump;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
@@ -77,7 +79,7 @@ public class MainController extends Controller implements Initializable {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-        String aaronPath = new File("src/10000-Reasons-Bless-the-Lord-Matt-Redman.mp3").getAbsolutePath();
+        String aaronPath = new File("src/10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String jerickPath = new File("C:\\Users\\11717777\\Downloads\\DesignChallenge2\\src\\10,000 Reasons (Bless the Lord) - Matt Redman.mp3").getAbsolutePath();
 //        String song2 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/ONE IN A MILLION.mp3").getAbsolutePath();
 //        String song3 = new File("/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/TT.mp3").getAbsolutePath();
@@ -89,6 +91,7 @@ public class MainController extends Controller implements Initializable {
         ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
         songsCopy = new LinkedList<>();
+        songsBackup = new LinkedList<>();
         songsDump = new Stack<>();
         displayer = new Displayer();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
@@ -385,11 +388,24 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
+        else if (indexes != null && j < ss.getAll(dashboardPlaylistLbl.getText()).size() && tempJ>0){ //next after calling unshuffle
+            play.stopSong();
+            play.setMedia(songs.get(j));
+//            if(songsCopy.peek()!=null
+            if(!songsCopy.isEmpty())
+                songsDump.push(songsCopy.remove());
+            /*MediaPlayer*/ mp = play.getMediaPlayer();
+//                setMp(mp);
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+//            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
+            play();
+        }
         else if (indexes != null && j < songs.size()){
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null)
-            songsDump.push(songsCopy.remove());
+            if(!songsCopy.isEmpty())
+                songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
@@ -397,18 +413,22 @@ public class MainController extends Controller implements Initializable {
             play();
 
         }
+
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()) {
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null)
-            songsDump.push(songsCopy.remove());
+            if(!songsCopy.isEmpty())
+                songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
+            System.out.println(j + " : " + ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
 
         }
+
 //        players.element().dispose();
 //        prevS.push(players.element());
 //        players.get(songIndex).stop();
@@ -445,6 +465,7 @@ public class MainController extends Controller implements Initializable {
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
+            songsCopy.add(songsDump.pop());
             if(j == 0) {
                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
             }
@@ -458,6 +479,7 @@ public class MainController extends Controller implements Initializable {
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //            setMp(mp);
+            songsCopy.add(songsDump.pop());
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
@@ -655,19 +677,32 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void shuffle() {
-        int i;
+        tempJ=j;
+        j=0;
+        int low=0;
+        for (int k=0; k<songs.size(); k++){
+            if(songs.get(k).contains(songsCopy.element().replaceAll("\\s", "")))
+                low=k;
+        }
         System.out.println(songs.size());
         indexes = new ArrayList<>();
-        /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
+        indexes = getRandom(low, songsCopy.size()-1);
         ArrayList<String> shuffled = new ArrayList<>();
-        shuffled.add(songs.get(0));
+//        Queue<String> songsBackup = new LinkedList<>();
+        songsBackup.clear();
+        songsBackup.addAll(songs);
+        for(int k=0;k<low;k++) {
+            songsBackup.remove();
+        }
+        shuffled.add(songs.get(low));
         songsCopy.clear();
-        songsCopy.add(songs.get(0));
-        for(i=0; i<songs.size()-1; i++){
+        songsCopy.add(shuffled.get(0));
+        for(int i=0; i<indexes.size(); i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
             songsCopy.add(songs.get(indexes.get(i)));
         }
         songs = shuffled;
+//        songsBackup.peek();
         System.out.println("Shuffled!");
 
         if (unshuffleImgVw.isVisible()) {
@@ -681,33 +716,45 @@ public class MainController extends Controller implements Initializable {
 
     }
     public void unshuffle(){
-//        int i;
-//        System.out.println(songs.size());
-//        indexes = new ArrayList<>();
-//        /*ArrayList<Integer> */indexes = getRandom(songs.size()-1);
-//        ArrayList<String> shuffled = new ArrayList<>();
-//        shuffled.add(songs.get(0));
-//        songsCopy.clear();
-//        songsCopy.add(songs.get(0));
-//        for(i=0; i<songs.size()-1; i++){
-//            shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
-//            songsCopy.add(songs.get(indexes.get(i)));
-//        }
-//        songs = shuffled;
-//        System.out.println("Shuffled!");
+//        j=tempJ;
+        System.out.println(songsBackup.size());
+        ArrayList<String> unshuffled = new ArrayList<>();
+        ArrayList<Integer> temp = new ArrayList<>();
+//        unshuffled.add(songsBackup.element());
+        songsCopy.clear();
+        songsCopy.add(songs.get(0));
+        int k = indexes.size() + 1;
+        Collections.sort(indexes);
+        for(int i=0; i<k; i++){
+            unshuffled.add(songsBackup.element()); // changes the queue based on the list of random numbers generated
+            songsCopy.add(songsBackup.remove());
+        }
+//        songs.addAll(songsBackup);
+        songs = unshuffled;
+//        songsCopy = songsBackup;
+        songsBackup.clear();
+        System.out.println("Unshuffled!");
+        if (imgvwShuffle.isVisible()) {
+            unshuffleImgVw.setVisible(true);
+            imgvwShuffle.setVisible(false);
+        }
+        else {
+            unshuffleImgVw.setVisible(false);
+            imgvwShuffle.setVisible(true);
+        }
     }
 
     public static final Random gen = new Random();
-    public static ArrayList<Integer> getRandom(int maxRange) {
+    public static ArrayList<Integer> getRandom(int low, int maxRange) {
         ArrayList<Integer> result = new ArrayList<>();
         ArrayList<Integer> used = new ArrayList<>();
-
+        int extra = low + 1;
         for (int i = 0; i < maxRange; i++) {
 
             int newRandom;
             do {
-                newRandom = gen.nextInt(maxRange+1);
-            } while (used.contains(newRandom) || newRandom == 0);
+                newRandom = gen.nextInt(maxRange+extra);
+            } while (used.contains(newRandom) || newRandom <= low);
             result.add(newRandom);
             used.add(newRandom);
         }
