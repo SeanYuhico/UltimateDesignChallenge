@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import static View.Main.getMainStage;
 
@@ -57,7 +58,7 @@ public class MainController extends Controller implements Initializable {
     Queue<String> songsQueue;
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
-    int songIndex, j =0, tempJ;
+    int songIndex, j =0, tempJ, checkShuffle;
     boolean isArtist = false;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
@@ -345,7 +346,7 @@ public class MainController extends Controller implements Initializable {
         ss = new SongService(db);
         sLoader = new SongLoader(db);
         play = new PlayMP3();
-        songs = new ArrayList<>();
+//        songs = new ArrayList<>();
 //        songsCopy = new LinkedList<>();
         ArrayList<Integer> iDs = new ArrayList<>();
         int id = 0;
@@ -388,7 +389,7 @@ public class MainController extends Controller implements Initializable {
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
         }
-        else if (indexes != null && j < ss.getAll(dashboardPlaylistLbl.getText()).size() && tempJ>0){ //next after calling unshuffle
+        else if (indexes != null && j < ss.getAll(dashboardPlaylistLbl.getText()).size() && checkShuffle==0){ //next after calling unshuffle
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null
@@ -396,11 +397,11 @@ public class MainController extends Controller implements Initializable {
                 songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(/*indexes.get(j-1)*/j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(/*indexes.get(j-1)*/j).getTitle());
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
         }
-        else if (indexes != null && j < songs.size()){
+        else if (indexes != null && j < songs.size() && checkShuffle==1){
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null)
@@ -408,7 +409,7 @@ public class MainController extends Controller implements Initializable {
                 songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j-1)).getTitle());
+            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
 
@@ -678,7 +679,8 @@ public class MainController extends Controller implements Initializable {
 
     public void shuffle() {
         tempJ=j;
-        j=0;
+        checkShuffle=1;
+//        j=0;
         int low=0;
         for (int k=0; k<songs.size(); k++){
             if(songs.get(k).contains(songsCopy.element().replaceAll("\\s", "")))
@@ -691,17 +693,20 @@ public class MainController extends Controller implements Initializable {
 //        Queue<String> songsBackup = new LinkedList<>();
         songsBackup.clear();
         songsBackup.addAll(songs);
-        for(int k=0;k<low;k++) {
-            songsBackup.remove();
-        }
-        shuffled.add(songs.get(low));
+//        for(int k=0;k<low;k++) {
+//            songsBackup.remove();
+//        }
+//        shuffled.add(songs.get(low));
         songsCopy.clear();
-        songsCopy.add(shuffled.get(0));
+        songsCopy.add(songs.get(low));
         for(int i=0; i<indexes.size(); i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
             songsCopy.add(songs.get(indexes.get(i)));
         }
-        songs = shuffled;
+        songs.addAll(low, shuffled);
+        LinkedHashSet<String> hashSet = new LinkedHashSet<>(songs);
+        ArrayList<String> setCopy = new ArrayList<>(hashSet);
+        songs = setCopy;
 //        songsBackup.peek();
         System.out.println("Shuffled!");
 
@@ -716,7 +721,9 @@ public class MainController extends Controller implements Initializable {
 
     }
     public void unshuffle(){
+        checkShuffle=0;
 //        j=tempJ;
+        String currSong = songs.get(j);
         System.out.println(songsBackup.size());
         ArrayList<String> unshuffled = new ArrayList<>();
         ArrayList<Integer> temp = new ArrayList<>();
@@ -725,8 +732,12 @@ public class MainController extends Controller implements Initializable {
         songsCopy.add(songs.get(0));
         int k = indexes.size() + 1;
         Collections.sort(indexes);
-        for(int i=0; i<k; i++){
+        for(int i=0; i<songs.size(); i++){ // possibly modify j from here
             unshuffled.add(songsBackup.element()); // changes the queue based on the list of random numbers generated
+            if(unshuffled.get(i).contains(currSong.replaceAll("\\s",""))) {
+                j = i;
+                System.out.println(j);
+            }
             songsCopy.add(songsBackup.remove());
         }
 //        songs.addAll(songsBackup);
@@ -749,6 +760,10 @@ public class MainController extends Controller implements Initializable {
         ArrayList<Integer> result = new ArrayList<>();
         ArrayList<Integer> used = new ArrayList<>();
         int extra = low + 1;
+        for(int i=0;i<=low;i++) {
+            result.add(low);
+            used.add(low);
+        }
         for (int i = 0; i < maxRange; i++) {
 
             int newRandom;
