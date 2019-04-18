@@ -96,6 +96,7 @@ public class AccountHBox extends HBox {
                         dashboardPane, playlistPane, controller));
                 follow.setOnAction(ex -> {
                     if(follow.getText().equals("Follow")) {
+                        Follower.PK++;
                         fs.add(LoginArtistController.getLoggedUser(), usernameLbl.getText());
                         follow.setText("Unfollow");
                     }
