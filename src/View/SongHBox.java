@@ -240,6 +240,7 @@ public class SongHBox extends HBox {
                     }
 //                    play.setMedia(tempFilename);
                     controller.initPlay(tempFilename);
+                    controller.resetJ();
                     MediaPlayer mp = play.getMediaPlayer();
                     controller.setMp(mp);
                     controller.setMPLabels(artistLbl.getText(), titleLbl.getText());

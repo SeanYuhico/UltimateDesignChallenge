@@ -536,7 +536,15 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void repeatPlaylist() {
-
+        stopRepeat();
+        mp.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                if(j == songs.size()){
+                    playAll();
+                }
+            }
+        });
         repeatOnceVw.setVisible(false);
         repeatPlaylistImgVw.setVisible(true);
     }
