@@ -36,7 +36,7 @@ public class MainController extends Controller implements Initializable {
     private Media me;
     public static Pane dbPane, mpPane;
     @FXML Slider volumeSlider, progressSlider;
-    @FXML Button playBtn, pauseBtn;
+    @FXML Button playPlaylistBtn;
     @FXML BorderPane bPane;
     @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, repeatPlaylistImgVw, notifImgVw, uncheckedNotifImgVw; //,repeatAllImgVw;
     @FXML Label artistLbl,nameLbl, songLbl, logoutLbl, dashboardPlaylistLbl;
@@ -602,6 +602,7 @@ public class MainController extends Controller implements Initializable {
 
     public void showMySongs()
     {
+        playPlaylistBtn.setVisible(true);
         dashboardPane.setVisible(true);
         playlistPane.setVisible(false);
         dashboardPlaylistLbl.setText("My Songs");
@@ -630,6 +631,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void showByYears() {
+        playPlaylistBtn.setVisible(true);
         playlistNameLbl.setText("Years");
         playlistVBox.getChildren().clear();
         displayer.setPlaylistBuilder(yearPlaylistBuilder);
@@ -639,6 +641,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void showByGenres() {
+        playPlaylistBtn.setVisible(true);
         playlistNameLbl.setText("Genres");
         playlistVBox.getChildren().clear();
         displayer.setPlaylistBuilder(genrePlaylistBuilder);
@@ -648,6 +651,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void showByMostPlayed() {
+        playPlaylistBtn.setVisible(true);
         dashboardPlaylistLbl.setText("My Most Played Songs");
         dashboardVBox.getChildren().clear();
         DisplayNonDefault.displayByMostPlayed(dashboardVBox, this);
@@ -805,6 +809,7 @@ public class MainController extends Controller implements Initializable {
             dashboardPlaylistLbl.setText("Search");
             dashboardPane.setVisible(true);
             playlistPane.setVisible(false);
+            playPlaylistBtn.setVisible(false);
         }
     }
 
@@ -814,6 +819,7 @@ public class MainController extends Controller implements Initializable {
             DisplaySearch.initialize(dashboardVBox);
             DisplaySearch.display(dashboardPlaylistLbl, dashboardVBox, dashboardPane, playlistPane, this);
             dashboardPlaylistLbl.setText("Search");
+            playPlaylistBtn.setVisible(false);
             dashboardPane.setVisible(true);
             playlistPane.setVisible(false);
         }

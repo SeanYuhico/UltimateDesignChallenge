@@ -17,12 +17,13 @@ import java.nio.file.Paths;
 public class MusicPlayer {
     public static void display(Stage primaryStage) {
         try {
-            URL urlAaron = new URL("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
-            URL urlLegs = new URL("File:\\Users\\Legs\\IdeaProjects\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
-            String path = "/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/View/Dashboard.fxml";
-            FXMLLoader loader = new FXMLLoader(urlAaron);
-            FXMLLoader loaderSean = new FXMLLoader(Paths.get(path).toUri().toURL()); //walalang
-            Parent root = loader.load();
+//            URL urlAaron = new URL("File:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
+//            URL urlLegs = new URL("File:\\Users\\Legs\\IdeaProjects\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml");
+//            String path = "/Users/seanyuhico/Documents/SCHOOL/DesignChallenge2/src/View/Dashboard.fxml";
+//            FXMLLoader loader = new FXMLLoader(urlAaron);
+//            FXMLLoader loaderSean = new FXMLLoader(Paths.get(path).toUri().toURL()); //walalang
+//            Parent root = loader.load();
+            Parent root = FXMLLoader.load(new URL("File:\\UltimateDesignChallenge\\src\\View\\Dashboard.fxml"));
             primaryStage.setTitle("REAL Music Player");
             primaryStage.setScene(new Scene(root, 1155, 700));
             primaryStage.setResizable(false);

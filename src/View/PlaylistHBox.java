@@ -3,7 +3,7 @@ package View;
 import Controller.LoginArtistController;
 import Controller.MainController;
 import Model.*;
-import com.mysql.cj.log.Log;
+//import com.mysql.cj.log.Log;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;

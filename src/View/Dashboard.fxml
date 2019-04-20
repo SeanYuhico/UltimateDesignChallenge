@@ -19,7 +19,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
+<BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1155.0" style="-fx-background-color: blue';" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
     <bottom>
         <HBox prefHeight="130.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
             <children>
@@ -336,7 +336,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="playPlaylistBtn" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onMouseClicked="#playAll" prefHeight="38.0" prefWidth="81.0" text="Play" textFill="#c4b57c" />
+                  <Button fx:id="playPlaylistBtn" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" onAction="#playAll" prefHeight="38.0" prefWidth="81.0" text="Play" textFill="#c4b57c" />
                   <Label layoutX="96.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="TITLE" />
                   <Label layoutX="389.0" layoutY="146.0" opacity="0.5" prefWidth="73.0" text="ARTIST" />
                   <Label layoutX="764.0" layoutY="146.0" opacity="0.5" prefHeight="17.0" prefWidth="60.0" text="YEAR" />

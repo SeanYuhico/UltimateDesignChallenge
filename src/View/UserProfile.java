@@ -3,6 +3,8 @@ package View;
 import Controller.MainController;
 import Model.*;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -56,6 +58,16 @@ public class UserProfile {
         controller.getDbPaneSortBy().setVisible(false);
         controller.getDbPaneSortBy().setDisable(true);
         controller.getSortLbl().setVisible(false);
+
+        boolean first = true;
+        for (Node node: dashboardPane.getChildren()) {
+            if (node instanceof Label && first) {
+                ((Label) node).setText(account.getUsername());
+                first = false;
+            }
+            else if (node instanceof Button)
+                node.setVisible(false);
+        }
 
         if(account.isArtist()) {
             dashboardVBox.getChildren().add(songLabel);
