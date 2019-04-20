@@ -41,7 +41,7 @@
                                 <Image url="@../Pictures/nextsong.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="repeatImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatSong" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="repeatImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatPlaylist" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Pictures/repeat.png" />
                             </image>
@@ -81,7 +81,7 @@
                         <Image url="@../Pictures/next10sec.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="repeatOnceVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatPlaylist" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="repeatOnceVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../Pictures/repeatOnce.png" />
                      </image>
@@ -116,7 +116,7 @@
                         <Image url="@../Pictures/unshuffled.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="repeatPlaylistImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#stopRepeat" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="repeatPlaylistImgVw" fitHeight="27.0" fitWidth="25.0" layoutX="764.0" layoutY="37.0" onMouseClicked="#repeatSong" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../Pictures/repeatPlaylist.png" />
                      </image>

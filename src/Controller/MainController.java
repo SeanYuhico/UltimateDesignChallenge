@@ -68,7 +68,7 @@ public class MainController extends Controller implements Initializable {
     PlaylistSongService ps;
     SongLoader sLoader;
     PlayMP3 play;
-    static ArrayList<String> songs;
+    static ArrayList<String> songs, songsArtist, songsTitle;
 //    static ArrayList<String> songBackup;
     static Queue<String> songsCopy;
     static Queue<String> songsBackup;
@@ -91,6 +91,8 @@ public class MainController extends Controller implements Initializable {
         pls = new PlaylistService(db);
         ps = new PlaylistSongService(db);
         songs = new ArrayList<>();
+        songsArtist = new ArrayList<>();
+        songsTitle = new ArrayList<>();
         songsCopy = new LinkedList<>();
         songsBackup = new LinkedList<>();
         songsDump = new Stack<>();
@@ -234,13 +236,18 @@ public class MainController extends Controller implements Initializable {
         ss = new SongService(db);
         sLoader = new SongLoader(db);
         play = new PlayMP3();
-        songs = new ArrayList<>();
+//        songs = new ArrayList<>();
 //        songsCopy = new LinkedList<>();
+        String title, artist;
 
         for (int i = 0; i < ss.getAll().size(); i++) {
             if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
-                songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
-                songsCopy.add(ss.getAll().get(i).getTitle());
+                title = ss.getAll().get(i).getTitle();
+                artist = ss.getAll().get(i).getArtist();
+                songs.add(sLoader.loadSong(title));
+                songsArtist.add(artist);
+                songsTitle.add(title);
+                songsCopy.add(title);
             }
         }
         System.out.println(songs.size());
@@ -279,12 +286,14 @@ public class MainController extends Controller implements Initializable {
         ss = new SongService(db);
         sLoader = new SongLoader(db);
         play = new PlayMP3();
-        songs = new ArrayList<>();
+//        songs = new ArrayList<>();
 //        songsCopy = new LinkedList<>();
         j = 0;
 
         for (int i = 0; i < ss.getAll(dashboardPlaylistLbl.getText()).size(); i++) {
             songs.add(sLoader.loadSong(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle()));
+            songsTitle.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
+            songsArtist.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getArtist());
             songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
         }
         play.setMedia(songs.get(j));
@@ -320,14 +329,16 @@ public class MainController extends Controller implements Initializable {
      clicking the next button works but clicking previous doesn't yet
      */
 
-    public void queue(String qFile){
+    public void queue(String qFile, String artistLbl){
         db = new Database();
         ss = new SongService(db);
         sLoader = new SongLoader(db);
         play = new PlayMP3();
 //        songsQueue = new LinkedList<>();
         songs.add(sLoader.loadSong(qFile));
-        songsCopy.add(sLoader.loadSong(qFile));
+        songsTitle.add(qFile);
+        songsArtist.add(artistLbl);
+        songsCopy.add(qFile);
 
         /*for(int k = 0; k < ss.getAll().size(); k++) {
             if(ss.getAll().get(k).getTitle().equals(qFile))
@@ -373,6 +384,7 @@ public class MainController extends Controller implements Initializable {
 
     public void next ()
     {
+        String artist = "", title = "";
 //        songsCopy = new LinkedList<>();
         if(j != songs.size()) {
             j++;
@@ -380,6 +392,13 @@ public class MainController extends Controller implements Initializable {
 
         if(j == songs.size()){
             System.out.println("Max songs");
+            if(repeatPlaylistImgVw.isVisible()) {
+                repeatPlaylist();
+            }
+            else{
+                pauseImgVw.setVisible(false);
+                playImgVw.setVisible(true);
+            }
         }
         else if(songsQueue != null && songsQueue.peek() != null){ // ewan ko pero i'm scared to take this out
             play.stopSong();
@@ -397,7 +416,8 @@ public class MainController extends Controller implements Initializable {
                 songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(/*indexes.get(j-1)*/j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(/*indexes.get(j-1)*/j).getTitle());
+//            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+            setMPLabels(songsArtist.get(j), songsTitle.get(j));
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
         }
@@ -410,6 +430,7 @@ public class MainController extends Controller implements Initializable {
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
             setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
+//            setMPLabels(songsArtist.get(j), songsTitle.get(j));
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             play();
 
@@ -423,7 +444,15 @@ public class MainController extends Controller implements Initializable {
                 songsDump.push(songsCopy.remove());
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //                setMp(mp);
-            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+//            for(int i=0; i<ss.getAll().size(); i++){
+//                String testTitle = ss.getAll().get(i).getTitle().replaceAll("\\s","");
+//                String testArtist = ss.getAll().get(i).getArtist();
+//                if(songs.get(j).contains(testTitle)){
+//                    artist = testArtist;
+//                    title = testTitle;
+//                }
+//            }
+            setMPLabels(songsArtist.get(j), songsTitle.get(j));
 //            QueueWindowController.recentlyPlayed.add(nameLbl.getText());
             System.out.println(j + " : " + ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
             play();
@@ -468,10 +497,12 @@ public class MainController extends Controller implements Initializable {
 //                setMp(mp);
             songsCopy.add(songsDump.pop());
             if(j == 0) {
-                setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
+//                setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
+                setMPLabels(songsArtist.get(j), songsTitle.get(j));
             }
             else{
-                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getTitle());
+//                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getTitle());
+                setMPLabels(songsArtist.get(j), songsTitle.get(j));
             }
             play();
         }
@@ -481,7 +512,8 @@ public class MainController extends Controller implements Initializable {
             /*MediaPlayer*/ mp = play.getMediaPlayer();
 //            setMp(mp);
             songsCopy.add(songsDump.pop());
-            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+//            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+            setMPLabels(songsArtist.get(j), songsTitle.get(j));
             play();
         }
 //        }
@@ -530,14 +562,25 @@ public class MainController extends Controller implements Initializable {
                 mp.play();
             }
         });
-
-        repeatImgVw.setVisible(false);
+        System.out.println("Repeat Song");
+        repeatPlaylistImgVw.setVisible(false);
         repeatOnceVw.setVisible(true);
     }
 
     public void repeatPlaylist() {
-
-        repeatOnceVw.setVisible(false);
+        if(j==songs.size()) {
+            mp.setOnEndOfMedia(new Runnable() {
+                @Override
+                public void run() {
+                    playAll();
+                }
+            });
+        }
+        if(j==songs.size() /*|| mp.getCurrentTime()==mp.getTotalDuration()*/) {
+            System.out.println("Repeat All");
+            playAll();
+        }
+        repeatImgVw.setVisible(false);
         repeatPlaylistImgVw.setVisible(true);
     }
 
@@ -545,10 +588,11 @@ public class MainController extends Controller implements Initializable {
         mp.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-
+                System.out.println("Repeat Disabled");
             }
         });
-        repeatPlaylistImgVw.setVisible(false);
+        System.out.println("Repeat Disabled");
+        repeatOnceVw.setVisible(false);
         repeatImgVw.setVisible(true);
     }
     public void uploadSong()
