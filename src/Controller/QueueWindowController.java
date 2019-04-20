@@ -50,8 +50,7 @@ public class QueueWindowController {
 
     public void showHistory() {
         queueVBox.getChildren().clear();
-
-
+        
         for (String songTitleDash: recentlyPlayed) {
 
             queueVBox.getChildren().add(new Label(songTitleDash));

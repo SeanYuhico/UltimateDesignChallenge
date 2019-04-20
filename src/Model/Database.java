@@ -10,7 +10,7 @@ public class Database {
     private final static String DRIVER_NAME = "com.mysql.jdbc.Driver";
     private final static String URL = "jdbc:mysql://localhost:3306/";
     private final static String USERNAME = "root";
-    private final static String PASSWORD = "password";
+    private final static String PASSWORD = "boiii";
     private final static String DATABASE = "music_player";
 
     public Database(){
