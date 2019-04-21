@@ -211,6 +211,7 @@ public class MainController extends Controller implements Initializable {
                 e.printStackTrace();
             }
         }
+        mp.stop();
     }
 
     public void changeProgress()
