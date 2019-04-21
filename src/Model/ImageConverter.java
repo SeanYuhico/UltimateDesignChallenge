@@ -13,24 +13,26 @@ public class ImageConverter extends ConverterTemplate {
     private String tempFilename;
     private ArrayList<String> results;
     private int index;
+    private static int newImage = 0;
 
     public boolean checkFile(String title){
         results = new ArrayList<>();
 
+        File[] files = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt").listFiles();
 
-        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt").listFiles();
-
-        for (File file : files) {
-            if (file.isFile()) {
-                results.add(file.getName());
+        if(newImage == 0) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    results.add(file.getName());
+                }
             }
-        }
 
-        for(int i=0; i<results.size(); i++){
-            if(results.get(i).contains(title.replaceAll("\\s", ""))){
-                System.out.println("TRUE");
-                index = i;
-                return true;
+            for (int i = 0; i < results.size(); i++) {
+                if (results.get(i).contains(title.replaceAll("\\s", ""))) {
+                    System.out.println("TRUE");
+                    index = i;
+                    return true;
+                }
             }
         }
         System.out.println("FALSE");
@@ -40,7 +42,7 @@ public class ImageConverter extends ConverterTemplate {
     public String convertFromBlob(Blob blob, String title){
         if (!checkFile(title)) {
             try {
-                directory = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\AlbumArt");
+                directory = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt");
                 String newTitle = title.replaceAll("\\s", "");
                 File tempImg = File.createTempFile(newTitle, ".png", directory);
                 InputStream is = blob.getBinaryStream();
@@ -52,6 +54,7 @@ public class ImageConverter extends ConverterTemplate {
                 fos.close();
                 System.out.println("Byte array to mp3 conversion: successful");
                 tempFilename = tempImg.getName();
+                tempImg.deleteOnExit();
             } catch (IOException e) {
                 e.getMessage();
                 e.printStackTrace();
@@ -61,12 +64,17 @@ public class ImageConverter extends ConverterTemplate {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/AlbumArt/" + tempFilename;
+            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt/" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/AlbumArt/" + results.get(index);
+            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/AlbumArt/" + results.get(index);
         }
         return tempFilename;
     }
+
+    public void setNewImage(int newImage) {
+        this.newImage = newImage;
+    }
+
 }

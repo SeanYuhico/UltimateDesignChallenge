@@ -154,6 +154,8 @@ public class PlaylistHBox extends HBox {
                     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
                     File coverToUpload = fileChooser.showOpenDialog(null);
                     ps.uploadAlbumCover(p, coverToUpload.getAbsolutePath());
+                    ImageConverter ic = new ImageConverter();
+                    ic.setNewImage(1);
                 });
                 addToQueue.setOnAction(event -> {
                     System.out.println("Playlist queueing!");
