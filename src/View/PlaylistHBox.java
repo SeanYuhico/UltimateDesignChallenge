@@ -122,6 +122,15 @@ public class PlaylistHBox extends HBox {
             contextMenu.getItems().add(addCover);
 
 
+        playBtn.setOnMouseClicked( e -> {
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            dashboardPlaylistLbl.setText(p.getName());
+            DisplayNonDefault.displaySongs(p.getName(), dashboardVBox, controller);
+            controller.playAll();
+
+        });
+
         deleteBtn.setOnMouseClicked(e -> {
             Boolean ans = ConfirmBox.display("Delete", "Are you sure you want to delete?");
             if (ans) {
@@ -253,6 +262,16 @@ public class PlaylistHBox extends HBox {
 
         if (!isArtist && !p.getUsername().equals(LoginArtistController.getLoggedUser()))
             contextMenu.getItems().add(follow);
+
+        playBtn.setOnMouseClicked( e -> {
+
+            dashboardPane.setVisible(true);
+            playlistPane.setVisible(false);
+            dashboardPlaylistLbl.setText(p.getName());
+            DisplayNonDefault.displaySongs(p.getName(), dashboardVBox, controller);
+            controller.playAll();
+
+        });
 
         titleLbl.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {

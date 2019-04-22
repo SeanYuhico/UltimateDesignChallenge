@@ -1,21 +1,21 @@
 package Model;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class SongRepository implements Container {
+public class ListRepository implements Container {
 
-    public ArrayList<Song> songList;
+    public List<Song> songList;
 
-    public SongRepository(ArrayList<Song> songList) {
+    public ListRepository(List<Song> songList) {
         this.songList = songList;
     }
 
     @Override
     public Iterator getIterator() {
-        return new SongIterator();
+        return new ListIterator();
     }
 
-    private class SongIterator implements Iterator {
+    private class ListIterator implements Iterator {
 
         int index;
 

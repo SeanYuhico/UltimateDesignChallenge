@@ -16,8 +16,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+import java.util.Iterator;
 
 public class SongHBox extends HBox {
     private ImageView playBtn;
@@ -232,6 +233,15 @@ public class SongHBox extends HBox {
             SongService service = new SongService(db);
             TimesPlayedService tps = new TimesPlayedService(db);
             PlayMP3 play = new PlayMP3();
+
+            if (!MainController.songsCopy.isEmpty()) {
+                MainController.songsCopy.remove();
+                Queue<String> queueTemp = new LinkedList<>();
+                queueTemp.add(song.getTitle());
+                queueTemp.addAll(MainController.songsCopy);
+                MainController.songsCopy = queueTemp;
+            }
+
             for(int i = 0; i < service.getAll().size(); i++){
                 if(titleLbl.getText().equals(service.getAll().get(i).getTitle())){
                     System.out.println("Hell yes");

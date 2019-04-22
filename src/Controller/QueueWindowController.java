@@ -37,6 +37,9 @@ public class QueueWindowController {
 //                    recentlyAddedButton.setVisible(false);
 //                    recentlyAddedButton.setDisable(true);
 //            }
+
+        showQueue();
+
         }
 
 

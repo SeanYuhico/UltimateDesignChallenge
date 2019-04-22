@@ -58,7 +58,7 @@ public class MainController extends Controller implements Initializable {
     Queue<String> songsQueue;
     Stack<MediaPlayer> prevS;
     ArrayList<MediaPlayer> prevList, players;
-    int songIndex, j =0, tempJ, checkShuffle;
+    int songIndex, tempJ, checkShuffle;
     boolean isArtist = false;
     public static ArrayList<String> notifications = new ArrayList<>();
     Database db;
@@ -70,9 +70,10 @@ public class MainController extends Controller implements Initializable {
     PlayMP3 play;
     static ArrayList<String> songs, songsArtist, songsTitle;
 //    static ArrayList<String> songBackup;
-    static Queue<String> songsCopy;
-    static Queue<String> songsBackup;
-    static Stack<String> songsDump;
+    public static int j = 0;
+    public static Queue<String> songsCopy;
+    public static Queue<String> songsBackup;
+    public static Stack<String> songsDump;
     ObservableList<String> sortList = FXCollections.observableArrayList("Date Uploaded", "Year", "Alphabetical", "Artist",
             "Album", "Genre");
     ArrayList<Integer> indexes;
@@ -97,6 +98,7 @@ public class MainController extends Controller implements Initializable {
         songsBackup = new LinkedList<>();
         songsDump = new Stack<>();
         displayer = new Displayer();
+        QueueWindowController.recentlyPlayed = new ArrayList<>();
         genrePlaylistBuilder = new GenrePlaylistBuilder();
         albumPlaylistBuilder = new AlbumPlaylistBuilder();
         artistPlaylistBuilder = new ArtistPlaylistBuilder();
@@ -241,18 +243,19 @@ public class MainController extends Controller implements Initializable {
 //        songsCopy = new LinkedList<>();
         String title, artist;
 
-        for (int i = 0; i < ss.getAll().size(); i++) {
-            if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
-                title = ss.getAll().get(i).getTitle();
-                artist = ss.getAll().get(i).getArtist();
-                songs.add(sLoader.loadSong(title));
-                songsArtist.add(artist);
-                songsTitle.add(title);
-                songsCopy.add(title);
-            }
-        }
+//        for (int i = 0; i < ss.getAll().size(); i++) {
+//            if (sLoader.loadSong(ss.getAll().get(i).getTitle()).equals(filename)) {
+//                title = ss.getAll().get(i).getTitle();
+//                artist = ss.getAll().get(i).getArtist();
+//                songs.add(sLoader.loadSong(title));
+//                songsArtist.add(artist);
+//                songsTitle.add(title);
+//                songsCopy.add(title);
+//            }
+//        }
         System.out.println(songs.size());
         play.setMedia(filename);
+        System.out.println("dito ka pala ahhhhhhhhh");
     }
 
     public void play()
@@ -340,7 +343,6 @@ public class MainController extends Controller implements Initializable {
         songsTitle.add(qFile);
         songsArtist.add(artistLbl);
         songsCopy.add(qFile);
-
         /*for(int k = 0; k < ss.getAll().size(); k++) {
             if(ss.getAll().get(k).getTitle().equals(qFile))
                 play.setMedia(songs.get(j));
@@ -495,25 +497,31 @@ public class MainController extends Controller implements Initializable {
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
-//                setMp(mp);
-            songsCopy.add(songsDump.pop());
+
             if(j == 0) {
-//                setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j)).getTitle());
                 setMPLabels(songsArtist.get(j), songsTitle.get(j));
             }
             else{
-//                 setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(indexes.get(j - 1)).getTitle());
+
                 setMPLabels(songsArtist.get(j), songsTitle.get(j));
             }
             play();
         }
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
+
+            if (!songsCopy.isEmpty()) {
+                songsCopy.remove();
+                Queue<String> queueTemp = new LinkedList<>();
+                if (songsDump.peek() != null)
+                    queueTemp.add(songsDump.pop());
+                queueTemp.addAll(songsCopy);
+                songsCopy = queueTemp;
+            }
+
             play.stopSong();
             play.setMedia(songs.get(j));
             /*MediaPlayer*/ mp = play.getMediaPlayer();
-//            setMp(mp);
-            songsCopy.add(songsDump.pop());
-//            setMPLabels(ss.getAll(dashboardPlaylistLbl.getText()).get(j).getArtist(), ss.getAll(dashboardPlaylistLbl.getText()).get(j).getTitle());
+
             setMPLabels(songsArtist.get(j), songsTitle.get(j));
             play();
         }
@@ -747,10 +755,10 @@ public class MainController extends Controller implements Initializable {
 //        }
 //        shuffled.add(songs.get(low));
         songsCopy.clear();
-        songsCopy.add(songs.get(low));
+        songsCopy.add(songsTitle.get(low));
         for(int i=0; i<indexes.size(); i++){
             shuffled.add(songs.get(indexes.get(i))); // changes the queue based on the list of random numbers generated
-            songsCopy.add(songs.get(indexes.get(i)));
+            songsCopy.add(songsTitle.get(indexes.get(i)));
         }
         songs.addAll(low, shuffled);
         LinkedHashSet<String> hashSet = new LinkedHashSet<>(songs);
@@ -778,7 +786,7 @@ public class MainController extends Controller implements Initializable {
         ArrayList<Integer> temp = new ArrayList<>();
 //        unshuffled.add(songsBackup.element());
         songsCopy.clear();
-        songsCopy.add(songs.get(0));
+        songsCopy.add(songsTitle.get(0));
         int k = indexes.size() + 1;
         Collections.sort(indexes);
         for(int i=0; i<songs.size(); i++){ // possibly modify j from here
@@ -788,6 +796,13 @@ public class MainController extends Controller implements Initializable {
                 System.out.println(j);
             }
             songsCopy.add(songsBackup.remove());
+        }
+        for(String filepath : songsCopy){
+            for(String songT : songsTitle){
+                if(filepath.contains(songT)){
+                    filepath=songT;
+                }
+            }
         }
 //        songs.addAll(songsBackup);
         songs = unshuffled;
