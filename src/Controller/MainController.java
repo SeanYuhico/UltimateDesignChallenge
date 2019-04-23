@@ -320,6 +320,40 @@ public class MainController extends Controller implements Initializable {
 
         QueueWindowController.recentlyPlayed.add(nameLbl.getText());
     }
+    public void playAll(String playlist) {
+        db = new Database();
+        ss = new SongService(db);
+        sLoader = new SongLoader(db);
+        play = new PlayMP3();
+//        songs = new ArrayList<>();
+//        songsCopy = new LinkedList<>();
+        j = 0;
+
+        for (int i = 0; i < ss.getAll(playlist).size(); i++) {
+            songs.add(sLoader.loadSong(ss.getAll(playlist).get(i).getTitle()));
+            songsTitle.add(ss.getAll(playlist).get(i).getTitle());
+            songsArtist.add(ss.getAll(playlist).get(i).getArtist());
+            songsCopy.add(ss.getAll(playlist).get(i).getTitle());
+        }
+        play.setMedia(songs.get(j));
+        /*MediaPlayer*/ mp = play.getMediaPlayer();
+//        setMp(mp);
+        setMPLabels(ss.getAll(playlist).get(j).getArtist(), ss.getAll(playlist).get(j).getTitle());
+        mp.play();
+        mp.setRate(1);
+        playImgVw.setVisible(false);
+        pauseImgVw.setVisible(true);
+
+        mp.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                songsCopy.remove();
+                next();
+            }
+        });
+
+        QueueWindowController.recentlyPlayed.add(nameLbl.getText());
+    }
 
 
     public void pause ()
@@ -380,8 +414,10 @@ public class MainController extends Controller implements Initializable {
             }
         }
 
-        for (int i = 0; i < ss.getAll().size(); i++) {
-            songs.add(sLoader.loadSong(ss.getAll().get(i).getTitle()));
+        for (int i = 0; i < ss.getAll(playlist).size(); i++) {
+            songs.add(sLoader.loadSong(ss.getAll(playlist).get(i).getTitle()));
+            songsTitle.add(ss.getAll(playlist).get(i).getTitle());
+            songsArtist.add(ss.getAll(playlist).get(i).getArtist());
             songsCopy.add(ss.getAll(dashboardPlaylistLbl.getText()).get(i).getTitle());
             System.out.println("UGH");
         }
