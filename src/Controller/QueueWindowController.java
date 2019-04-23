@@ -22,6 +22,8 @@ public class QueueWindowController {
 
     public static ArrayList<String> recentlyPlayed = new ArrayList<>();
     public static ArrayList<String> recentlyAdded = new ArrayList<>();
+    private ArrayListRepository playedRep = new ArrayListRepository(recentlyPlayed);
+    private ArrayListRepository addedRep = new ArrayListRepository(recentlyAdded);
 
     public void initialize() {
 
@@ -53,11 +55,16 @@ public class QueueWindowController {
 
     public void showHistory() {
         queueVBox.getChildren().clear();
-        
-        for (String songTitleDash: recentlyPlayed) {
 
-            queueVBox.getChildren().add(new Label(songTitleDash));
+        for(Iterator it = playedRep.getIterator(); it.hasNext();){
+            String title = (String) it.next();
+            queueVBox.getChildren().add(new Label(title));
         }
+        
+//        for (String songTitleDash: recentlyPlayed) {
+//
+//            queueVBox.getChildren().add(new Label(songTitleDash));
+//        }
 
     }
 
@@ -77,8 +84,13 @@ public class QueueWindowController {
             queueVBox.getChildren().clear();
             sortedSongs.sort(Comparator.comparing(Song::getDateUploaded));
 
-            for (Song s : sortedSongs)
-                queueVBox.getChildren().add(new Label(s.getTitle()));
+           for(Iterator it = addedRep.getIterator(); it.hasNext();){
+               String title = (String) it.next();
+               queueVBox.getChildren().add(new Label(title));
+           }
+
+//            for (Song s : sortedSongs)
+//                queueVBox.getChildren().add(new Label(s.getTitle()));
         }
         else
         {

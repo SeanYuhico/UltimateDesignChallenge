@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class ArrayListRepository implements Container {
 
-    public ArrayList<Song> songList;
+    public ArrayList<String> songList;
 
-    public ArrayListRepository(ArrayList<Song> songList) {
+    public ArrayListRepository(ArrayList<String> songList) {
         this.songList = songList;
     }
 
