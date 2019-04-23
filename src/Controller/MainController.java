@@ -510,6 +510,14 @@ public class MainController extends Controller implements Initializable {
             play();
         }
         else*/ if (indexes != null && j < ss.getAll(dashboardPlaylistLbl.getText()).size() && checkShuffle==0){ //next after calling unshuffle
+            if (!songsCopy.isEmpty()) {
+    //                songsCopy.remove();
+                Queue<String> queueTemp = new LinkedList<>();
+                if (songsDump.peek() != null)
+                    queueTemp.add(songsDump.pop());
+                queueTemp.addAll(songsCopy);
+                songsCopy = queueTemp;
+            }
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null
@@ -523,6 +531,14 @@ public class MainController extends Controller implements Initializable {
             play();
         }
         else if (indexes != null && j < songs.size() && checkShuffle==1){
+            if (!songsCopy.isEmpty()) {
+    //                songsCopy.remove();
+                Queue<String> queueTemp = new LinkedList<>();
+                if (songsDump.peek() != null)
+                    queueTemp.add(songsDump.pop());
+                queueTemp.addAll(songsCopy);
+                songsCopy = queueTemp;
+            }
             play.stopSong();
             play.setMedia(songs.get(j));
 //            if(songsCopy.peek()!=null)
@@ -539,7 +555,7 @@ public class MainController extends Controller implements Initializable {
         else if (j < ss.getAll(dashboardPlaylistLbl.getText()).size()  && j >= 0) {
 
             if (!songsCopy.isEmpty()) {
-                songsCopy.remove();
+//                songsCopy.remove();
                 Queue<String> queueTemp = new LinkedList<>();
                 if (songsDump.peek() != null)
                     queueTemp.add(songsDump.pop());
