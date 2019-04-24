@@ -96,7 +96,7 @@ public class DisplayNonDefault {
             if(tp.getAccountName().equals(LoginArtistController.getLoggedUser()))
                 userTP.add(tp);
 
-        userTP.sort(Comparator.comparing(TimesPlayed::getNumTimesPlayed));
+        userTP.sort(Comparator.comparingInt(TimesPlayed::getNumTimesPlayed).reversed());
 
         for(TimesPlayed tp : userTP)
             for(Song s : ss.getAll())
