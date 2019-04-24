@@ -1,5 +1,6 @@
 package Controller;
 
+import ClientControl.ClientController;
 import Model.*;
 import View.*;
 import javafx.collections.FXCollections;
@@ -38,7 +39,7 @@ public class MainController extends Controller implements Initializable {
     @FXML Slider volumeSlider, progressSlider;
     @FXML Button playPlaylistBtn;
     @FXML BorderPane bPane;
-    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, repeatPlaylistImgVw, notifImgVw, uncheckedNotifImgVw; //,repeatAllImgVw;
+    @FXML ImageView playImgVw, pauseImgVw, repeatImgVw, nextImgVw, prevImgVw, repeatOnceVw, repeatPlaylistImgVw, notifImgVw, uncheckedNotifImgVw, refreshImg; //,repeatAllImgVw;
     @FXML Label artistLbl,nameLbl, songLbl, logoutLbl, dashboardPlaylistLbl;
     @FXML Label playlistNameLbl;
     @FXML ScrollPane sp;
@@ -861,6 +862,12 @@ public class MainController extends Controller implements Initializable {
         }
 
     }
+
+    public void refresh(){
+        ClientController.getInstance().getMusic();
+        ClientController.getInstance().syncAll();
+    }
+
     public void unshuffle(){
         checkShuffle=0;
 //        j=tempJ;
