@@ -1,5 +1,6 @@
 package Model;
 
+import ClientControl.ClientController;
 import Controller.LoginArtistController;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class TimesPlayedService {
 
     public boolean add(int id){
         // ADD CONTACT
+        ClientController.getInstance().timesplayedAdd(id);
 
         String query = "INSERT INTO " + TimesPlayed.TABLE_NAME + " VALUE (?, ?, ?, ?)";
         Connection connection = db.getConnection();

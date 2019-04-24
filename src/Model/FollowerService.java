@@ -1,5 +1,7 @@
 package Model;
 
+import ClientControl.ClientController;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,7 @@ public class FollowerService {
 
     public boolean add(String follower, String following){
         // ADD CONTACT
+        ClientController.getInstance().followerAdd(follower, following);
 
         String query = "INSERT INTO " + Follower.TABLE_NAME + " VALUE (?, ?, ?)";
         Connection connection = db.getConnection();

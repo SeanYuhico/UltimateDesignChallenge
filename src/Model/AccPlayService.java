@@ -1,5 +1,6 @@
 package Model;
 
+import ClientControl.ClientController;
 import Controller.LoginArtistController;
 
 import java.sql.Connection;
@@ -19,6 +20,7 @@ public class AccPlayService {
 
     public boolean add(Playlist p){
         // ADD CONTACT
+        ClientController.getInstance().accplayAdd(p);
 
         String query = "INSERT INTO " + AccPlay.TABLE_NAME + " VALUE (?, ?, ?)";
         Connection connection = db.getConnection();

@@ -1,5 +1,7 @@
 package Model;
 
+import ClientControl.Client;
+import ClientControl.ClientController;
 import Controller.LoginArtistController;
 
 import java.io.File;
@@ -21,6 +23,7 @@ public class PlaylistService {
 
     public boolean add(Playlist p){
         // ADD CONTACT
+        ClientController.getInstance().playlistAdd(p);
 
         String query = "INSERT INTO " + Playlist.TABLE_NAME + " VALUE (?, ?, ?, ?, ?, ?, ?)";
         Connection connection = db.getConnection();

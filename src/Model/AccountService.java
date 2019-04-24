@@ -1,5 +1,7 @@
 package Model;
 
+import ClientControl.ClientController;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ public class AccountService {
 
     public boolean add(Account a){
         // ADD CONTACT
+        ClientController.getInstance().accountAdd(a);
 
         String query = "INSERT INTO " + Account.TABLE_NAME + " VALUE (?, ?, ?)";
         Connection connection = db.getConnection();

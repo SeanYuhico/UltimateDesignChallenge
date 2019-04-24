@@ -1,5 +1,7 @@
 package View;
 
+import ClientControl.Client;
+import ClientControl.ClientController;
 import Controller.LoginArtistController;
 import Model.*;
 import javafx.geometry.Insets;
@@ -118,8 +120,12 @@ public class UploadSongWindow implements Window{
                 for(Song song : service.getAll())
                     if(song.getUsername().equals(LoginArtistController.getLoggedUser()) && song.getSongName().equals(s.getSongName()))
                         add = 0;
-                if(add == 1)
+                if(add == 1) {
                     service.add(s);
+                    String tempString = cheatTextField.getText().replace("\\", "/");
+                    ClientController.getInstance().uploadMusic(tempString);
+                    ClientController.getInstance().songAdd(s);
+                }
                 else
                     AlertBox.display("Error in Uploading Song", "Huy inupload mo na tong song na to.");
 

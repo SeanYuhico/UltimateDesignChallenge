@@ -17,7 +17,7 @@ public class SongConverter extends ConverterTemplate {
     public boolean checkFile(String title){
         results = new ArrayList<>();
 
-        File[] files = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music").listFiles();
+        File[] files = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music").listFiles();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -39,7 +39,7 @@ public class SongConverter extends ConverterTemplate {
     public String convertFromBlob(Blob blob, String title){
         if (!checkFile(title)) {
             try {
-                directory = new File("C:\\Users\\aaron\\Desktop\\UltimateDesignChallenge\\src\\Music");
+                directory = new File("/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music");
                 String newTitle = title.replaceAll("\\s", "");
                 File tempMp3 = File.createTempFile(newTitle, ".mp3", directory);
                 InputStream is = blob.getBinaryStream();
@@ -60,11 +60,11 @@ public class SongConverter extends ConverterTemplate {
                 e.printStackTrace();
                 System.out.println(e);
             }
-            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/Music/" + tempFilename;
+            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music/" + tempFilename;
 //            return tempFilename;
         }
         else {
-            tempFilename = "file:/Users/aaron/Desktop/UltimateDesignChallenge/src/Music/" + results.get(index);
+            tempFilename = "file:/Users/seanyuhico/Documents/SCHOOL/UltimateDesignChallenge/src/Music/" + results.get(index);
         }
         return tempFilename;
     }

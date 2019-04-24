@@ -1,5 +1,6 @@
 package Model;
 
+import ClientControl.ClientController;
 import Controller.LoginArtistController;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class PlaylistSongService {
 
     public boolean add(Playlist p, Song s){
         // ADD CONTACT
+        ClientController.getInstance().playlistSongAdd(p,s);
 
         String query = "INSERT INTO " + PlaylistSong.TABLE_NAME + " VALUE (?, ?, ?, ?)";
         Connection connection = db.getConnection();
@@ -27,6 +29,27 @@ public class PlaylistSongService {
             statement.setInt(1, p.getPlaylistID());
             statement.setInt(2, s.getSongID());
             statement.setString(3, LoginArtistController.getLoggedUser());
+            statement.setDouble(4, PlaylistSong.PK);
+
+            boolean added = statement.execute();
+            return added;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean add(Playlist p, Song s, String user){
+        // ADD CONTACT
+        ClientController.getInstance().playlistSongAdd(p, s);
+
+        String query = "INSERT INTO " + PlaylistSong.TABLE_NAME + " VALUE (?, ?, ?, ?)";
+        Connection connection = db.getConnection();
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, p.getPlaylistID());
+            statement.setInt(2, s.getSongID());
+            statement.setString(3, user);
             statement.setDouble(4, PlaylistSong.PK);
 
             boolean added = statement.execute();
@@ -127,6 +150,19 @@ public class PlaylistSongService {
         Database db = new Database();
         Connection connection = db.getConnection();
         String query = "DELETE FROM " + PlaylistSong.TABLE_NAME + " WHERE username = 'Guest'";
+        try{
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.execute();
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void removeAll()
+    {
+        Database db = new Database();
+        Connection connection = db.getConnection();
+        String query = "DELETE FROM " + PlaylistSong.TABLE_NAME;
         try{
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();

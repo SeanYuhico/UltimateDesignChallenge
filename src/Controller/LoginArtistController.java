@@ -1,5 +1,6 @@
 package Controller;
 
+import ClientControl.ClientController;
 import Model.*;
 import View.*;
 import javafx.fxml.FXML;
@@ -50,6 +51,7 @@ public class LoginArtistController {
                 AlertBox.display("Testing", "Login Successful!");
                 loggedUser = username;
                 loggedAccount = a;
+                ClientController.getInstance().getClient().setUser(username);
                 MusicPlayer.display(Main.getMainStage());
             } else if (uExists > 0 && pExists == 0)
                 AlertBox.display("Testing", "Incorrect password!");
